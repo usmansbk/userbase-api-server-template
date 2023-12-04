@@ -103,7 +103,9 @@ yarn codegen
 
 ## Deployment
 
-### [Secrets](https://www.dotenv.org/docs/quickstart#sync)
+### Secrets
+
+#### [Dotenv Vault](https://www.dotenv.org/docs/quickstart#sync)
 
 [![dotenv-vault](https://badge.dotenv.org/fork.svg?r=1)](https://vault.dotenv.org/project/vlt_d58b61c8b19f6c19c95442b7f144d743c582effc071b5847060fb5b39f6c42c0/example)
 
@@ -132,10 +134,20 @@ Build your project's encrypted `.env.vault` file
 npx dotenv-vault build
 ```
 
-Fetch your production decryption key (will be needed in the next step)
+Fetch your production decryption key (will be used in the next step)
 
 ```sh
 npx dotenv-vault keys production
 ```
 
 ### CI/CD
+
+#### [DockerHub](https://hub.docker.com/)
+
+- Generate and copy an access token for your [DockerHub account](https://hub.docker.com/settings/security)
+
+- Add the access token to your repo actions secrets as `DOCKER_HUB_ACCESS_TOKEN`
+
+- Add your dockerhub username to your repo actions secrets as `DOCKER_HUB_USERNAME`
+
+#### [Render](https://dashboard.render.com/)
