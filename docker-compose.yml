@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: api
+    image: userbase/api
+    restart: always
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - db
+      - cache
+    ports:
+      - 4000:4000
+    working_dir: /app
+    volumes:
+      - ./:/app
+
+  prisma-studio:
+    container_name: prisma-studio
+    image: timothyjmiller/prisma-studio:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      POSTGRES_URL: ${DATABASE_URL}
+    ports:
+      - 5555:5555
+
+  cache:
+    container_name: redis-server
+    image: redis:6-alpine
+    restart: always
+    env_file: .env
+    command: redis-server
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - cache:/data
+
+  db:
+    container_name: postgresql_db
+    image: postgres:14-alpine
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DATABASE}
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local
