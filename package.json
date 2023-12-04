@@ -2,7 +2,7 @@
   "name": "userbase-api-server-template",
   "version": "1.0.0",
   "description": "user managemnet api server template",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "repository": "git@github.com:usmansbk/userbase-api-server-template.git",
   "author": "usmansbk <usmansbk@gmail.com>",
   "license": "MIT",
