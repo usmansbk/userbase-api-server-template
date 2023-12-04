@@ -81,6 +81,7 @@ yarn db:migrate
 
 - [Watch how Prisma handles N+1 Problem](https://www.prisma.io/docs/guides/performance-and-optimization/query-optimization-performance)
 - [Scalar Types](https://the-guild.dev/graphql/scalars/docs)
+- [Input validation](https://github.com/confuser/graphql-constraint-directive)
 
 Run codegen after modifying the graphql schema to generate TypeScript definitions
 
