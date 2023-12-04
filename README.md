@@ -27,6 +27,7 @@ User management system api server base template
 **Existing project**
 
 ```sh
+npx dotenv-vault login
 npx dotenv-vault pull
 ```
 
