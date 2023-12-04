@@ -37,6 +37,8 @@ npx dotenv-vault pull
 cp .env.example .env
 ```
 
+### 3rd-Party Services
+
 #### AWS
 
 - Set your `AWS_REGIONS`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` variables.
