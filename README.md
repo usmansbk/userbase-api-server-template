@@ -68,6 +68,7 @@ yarn db:migrate
 
 ### Clients
 
+- [Admin Dashboard](http://localhost:3000/)
 - [Apollo Studio](http://localhost:4000/graphql)
 - [Prisma Studio](http://localhost:5555/)
 
