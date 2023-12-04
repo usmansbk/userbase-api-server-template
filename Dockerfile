@@ -19,8 +19,7 @@ COPY package.json yarn.lock ./
 RUN yarn
 COPY --from=builder /app/build ./build
 COPY ./prisma ./prisma
-COPY ./locales ./locales
-COPY ./emails ./emails
+COPY ./assets ./assets
 COPY .env.vault ./
 RUN yarn db:deploy
 EXPOSE 4000
