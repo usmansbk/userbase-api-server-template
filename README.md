@@ -49,7 +49,7 @@ mv .env.example .env
 
 #### Google Authentication
 
-#### Build Containers
+### Build Containers
 
 ```sh
 yarn docker:build
