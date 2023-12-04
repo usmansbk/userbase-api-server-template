@@ -170,12 +170,16 @@ npx dotenv-vault keys production
 
 #### Deploy
 
-Build your project's encrypted `.env.vault` file
+- Build your project's encrypted `.env.vault` file
 
 ```sh
 npx dotenv-vault build
 ```
 
-- Trigger action and wait for build it to finish
+- Commit and push changes to trigger action
+
+- Wait for CI build to finish successfully
 
 - Create a new [Web Service](https://dashboard.render.com/create?type=web) using the new image from dockerhub
+
+- Click the Advanced button and add your `DOTENV_KEY` environment variable
