@@ -150,4 +150,6 @@ npx dotenv-vault keys production
 
 - Add your dockerhub username to your repo actions secrets as `DOCKER_HUB_USERNAME`
 
+- Add your dotenv-vault decryption key to your repo actions secrets as `DOTENV_KEY`
+
 #### [Render](https://dashboard.render.com/)
