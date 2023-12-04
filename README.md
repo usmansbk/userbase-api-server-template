@@ -180,6 +180,6 @@ npx dotenv-vault build
 
 - Wait for CI build to finish successfully
 
-- Create a new [Web Service](https://dashboard.render.com/create?type=web) using the new image from dockerhub. (you may need to add your DockerHub access token to render for private images)
+- Create a new [Web Service](https://dashboard.render.com/create?type=web) using the new image from dockerhub. (You may need to add your DockerHub access token to render for private images)
 
 - Click the Advanced button and add your `DOTENV_KEY` environment variable
