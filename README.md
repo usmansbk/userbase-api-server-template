@@ -152,4 +152,6 @@ npx dotenv-vault keys production
 
 - Add your dotenv-vault decryption key to your repo actions secrets as `DOTENV_KEY`
 
+- Trigger build and wait to complete before moving to next step
+
 #### [Render](https://dashboard.render.com/)
