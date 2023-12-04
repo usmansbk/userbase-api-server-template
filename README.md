@@ -8,6 +8,9 @@ User management system api server
 - [ ] RBAC
 - [ ] Email authentication
 - [ ] Social authentication
+- [ ] SMS OTP authentication
+- [ ] Email OTP authentication
+- [ ] MFA
 - [ ] In-app notifications
 - [ ] Email notifications
 - [ ] SMS notifications
