@@ -77,7 +77,7 @@ yarn docker:stop
 ### Test
 
 ```sh
-yarn docker:test
+yarn test
 ```
 
 ## Database Migrations
