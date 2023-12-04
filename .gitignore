@@ -2,6 +2,7 @@
 node_modules
 build
 coverage
+.env.production
 .env*
 .flaskenv*
 !.env.project

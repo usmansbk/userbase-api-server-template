@@ -152,6 +152,30 @@ npx dotenv-vault keys production
 
 - Add your dotenv-vault decryption key to your repo actions secrets as `DOTENV_KEY`
 
-- Trigger build and wait to complete before moving to next step
-
 #### [Render](https://dashboard.render.com/)
+
+##### Database
+
+- Create a new [PostgreSQL database](https://dashboard.render.com/new/database)
+
+- Add the External Database URL to your repo actions secrets as `DATABASE_URL`
+
+- Add the Internal Database URL to your vault's production enviroment as `DATABASE_URL`
+
+##### Cache
+
+- Create a new [Redis Cache](https://dashboard.render.com/new/redis)
+
+- Add the Internal Redis URL to your vault's prodction environment as `REDIS_URL`
+
+#### Deploy
+
+Build your project's encrypted `.env.vault` file
+
+```sh
+npx dotenv-vault build
+```
+
+- Trigger action and wait for build it to finish
+
+- Create a new [Web Service](https://dashboard.render.com/create?type=web) using the new image from dockerhub
