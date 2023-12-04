@@ -24,14 +24,14 @@ User management system api server base template
 
 ### Environment Variables
 
-**Existing project**
+- **Existing project**
 
 ```sh
 npx dotenv-vault login
 npx dotenv-vault pull
 ```
 
-**New project**
+- **New project**
 
 ```sh
 cp .env.example .env
