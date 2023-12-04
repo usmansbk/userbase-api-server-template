@@ -190,3 +190,10 @@ npx dotenv-vault build
 - Create a new [Web Service](https://dashboard.render.com/create?type=web) using the new image from dockerhub. (You may need to add your DockerHub access token to render for private images)
 
 - Click the Advanced button and add your `DOTENV_KEY` environment variable
+
+## VSCode Extensions
+
+- [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
+- [Dotenv](https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode)
+- [GraphQL Foundation](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql)
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
