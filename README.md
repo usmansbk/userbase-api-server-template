@@ -132,7 +132,7 @@ Build your project's encrypted `.env.vault` file
 npx dotenv-vault build
 ```
 
-Fetch your production decryption key
+Fetch your production decryption key (will be needed in the next step)
 
 ```sh
 npx dotenv-vault keys production
