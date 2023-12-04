@@ -52,19 +52,19 @@ cp .env.example .env
 
 #### Google Authentication
 
-### Build Containers
+### Build
 
 ```sh
 yarn docker:build
 ```
 
-### Run Containers
+### Run
 
 ```sh
 yarn docker:start
 ```
 
-### Stop Containers
+### Stop
 
 ```sh
 yarn docker:stop
