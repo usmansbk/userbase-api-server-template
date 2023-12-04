@@ -71,7 +71,7 @@ yarn db:migrate
 - [Apollo Studio](http://localhost:4000/graphql)
 - [Prisma Studio](http://localhost:5555/)
 
-## Main technologies
+### Main technologies
 
 - [ExpressJS](https://expressjs.com/)
 - [Apollo GraphQL](https://www.apollographql.com/docs/apollo-server/)
