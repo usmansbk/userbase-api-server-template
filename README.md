@@ -30,8 +30,9 @@ mv .env.example .env
 
 ### AWS
 
+- Set your `AWS_REGIONS`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` variables.
 - Create an [S3 bucket](https://aws.amazon.com/s3/) to store documents (images, files, etc) and set your `AWS_S3_BUCKET` env variable.
-- Set up [AWS Serverless Image Handler](https://aws.amazon.com/solutions/implementations/serverless-image-handler/) and set your `CLOUDFRONT_ENDPOINT` env variable.
+- Follow [AWS Serverless Image Handler](https://aws.amazon.com/solutions/implementations/serverless-image-handler/) instructions to create a CDN and set your `CLOUDFRONT_API_ENDPOINT` env variable.
 
 ### Twilio
 
