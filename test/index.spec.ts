@@ -1,5 +1,7 @@
-describe("test", () => {
-  const greetings = "Hello World!";
+import greet from "../src";
 
-  expect(greetings).toBe("Hello World!");
+describe("test", () => {
+  test("greetings", async () => {
+    expect(await greet()).toBe("Hello World!");
+  });
 });

@@ -1,5 +1,3 @@
-export default async function test() {
-  console.log("Hello World!");
+export default async function greet() {
+  return "Hello World!";
 }
-
-test();
