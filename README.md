@@ -1,6 +1,6 @@
-# Userbase API Server
+# Userbase
 
-User management system api server
+User management system api server base template
 
 ## Features
 
