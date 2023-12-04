@@ -1367,6 +1367,11 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@prisma/prisma-schema-wasm@4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584":
+  version "4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584"
+  resolved "https://registry.yarnpkg.com/@prisma/prisma-schema-wasm/-/prisma-schema-wasm-4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584.tgz#58398a22a15d0a11ae7c8756de2b793bb8abfca3"
+  integrity sha512-JFdsnSgBPN8reDTLOI9Vh/6ccCb2aD1LbY/LWQnkcIgNo6IdpzvuM+qRVbBuA6IZP2SdqQI8Lu6RL2P8EFBQUA==
+
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
@@ -4179,6 +4184,13 @@ prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
+
+prettier-plugin-prisma@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-prisma/-/prettier-plugin-prisma-5.0.0.tgz#f61f7419453a5ce9973156f1ac9d8309fad44e48"
+  integrity sha512-jTJV04D9+yF7ziOOMs7CJe4ijgAH7DEGjt0SAWAToGNRy1H6BEhvcKA2UQH6gC6KVW5zeeOSAvsoiDDTt9oKXg==
+  dependencies:
+    "@prisma/prisma-schema-wasm" "4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584"
 
 prettier@3.1.0:
   version "3.1.0"

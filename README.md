@@ -35,6 +35,8 @@ mv .env.example .env
 - Follow [AWS Serverless Image Handler](https://aws.amazon.com/solutions/implementations/serverless-image-handler/) instructions to create a CDN and set your `CLOUDFRONT_API_ENDPOINT` env variable.
 - Create a [Dynamodb table](https://aws.amazon.com/dynamodb/) table and set your `AWS_DYNAMODB_DELTA_TABLE`.
 
+## Sentry
+
 ### Twilio
 
 ### Google Authentication
