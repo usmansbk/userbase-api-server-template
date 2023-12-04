@@ -39,7 +39,7 @@ cp .env.example .env
 
 ### 3rd-Party Services
 
-#### AWS
+#### [AWS](https://aws.amazon.com/console/)
 
 - Set your `AWS_REGIONS`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` variables.
 - Create an [S3 bucket](https://aws.amazon.com/s3/) to store documents (images, files, etc) and your `AWS_S3_BUCKET` env variable.
