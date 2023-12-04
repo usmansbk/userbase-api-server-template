@@ -33,6 +33,7 @@ mv .env.example .env
 - Set your `AWS_REGIONS`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` variables.
 - Create an [S3 bucket](https://aws.amazon.com/s3/) to store documents (images, files, etc) and set your `AWS_S3_BUCKET` env variable.
 - Follow [AWS Serverless Image Handler](https://aws.amazon.com/solutions/implementations/serverless-image-handler/) instructions to create a CDN and set your `CLOUDFRONT_API_ENDPOINT` env variable.
+- Create a [Dynamodb table](https://aws.amazon.com/dynamodb/) table and set your `AWS_DYNAMODB_DELTA_TABLE`.
 
 ### Twilio
 
