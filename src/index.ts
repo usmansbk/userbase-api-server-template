@@ -1,3 +1,3 @@
-export default async function greet(): Promise<string> {
+export default async function main(): Promise<string> {
   return "Hello World!";
 }

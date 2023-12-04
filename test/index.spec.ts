@@ -1,7 +1,7 @@
-import greet from "../src";
+import main from "../src";
 
 describe("test", () => {
-  test("greetings", async () => {
-    expect(await greet()).toBe("Hello World!");
+  test("main", async () => {
+    expect(await main()).toBe("Hello World!");
   });
 });
