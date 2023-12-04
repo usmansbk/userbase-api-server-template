@@ -4,14 +4,14 @@ User management system api server
 
 ## Features
 
-- User Profile
-- RBAC
-- Email authentication
-- Social authentication
-- In-app notifications
-- Email notifications
-- SMS notifications
-- File uploads
+[ ] User Profile
+[ ] RBAC
+[ ] Email authentication
+[ ] Social authentication
+[ ] In-app notifications
+[ ] Email notifications
+[ ] SMS notifications
+[ ] File uploads
 
 ## Prerequisites
 
