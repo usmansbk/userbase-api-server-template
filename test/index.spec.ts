@@ -1,4 +1,5 @@
-import main from "../src";
+import main from "@/index";
+import "test/helpers";
 
 describe("test", () => {
   test("main", async () => {
