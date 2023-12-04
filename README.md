@@ -50,10 +50,6 @@ yarn docker:sh
 
 ## Database Migrations
 
-Open a new terminal tab
-
-Enter your api container shell
-
 ```sh
 yarn docker:sh
 ```
@@ -79,7 +75,7 @@ yarn db:migrate
 
 ### GraphQL
 
-- [Watch how Prisma handles N+1 Proble](https://www.prisma.io/docs/guides/performance-and-optimization/query-optimization-performance)
+- [Watch how Prisma handles N+1 Problem](https://www.prisma.io/docs/guides/performance-and-optimization/query-optimization-performance)
 - [Scalar Types](https://the-guild.dev/graphql/scalars/docs)
 
 Run codegen after modifying the graphql schema to generate TypeScript definitions
@@ -89,5 +85,3 @@ yarn codegen
 ```
 
 ### CI/CD
-
-- Project is automatically built and pushed to DockerHub via git actions
