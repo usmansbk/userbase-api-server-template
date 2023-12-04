@@ -1,1 +1,3 @@
-console.log("Helper working");
+import logger from "@/utils/logger";
+
+logger.info("Helper working");
