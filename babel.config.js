@@ -11,6 +11,8 @@ module.exports = {
         alias: {
           "^@/(.+)": "./src/\\1",
           "^test/(.+)": "./test/\\1",
+          "^locales/(.+)": "./locales/\\1",
+          "^emails/(.+)": "./emails/\\1",
         },
       },
     ],
