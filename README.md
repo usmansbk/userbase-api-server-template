@@ -4,7 +4,8 @@ User management system api server
 
 ## Features
 
-[ ] User Profile
+[] User Profile
+
 [ ] RBAC
 [ ] Email authentication
 [ ] Social authentication
