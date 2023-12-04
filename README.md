@@ -33,7 +33,7 @@ npx dotenv-vault pull
 **New project**
 
 ```sh
-mv .env.example .env
+cp .env.example .env
 ```
 
 #### AWS
@@ -64,18 +64,13 @@ yarn docker:start
 ### Stop Containers
 
 ```sh
-yarn docker:sh
+yarn docker:stop
 ```
 
 ## Database Migrations
 
 ```sh
 yarn docker:sh
-```
-
-Run dev migrations
-
-```sh
 yarn db:migrate
 ```
 
@@ -92,6 +87,7 @@ yarn db:migrate
 - [ExpressJS](https://expressjs.com/)
 - [Apollo GraphQL](https://www.apollographql.com/docs/apollo-server/)
 - [PrismaORM](https://www.prisma.io/docs/getting-started/quickstart)
+- [Dotenv Vault](https://www.dotenv.org/docs/security/vault)
 
 ### GraphQL
 
@@ -107,6 +103,39 @@ yarn codegen
 
 ## Deployment
 
-### Secrets
+### [Secrets](https://www.dotenv.org/docs/quickstart#sync)
+
+[![dotenv-vault](https://badge.dotenv.org/fork.svg?r=1)](https://vault.dotenv.org/project/vlt_d58b61c8b19f6c19c95442b7f144d743c582effc071b5847060fb5b39f6c42c0/example)
+
+Begin by creating your project's env vault and authenticating against it.
+
+```sh
+npx dotenv-vault new
+npx dotenv-vault login
+```
+
+Push development `.env`` file securely
+
+```sh
+npx dotenv-vault push
+```
+
+Open the production environment to edit the production variables
+
+```sh
+npx dotenv-vault open production
+```
+
+Build your project's encrypted `.env.vault` file
+
+```sh
+npx dotenv-vault build
+```
+
+Fetch your production decryption key
+
+```sh
+npx dotenv-vault keys production
+```
 
 ### CI/CD
