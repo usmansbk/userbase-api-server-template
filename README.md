@@ -74,6 +74,12 @@ yarn docker:start
 yarn docker:stop
 ```
 
+### Test
+
+```sh
+yarn docker:test
+```
+
 ## Database Migrations
 
 ```sh
