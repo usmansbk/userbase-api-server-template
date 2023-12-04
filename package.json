@@ -1,0 +1,9 @@
+{
+  "name": "userbase-api-server-template",
+  "version": "1.0.0",
+  "description": "user managemnet api server template",
+  "main": "index.js",
+  "repository": "git@github.com:usmansbk/userbase-api-server-template.git",
+  "author": "usmansbk <usmansbk@gmail.com>",
+  "license": "MIT"
+}
