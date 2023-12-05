@@ -165,12 +165,12 @@ export type Picture = {
 
 
 export type PictureThumbnailArgs = {
-  edit?: InputMaybe<ImageEditInput>;
+  edits?: InputMaybe<ImageEditInput>;
 };
 
 
 export type PictureUrlArgs = {
-  edit?: InputMaybe<ImageEditInput>;
+  edits?: InputMaybe<ImageEditInput>;
 };
 
 export type Query = {
@@ -243,12 +243,12 @@ export type UserAvatar = Picture & {
 
 
 export type UserAvatarThumbnailArgs = {
-  edit?: InputMaybe<ImageEditInput>;
+  edits?: InputMaybe<ImageEditInput>;
 };
 
 
 export type UserAvatarUrlArgs = {
-  edit?: InputMaybe<ImageEditInput>;
+  edits?: InputMaybe<ImageEditInput>;
 };
 
 export type UserPermission = {

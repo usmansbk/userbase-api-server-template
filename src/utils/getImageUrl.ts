@@ -4,7 +4,7 @@ import type { ImageEditInput } from "types/graphql";
 interface ImageRequest {
   bucket: string;
   key: string;
-  edits?: ImageEditInput;
+  edits?: ImageEditInput | null;
 }
 
 const getImageUrl = (imageRequest: ImageRequest) =>

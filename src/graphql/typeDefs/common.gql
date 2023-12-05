@@ -33,6 +33,6 @@ input ImageEditInput {
 interface Picture {
   id: ID!
   file: File!
-  url(edit: ImageEditInput): URL!
-  thumbnail(edit: ImageEditInput): URL!
+  url(edits: ImageEditInput): URL!
+  thumbnail(edits: ImageEditInput): URL!
 }
