@@ -36,7 +36,11 @@ const fileUploader = ({
       } = req;
 
       if (!supportedMimeTypes.includes(file.mimetype)) {
-        cb(new Error(t("UNSUPPORTED_FILE_TYPE", { ns: "error" })));
+        cb(
+          new Error(
+            t("UNSUPPORTED_FILE_TYPE", { ns: "error", supportedMimeTypes }),
+          ),
+        );
       } else {
         cb(null, true);
       }

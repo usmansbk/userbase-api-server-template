@@ -14,6 +14,7 @@ import Backend from "i18next-fs-backend";
 import logger from "./utils/logger";
 import createApolloHTTPServer from "./graphql";
 import rateLimiter from "./v1/middlewares/rateLimiter";
+import v1Router from "./v1/routes";
 
 const localesDir = resolve("assets/locales");
 
@@ -85,6 +86,7 @@ async function main() {
 
   const { httpServer, apolloServer } = await createApolloHTTPServer(app);
 
+  app.use("/v1", v1Router);
   app.use(
     "/graphql",
     expressMiddleware(apolloServer, {

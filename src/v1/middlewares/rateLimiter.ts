@@ -3,7 +3,7 @@ import { rateLimit } from "express-rate-limit";
 import RedisStore from "rate-limit-redis";
 import client from "@/config/redis";
 import {
-  RATE_LIMITER_MAX_REQUESTS,
+  RATE_LIMITER_MAX_REQUESTS_PER_WINDOW,
   RATE_LIMITER_WINDOW_MS,
 } from "@/constants/limits";
 
@@ -16,13 +16,13 @@ const rateLimiter = rateLimit({
     sendCommand: async (...args: string[]) => await client.call(...args),
   }),
   skip: () => process.env.NODE_ENV === "development",
-  limit: async (req: Request) => RATE_LIMITER_MAX_REQUESTS,
+  limit: async (req: Request) => RATE_LIMITER_MAX_REQUESTS_PER_WINDOW,
   message: async (req: Request) => {
     const { t } = req;
 
     return t("MAX_REQUESTS", {
       ns: "error",
-      max: RATE_LIMITER_MAX_REQUESTS,
+      max: RATE_LIMITER_MAX_REQUESTS_PER_WINDOW,
       windowMs: RATE_LIMITER_WINDOW_MS,
     });
   },
