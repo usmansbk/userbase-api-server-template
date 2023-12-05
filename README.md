@@ -56,6 +56,14 @@ cp .env.example .env
 
 #### Google Authentication
 
+- Create a [Firebase project](https://console.firebase.google.com/) if you don't have one.
+
+- Go to **APIs & Auth > Credentials** in the [Google Developers Console](https://console.cloud.google.com/) and download the secret json
+
+- Set `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the path of your secret
+
+- Generate an _OAuth2 API v2_ id token from [Google 0Auth 2.0 Playground](https://developers.google.com/oauthplayground/) to test.
+
 ### Build
 
 ```sh
@@ -108,6 +116,9 @@ yarn db:migrate
 - [Scalar Types](https://the-guild.dev/graphql/scalars/docs)
 - [Input validation](https://github.com/confuser/graphql-constraint-directive)
 
+### Error Handling
+
+We use ["wrapping exceptions"](https://javascript.info/custom-errors#wrapping-exceptions) technique to handle client generated errors. This allows us to take full control of the kind of errors we return, and easily translate them before sending to the end-users.
 Run codegen after modifying the graphql schema to generate TypeScript definitions
 
 ```sh
