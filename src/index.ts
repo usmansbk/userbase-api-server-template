@@ -23,7 +23,7 @@ async function init() {
     .init({
       initImmediate: false,
       fallbackLng: "en",
-      ns: ["translation", "error", "notifications"],
+      ns: ["translation", "error"],
       defaultNS: "translation",
       preload: readdirSync(localesDir).filter((fileName) => {
         const joinedPath = join(localesDir, fileName);
