@@ -14,10 +14,15 @@ enum AuthStrategy {
   When `owner` authorization is configured, only the record's `owner` and admins are allowed the specified operations.
   """
   owner
+  roles
+  permissions
 }
 
 input AuthRule {
   allow: AuthStrategy!
   identityClaim: String = "id"
   ownerField: String = "ownerId"
+  roles: [String]
+  rolesField: String = "roles"
+  permissions: [String]
 }
