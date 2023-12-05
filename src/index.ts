@@ -6,13 +6,14 @@ import { ProfilingIntegration } from "@sentry/profiling-node";
 import { json } from "body-parser";
 import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
-import logger from "./utils/logger";
-import createApolloHTTPServer from "./graphql";
 import { join, resolve } from "path";
 import { lstatSync, readdirSync } from "fs";
 import i18next from "i18next";
 import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
+import logger from "./utils/logger";
+import createApolloHTTPServer from "./graphql";
+import rateLimiter from "./v1/rateLimiter";
 
 const localesDir = resolve("assets/locales");
 
@@ -71,6 +72,8 @@ async function main() {
 
   // TracingHandler creates a trace for every incoming request
   app.use(Sentry.Handlers.tracingHandler());
+
+  app.use(rateLimiter);
 
   app.get("/healthz", (req, res) => res.json({ success: true }));
 
