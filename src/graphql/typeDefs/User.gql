@@ -93,7 +93,6 @@ type RolePermission @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
   id: ID!
   role: Role!
   permission: Permission!
-  assignee: User!
   assignor: User
   createdAt: DateTime!
   updatedAt: DateTime

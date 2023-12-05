@@ -192,7 +192,6 @@ export type Role = {
 
 export type RolePermission = {
   __typename?: 'RolePermission';
-  assignee: User;
   assignor?: Maybe<User>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
@@ -790,7 +789,6 @@ export type RoleResolvers<ContextType = any, ParentType extends ResolversParentT
 }>;
 
 export type RolePermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['RolePermission'] = ResolversParentTypes['RolePermission']> = ResolversObject<{
-  assignee?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   assignor?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
