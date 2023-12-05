@@ -55,6 +55,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "pino": "^8.16.2",
     "pino-http": "^8.5.1"
