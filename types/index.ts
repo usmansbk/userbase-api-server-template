@@ -1,8 +1,14 @@
 import type pino from "pino";
+import type { TFunction } from "i18next";
 
-/* eslint-disable @typescript-eslint/no-namespace */
+interface User {
+  id: string;
+}
+
 export interface AppContext {
   log: pino.Logger<pino.LoggerOptions>;
+  currentUser?: User;
+  t: TFunction<"translation" | "error", undefined>;
 }
 
 declare global {
@@ -24,13 +30,13 @@ declare global {
 
     export interface Request {
       context: AppContext;
-      // file?: MulterS3.File | undefined;
-      // files?:
-      //   | {
-      //       [fieldname: string]: MulterS3.File[];
-      //     }
-      //   | MulterS3.File[]
-      //   | undefined;
+      file?: MulterS3.File | undefined;
+      files?:
+        | {
+            [fieldname: string]: MulterS3.File[];
+          }
+        | MulterS3.File[]
+        | undefined;
     }
   }
 }

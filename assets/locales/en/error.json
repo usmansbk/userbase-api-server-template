@@ -1,0 +1,16 @@
+{
+  "MAX_REQUESTS": "You can only make {{max}} requests every {{window}}.",
+  "SOMETHING_WENT_WRONG": "Something went wrong...",
+  "UNAUTHENTICATED": "Login to continue.",
+  "UNAUTHORIZED": "You don't have the necessary permissions to perform this action.",
+  "UNSUPPORTED_CLIENT": "Unsupported client.",
+  "INVALID_AUTH_TOKEN": "Invalid auth token.",
+  "INVALID_OTP": "Invalid OTP",
+  "EXPIRED_AUTH_TOKEN": "Your auth token has expired.",
+  "EXPIRED_REFRESH_TOKEN": "Your refresh token has expired.",
+  "TOKENS_REQUIRED": "Refresh and Access tokens are required.",
+  "UPLOAD_FAILED": "Upload failed: {{message}}.",
+  "NO_FILE_TO_UPLOAD": "Select a file to upload.",
+  "LIMIT_FILE_SIZE": "File exceed {{size}}.",
+  "LIMIT_UNEXPECTED_FILE": "Unsupported file type."
+}

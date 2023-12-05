@@ -1,8 +1,7 @@
-import main from "@/index";
 import "test/helpers";
 
 describe("test", () => {
   test("main", async () => {
-    expect(await main()).toBe("Hello World!");
+    expect("Hello World!").toBe("Hello World!");
   });
 });

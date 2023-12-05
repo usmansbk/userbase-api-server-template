@@ -8,47 +8,78 @@ import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
 import logger from "./utils/logger";
 import createApolloHTTPServer from "./graphql";
+import { join, resolve } from "path";
+import { lstatSync, readdirSync } from "fs";
+import i18next from "i18next";
+import i18nextMiddleware from "i18next-http-middleware";
+import Backend from "i18next-fs-backend";
 
-const app = express();
+const localesDir = resolve("assets/locales");
 
-app.use(json());
-app.use(cors<cors.CorsRequest>());
-app.use(
-  PinoHttp({
-    logger,
-  }),
-);
+async function init() {
+  await i18next
+    .use(Backend)
+    .use(i18nextMiddleware.LanguageDetector)
+    .init({
+      initImmediate: false,
+      fallbackLng: "en",
+      ns: ["translation", "error", "notifications"],
+      defaultNS: "translation",
+      preload: readdirSync(localesDir).filter((fileName) => {
+        const joinedPath = join(localesDir, fileName);
+        return lstatSync(joinedPath).isDirectory();
+      }),
+      backend: {
+        loadPath: join(localesDir, "{{lng}}/{{ns}}.json"),
+      },
+      interpolation: {
+        skipOnVariables: false,
+      },
+    });
 
-app.set("trust proxy", 1);
+  const app = express();
 
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Sentry.Integrations.Express({ app }),
-    new ProfilingIntegration(),
-  ],
-  // Performance Monitoring
-  tracesSampleRate: 1.0,
-  // Set sampling rate for profiling - this is relative to tracesSampleRate
-  profilesSampleRate: 1.0,
-});
+  app.use(json());
+  app.use(cors<cors.CorsRequest>());
+  app.use(
+    PinoHttp({
+      logger,
+    }),
+  );
 
-// The request handler must be the first middleware on the app
-app.use(Sentry.Handlers.requestHandler());
+  app.set("trust proxy", 1);
 
-// TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler());
+  app.use(i18nextMiddleware.handle(i18next));
 
-app.get("/healthz", (req, res) => res.json({ success: true }));
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [
+      // enable HTTP calls tracing
+      new Sentry.Integrations.Http({ tracing: true }),
+      // enable Express.js middleware tracing
+      new Sentry.Integrations.Express({ app }),
+      new ProfilingIntegration(),
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 1.0,
+    // Set sampling rate for profiling - this is relative to tracesSampleRate
+    profilesSampleRate: 1.0,
+  });
 
-app.get("/generate_204", (req, res) => res.status(204).json({ success: true }));
+  // The request handler must be the first middleware on the app
+  app.use(Sentry.Handlers.requestHandler());
 
-app.get("/ip", (request, response) => response.send(request.ip));
+  // TracingHandler creates a trace for every incoming request
+  app.use(Sentry.Handlers.tracingHandler());
 
-export default async function main(): Promise<void> {
+  app.get("/healthz", (req, res) => res.json({ success: true }));
+
+  app.get("/generate_204", (req, res) =>
+    res.status(204).json({ success: true }),
+  );
+
+  app.get("/ip", (request, response) => response.send(request.ip));
+
   const { httpServer, apolloServer } = await createApolloHTTPServer(app);
 
   app.use(
@@ -69,6 +100,12 @@ export default async function main(): Promise<void> {
   });
 }
 
-main().catch((e) => {
-  logger.error(e as Error);
-});
+async function main() {
+  try {
+    await init();
+  } catch (e) {
+    logger.error(e as Error);
+  }
+}
+
+main();
