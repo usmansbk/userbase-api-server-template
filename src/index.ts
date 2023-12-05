@@ -15,6 +15,7 @@ import logger from "./utils/logger";
 import createApolloHTTPServer from "./graphql";
 import rateLimiter from "./v1/middlewares/rateLimiter";
 import v1Router from "./v1/routes";
+import errorHandler from "./v1/middlewares/errorHandler";
 
 const localesDir = resolve("assets/locales");
 
@@ -98,6 +99,7 @@ async function main() {
   app.use(Sentry.Handlers.errorHandler());
 
   // Optional fallthrough error handler
+  app.use(errorHandler);
 
   await new Promise<void>((resolve) => {
     httpServer.listen({ port: 4000 }, resolve);
