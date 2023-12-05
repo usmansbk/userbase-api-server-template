@@ -11,6 +11,6 @@
   "TOKENS_REQUIRED": "Refresh and Access tokens are required.",
   "UPLOAD_FAILED": "Upload failed: {{message}}.",
   "NO_FILE_TO_UPLOAD": "Select a file to upload.",
-  "LIMIT_FILE_SIZE": "File exceed {{size}}.",
-  "LIMIT_UNEXPECTED_FILE": "Unsupported file type."
+  "FILE_SIZE_EXCEEDED": "File exceed {{size}}.",
+  "UNSUPPORTED_FILE_TYPE": "Unsupported file type."
 }

@@ -13,7 +13,7 @@ import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
 import logger from "./utils/logger";
 import createApolloHTTPServer from "./graphql";
-import rateLimiter from "./v1/rateLimiter";
+import rateLimiter from "./v1/middlewares/rateLimiter";
 
 const localesDir = resolve("assets/locales");
 
