@@ -1,0 +1,31 @@
+enum ImageResizeFit {
+  cover
+  contain
+  fill
+  inside
+  outside
+}
+
+input ImageResizeBackgroundInput {
+  r: Int!
+  g: Int!
+  b: Int!
+  alpha: Int!
+}
+
+input ImageResize {
+  width: PositiveInt!
+  height: PositiveInt!
+  fit: ImageResizeFit
+  background: ImageResizeBackgroundInput
+}
+
+input ImageEditInput {
+  resize: ImageResize
+  flatten: Boolean
+  grayscale: Boolean
+  flip: Boolean
+  flop: Boolean
+  negate: Boolean
+  normalise: Boolean
+}

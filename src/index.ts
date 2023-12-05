@@ -3,10 +3,17 @@ import express from "express";
 import PinoHttp from "pino-http";
 import * as Sentry from "@sentry/node";
 import { ProfilingIntegration } from "@sentry/profiling-node";
+import { json } from "body-parser";
+import cors from "cors";
+import { expressMiddleware } from "@apollo/server/express4";
 import logger from "./utils/logger";
+import createApolloHTTPServer from "./graphql";
 
 const port = 4000;
 const app = express();
+
+app.use(json());
+app.use(cors<cors.CorsRequest>());
 
 app.use(
   PinoHttp({
@@ -39,15 +46,32 @@ app.get("/healthz", (req, res) => res.json({ success: true }));
 
 app.get("/generate_204", (req, res) => res.status(204).json({ success: true }));
 
-// The error handler must be registered before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
+app.set("trust proxy", 1);
 
-// Optional fallthrough error handler
+app.get("/ip", (request, response) => response.send(request.ip));
 
-app.listen(port, () => {
-  logger.info(`listening on port ${port}`);
-});
+export default async function main(): Promise<void> {
+  const { httpServer, apolloServer } = await createApolloHTTPServer(app);
 
-export default async function main(): Promise<string> {
-  return "Hello World!";
+  app.use(
+    "/graphql",
+    expressMiddleware(apolloServer, {
+      context: async ({ req }) => req.context,
+    }),
+  );
+
+  // The error handler must be registered before any other error middleware and after all controllers
+  app.use(Sentry.Handlers.errorHandler());
+
+  // Optional fallthrough error handler
+
+  app.listen(port, () => {
+    logger.info(`listening on port ${port}`);
+  });
+
+  await new Promise<void>((resolve) => {
+    httpServer.listen({ port: 4000 }, resolve);
+  });
+
+  logger.info(`🚀 Server ready at /graphql`);
 }
