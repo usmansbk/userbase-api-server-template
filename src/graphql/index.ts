@@ -16,13 +16,7 @@ const schema = authDirectiveTransformer(
   "auth",
 );
 
-export default async function createApolloHTTPServer(app: Express): Promise<{
-  apolloServer: ApolloServer<AppContext>;
-  httpServer: http.Server<
-    typeof http.IncomingMessage,
-    typeof http.ServerResponse
-  >;
-}> {
+export default async function createApolloHTTPServer(app: Express) {
   const httpServer = http.createServer(app);
   const apolloServer = new ApolloServer<AppContext>({
     schema,
