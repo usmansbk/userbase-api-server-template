@@ -19,6 +19,8 @@ app.use(
   }),
 );
 
+app.set("trust proxy", 1);
+
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   integrations: [
@@ -43,8 +45,6 @@ app.use(Sentry.Handlers.tracingHandler());
 app.get("/healthz", (req, res) => res.json({ success: true }));
 
 app.get("/generate_204", (req, res) => res.status(204).json({ success: true }));
-
-app.set("trust proxy", 1);
 
 app.get("/ip", (request, response) => response.send(request.ip));
 
