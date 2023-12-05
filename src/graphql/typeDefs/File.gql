@@ -1,0 +1,10 @@
+type File {
+  id: ID!
+  name: String
+  mimetype: String!
+  size: Int!
+  thumbnailUrl: URL
+  downloadUrl: URL
+  createdAt: DateTime!
+  updatedAt: DateTime
+}

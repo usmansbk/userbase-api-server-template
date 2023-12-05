@@ -1,0 +1,21 @@
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String
+  surname: String
+  email: EmailAddress!
+  language: Locale!
+  phoneNumber: PhoneNumber
+  isEmailVerified: Boolean!
+  isPhoneNumberVerified: Boolean!
+  socialPictureUrl: URL
+  pictureUrl(edit: ImageEditInput): URL
+  thumbnailUrl(edit: ImageEditInput): URL
+  createdAt: DateTime!
+  updatedAt: DateTime
+  lastLoggedInAt: DateTime
+  passwordLastUpdatedAt: DateTime
+  phoneNumberLastUpdatedAt: DateTime
+  emailLastUpdatedAt: DateTime
+  pictureLastUpdatedAt: DateTime
+}
