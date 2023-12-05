@@ -3,9 +3,12 @@ import { MulterError } from "multer";
 import numeral from "numeral";
 import uploader from "@/v1/middlewares/fileUploader";
 import {
+  DEFAULT_USER_PICTURE_SIZE,
+  DEFAULT_USER_THUMBNAIL_SIZE,
   MAX_USER_IMAGE_FILE_SIZE_IN_BYTES,
   SUPPORTED_IMAGE_TYPES,
 } from "@/constants/limits";
+import getImageUrl from "@/utils/getImageUrl";
 
 const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
   const upload = uploader({
@@ -68,7 +71,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
           });
         }
 
-        await prismaClient.user.update({
+        const user = await prismaClient.user.update({
           where: {
             id: currentUser!.id,
           },
@@ -89,12 +92,45 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
             },
             pictureLastUpdatedAt: new Date(),
           },
+          select: {
+            id: true,
+            picture: {
+              include: {
+                file: {
+                  select: {
+                    key: true,
+                    bucket: true,
+                  },
+                },
+              },
+            },
+          },
         });
 
         res.status(201).json({
           success: true,
           data: {
-            success: true,
+            user: {
+              id: user.id,
+              pictureUrl: getImageUrl({
+                ...user.picture!.file,
+                edits: {
+                  resize: {
+                    width: DEFAULT_USER_PICTURE_SIZE,
+                    height: DEFAULT_USER_PICTURE_SIZE,
+                  },
+                },
+              }),
+              thumbnailUrl: getImageUrl({
+                ...user.picture!.file,
+                edits: {
+                  resize: {
+                    width: DEFAULT_USER_THUMBNAIL_SIZE,
+                    height: DEFAULT_USER_THUMBNAIL_SIZE,
+                  },
+                },
+              }),
+            },
           },
         });
       } else {
