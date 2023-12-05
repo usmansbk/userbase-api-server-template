@@ -16,7 +16,7 @@ import Backend from "i18next-fs-backend";
 
 const localesDir = resolve("assets/locales");
 
-async function init() {
+async function main() {
   await i18next
     .use(Backend)
     .use(i18nextMiddleware.LanguageDetector)
@@ -100,12 +100,6 @@ async function init() {
   });
 }
 
-async function main() {
-  try {
-    await init();
-  } catch (e) {
-    logger.error(e as Error);
-  }
-}
-
-main();
+main().catch((e) => {
+  logger.error(e as Error);
+});

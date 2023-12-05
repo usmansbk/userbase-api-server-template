@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model File {
+  id           String       @id @default(uuid())
+  key          String       @unique
+  bucket       String
+  mimetype     String
+  size         Int
+  encoding     String?
+  fieldname    String?
+  originalname String?
+  contentType  String?
+  metadata     Json?
+  location     String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime?    @updatedAt
+  UserAvatars  UserAvatar[]
+}
+
+model User {
+  id                       String      @id @default(uuid())
+  firstName                String
+  lastName                 String?
+  surname                  String?
+  socialPictureUrl         String?
+  email                    String      @unique
+  password                 String
+  phoneNumber              String?     @unique
+  isEmailVerified          Boolean?
+  isPhoneNumberVerified    Boolean?
+  language                 String?     @default("en")
+  createdAt                DateTime    @default(now())
+  updatedAt                DateTime?   @updatedAt
+  lastLoggedInAt           DateTime?
+  passwordLastUpdatedAt    DateTime?
+  phoneNumberLastUpdatedAt DateTime?
+  emailLastUpdatedAt       DateTime?
+  pictureLastUpdatedAt     DateTime?
+  picture                  UserAvatar?
+}
+
+model UserAvatar {
+  id        String    @id @default(uuid())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String    @unique
+  file      File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}

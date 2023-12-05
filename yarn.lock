@@ -2794,6 +2794,11 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@prisma/engines@5.6.0":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-5.6.0.tgz#82c445aa10633bbc0388aa2d6e411a0bd94c9439"
+  integrity sha512-Mt2q+GNJpU2vFn6kif24oRSBQv1KOkYaterQsi0k2/lA+dLvhRX6Lm26gon6PYHwUM8/h8KRgXIUMU0PCLB6bw==
+
 "@prisma/prisma-schema-wasm@4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584":
   version "4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584"
   resolved "https://registry.yarnpkg.com/@prisma/prisma-schema-wasm/-/prisma-schema-wasm-4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584.tgz#58398a22a15d0a11ae7c8756de2b793bb8abfca3"
@@ -8286,6 +8291,13 @@ pretty-format@^29.0.0, pretty-format@^29.7.0:
     "@jest/schemas" "^29.6.3"
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
+
+prisma@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-5.6.0.tgz#ae2c27fdfb4d53be7f7dafb50d6b8b7f55c93aa5"
+  integrity sha512-EEaccku4ZGshdr2cthYHhf7iyvCcXqwJDvnoQRAJg5ge2Tzpv0e2BaMCp+CbbDUwoVTzwgOap9Zp+d4jFa2O9A==
+  dependencies:
+    "@prisma/engines" "5.6.0"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
