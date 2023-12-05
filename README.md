@@ -195,7 +195,7 @@ npx dotenv-vault keys production
 
 - Add the Internal Redis URL to your vault's prodction environment as `REDIS_URL`
 
-#### Deploy
+##### Deploy
 
 - Build your project's encrypted `.env.vault` file
 
