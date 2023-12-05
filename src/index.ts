@@ -50,6 +50,7 @@ async function main() {
     }),
   );
 
+  // https://express-rate-limit.mintlify.app/guides/troubleshooting-proxy-issues
   app.set("trust proxy", 1);
 
   app.use(i18nextMiddleware.handle(i18next));
