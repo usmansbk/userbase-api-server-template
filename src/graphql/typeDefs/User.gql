@@ -4,6 +4,7 @@ type UserAvatar implements Picture {
   url(edit: ImageEditInput): URL!
   thumbnail(edit: ImageEditInput): URL!
   createdAt: DateTime!
+  updatedAt: DateTime
 }
 
 type User {

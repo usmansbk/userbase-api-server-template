@@ -237,6 +237,7 @@ export type UserAvatar = Picture & {
   file: File;
   id: Scalars['ID']['output'];
   thumbnail: Scalars['URL']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
   url: Scalars['URL']['output'];
 };
 
@@ -878,6 +879,7 @@ export type UserAvatarResolvers<ContextType = any, ParentType extends ResolversP
   file?: Resolver<ResolversTypes['File'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   thumbnail?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<UserAvatarThumbnailArgs>>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   url?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<UserAvatarUrlArgs>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
