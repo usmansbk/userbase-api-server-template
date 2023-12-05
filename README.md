@@ -45,6 +45,7 @@ cp .env.example .env
 - Create an [S3 bucket](https://aws.amazon.com/s3/) to store documents (images, files, etc) and set your `AWS_S3_BUCKET` env variable.
 - Follow [AWS Serverless Image Handler](https://aws.amazon.com/solutions/implementations/serverless-image-handler/) instructions to create a CDN and set your `CLOUDFRONT_API_ENDPOINT` env variable.
 - Create a [Dynamodb table](https://aws.amazon.com/dynamodb/) for in-app notifications and set your `AWS_DYNAMODB_DELTA_TABLE`.
+- Setup your [SES](https://aws.amazon.com/ses/) account for SMS and ensure you have this [AWS IAM Policy](https://nodemailer.com/transports/ses/#example-3).
 
 #### [Sentry](https://sentry.io/)
 
@@ -109,6 +110,7 @@ yarn db:migrate
 - [Apollo GraphQL](https://www.apollographql.com/docs/apollo-server/)
 - [PrismaORM](https://www.prisma.io/docs/getting-started/quickstart)
 - [Dotenv Vault](https://www.dotenv.org/docs/security/vault)
+- [Email Templates](https://github.com/forwardemail/email-templates)
 
 ### GraphQL
 
@@ -214,3 +216,15 @@ npx dotenv-vault build
 - [Dotenv](https://marketplace.visualstudio.com/items?itemName=dotenv.dotenv-vscode)
 - [GraphQL Foundation](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql)
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+## Readings
+
+- [GraphQL Schema Design: Building Evolvable Schemas](https://www.apollographql.com/blog/backend/schema-design/graphql-building-evolvable-schemas/)
+
+- [Apollo Server File Upload Best Practices](https://www.apollographql.com/blog/backend/file-uploads/file-upload-best-practices/)
+
+- [Designing a GraphQL server for optimal performance](https://blog.logrocket.com/designing-graphql-server-optimal-performance/)
+
+- [GraphQL Cursors Connections Specification](https://relay.dev/graphql/connections.htm)
+
+- [TDD, Where Did It All Go Wrong - Ian Cooper](https://www.youtube.com/watch?v=EZ05e7EMOLM&list=TLPQMjIwMTIwMjJnzh0h4NGjEg&index=2)
