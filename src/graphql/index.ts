@@ -1,16 +1,20 @@
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import http from "http";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import type { Express } from "express";
 import type { AppContext } from "types";
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";
-import { makeExecutableSchema } from "@graphql-tools/schema";
+import authDirectiveTransformer from "./directives/auth";
 
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
+const schema = authDirectiveTransformer(
+  makeExecutableSchema({
+    typeDefs,
+    resolvers,
+  }),
+  "auth",
+);
 
 export default async function createApolloHTTPServer(app: Express): Promise<{
   apolloServer: ApolloServer<AppContext>;
