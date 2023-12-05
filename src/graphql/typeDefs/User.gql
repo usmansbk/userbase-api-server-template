@@ -3,9 +3,9 @@ type User {
   firstName: String!
   lastName: String
   surname: String
-  email: EmailAddress!
+  email: EmailAddress! @auth(rules: [{ allow: owner }])
   language: Locale!
-  phoneNumber: PhoneNumber
+  phoneNumber: PhoneNumber @auth(rules: [{ allow: owner }])
   isEmailVerified: Boolean!
   isPhoneNumberVerified: Boolean!
   socialPictureUrl: URL
@@ -18,4 +18,8 @@ type User {
   phoneNumberLastUpdatedAt: DateTime
   emailLastUpdatedAt: DateTime
   pictureLastUpdatedAt: DateTime
+}
+
+type Query {
+  me: User! @auth
 }

@@ -39,16 +39,23 @@ export default function authDirectiveTransformer(
             const { rules } = authDirective as { rules?: AuthRule[] };
 
             if (rules) {
-              const checks = rules.map(({ allow, identityClaim }) => {
-                switch (allow) {
-                  case "owner": {
-                    return source[identityClaim!] === currentUser.id;
+              const checks = rules.map(
+                ({ allow, identityClaim, ownerField }) => {
+                  switch (allow) {
+                    case "owner": {
+                      return (
+                        source[ownerField ?? "ownerId"] ===
+                        currentUser[
+                          (identityClaim ?? "id") as keyof typeof currentUser
+                        ]
+                      );
+                    }
+                    default: {
+                      return false;
+                    }
                   }
-                  default: {
-                    return false;
-                  }
-                }
-              });
+                },
+              );
 
               if (!checks.some((allowed) => allowed)) {
                 throw new Error(

@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:16 as base 
+FROM node:18 as base 
 ENV NODE_ENV=development
 WORKDIR /app
 COPY package.json yarn.lock ./

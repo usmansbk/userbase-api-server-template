@@ -101,6 +101,7 @@ export type Scalars = {
 export type AuthRule = {
   allow: AuthStrategy;
   identityClaim?: InputMaybe<Scalars["String"]["input"]>;
+  ownerField?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export enum AuthStrategy {
@@ -110,6 +111,19 @@ export enum AuthStrategy {
    */
   Owner = "owner",
 }
+
+export type File = {
+  __typename?: "File";
+  createdAt: Scalars["DateTime"]["output"];
+  downloadUrl?: Maybe<Scalars["URL"]["output"]>;
+  encoding?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ID"]["output"];
+  mimetype: Scalars["String"]["output"];
+  name?: Maybe<Scalars["String"]["output"]>;
+  size: Scalars["Int"]["output"];
+  thumbnailUrl?: Maybe<Scalars["URL"]["output"]>;
+  updatedAt?: Maybe<Scalars["DateTime"]["output"]>;
+};
 
 export type ImageEditInput = {
   flatten?: InputMaybe<Scalars["Boolean"]["input"]>;
@@ -145,7 +159,38 @@ export enum ImageResizeFit {
 
 export type Query = {
   __typename?: "Query";
-  test?: Maybe<Scalars["String"]["output"]>;
+  me: User;
+};
+
+export type User = {
+  __typename?: "User";
+  createdAt: Scalars["DateTime"]["output"];
+  email: Scalars["EmailAddress"]["output"];
+  emailLastUpdatedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  firstName: Scalars["String"]["output"];
+  id: Scalars["ID"]["output"];
+  isEmailVerified: Scalars["Boolean"]["output"];
+  isPhoneNumberVerified: Scalars["Boolean"]["output"];
+  language: Scalars["Locale"]["output"];
+  lastLoggedInAt?: Maybe<Scalars["DateTime"]["output"]>;
+  lastName?: Maybe<Scalars["String"]["output"]>;
+  passwordLastUpdatedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  phoneNumber?: Maybe<Scalars["PhoneNumber"]["output"]>;
+  phoneNumberLastUpdatedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  pictureLastUpdatedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  pictureUrl?: Maybe<Scalars["URL"]["output"]>;
+  socialPictureUrl?: Maybe<Scalars["URL"]["output"]>;
+  surname?: Maybe<Scalars["String"]["output"]>;
+  thumbnailUrl?: Maybe<Scalars["URL"]["output"]>;
+  updatedAt?: Maybe<Scalars["DateTime"]["output"]>;
+};
+
+export type UserPictureUrlArgs = {
+  edit?: InputMaybe<ImageEditInput>;
+};
+
+export type UserThumbnailUrlArgs = {
+  edit?: InputMaybe<ImageEditInput>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -274,12 +319,14 @@ export type ResolversTypes = ResolversObject<{
   DeweyDecimal: ResolverTypeWrapper<Scalars["DeweyDecimal"]["output"]>;
   Duration: ResolverTypeWrapper<Scalars["Duration"]["output"]>;
   EmailAddress: ResolverTypeWrapper<Scalars["EmailAddress"]["output"]>;
+  File: ResolverTypeWrapper<File>;
   GUID: ResolverTypeWrapper<Scalars["GUID"]["output"]>;
   HSL: ResolverTypeWrapper<Scalars["HSL"]["output"]>;
   HSLA: ResolverTypeWrapper<Scalars["HSLA"]["output"]>;
   HexColorCode: ResolverTypeWrapper<Scalars["HexColorCode"]["output"]>;
   Hexadecimal: ResolverTypeWrapper<Scalars["Hexadecimal"]["output"]>;
   IBAN: ResolverTypeWrapper<Scalars["IBAN"]["output"]>;
+  ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
   IP: ResolverTypeWrapper<Scalars["IP"]["output"]>;
   IPCPatent: ResolverTypeWrapper<Scalars["IPCPatent"]["output"]>;
   IPv4: ResolverTypeWrapper<Scalars["IPv4"]["output"]>;
@@ -332,6 +379,7 @@ export type ResolversTypes = ResolversObject<{
   UUID: ResolverTypeWrapper<Scalars["UUID"]["output"]>;
   UnsignedFloat: ResolverTypeWrapper<Scalars["UnsignedFloat"]["output"]>;
   UnsignedInt: ResolverTypeWrapper<Scalars["UnsignedInt"]["output"]>;
+  User: ResolverTypeWrapper<User>;
   UtcOffset: ResolverTypeWrapper<Scalars["UtcOffset"]["output"]>;
   Void: ResolverTypeWrapper<Scalars["Void"]["output"]>;
 }>;
@@ -353,12 +401,14 @@ export type ResolversParentTypes = ResolversObject<{
   DeweyDecimal: Scalars["DeweyDecimal"]["output"];
   Duration: Scalars["Duration"]["output"];
   EmailAddress: Scalars["EmailAddress"]["output"];
+  File: File;
   GUID: Scalars["GUID"]["output"];
   HSL: Scalars["HSL"]["output"];
   HSLA: Scalars["HSLA"]["output"];
   HexColorCode: Scalars["HexColorCode"]["output"];
   Hexadecimal: Scalars["Hexadecimal"]["output"];
   IBAN: Scalars["IBAN"]["output"];
+  ID: Scalars["ID"]["output"];
   IP: Scalars["IP"]["output"];
   IPCPatent: Scalars["IPCPatent"]["output"];
   IPv4: Scalars["IPv4"]["output"];
@@ -410,6 +460,7 @@ export type ResolversParentTypes = ResolversObject<{
   UUID: Scalars["UUID"]["output"];
   UnsignedFloat: Scalars["UnsignedFloat"]["output"];
   UnsignedInt: Scalars["UnsignedInt"]["output"];
+  User: User;
   UtcOffset: Scalars["UtcOffset"]["output"];
   Void: Scalars["Void"]["output"];
 }>;
@@ -489,6 +540,31 @@ export interface EmailAddressScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["EmailAddress"], any> {
   name: "EmailAddress";
 }
+
+export type FileResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["File"] = ResolversParentTypes["File"],
+> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  downloadUrl?: Resolver<Maybe<ResolversTypes["URL"]>, ParentType, ContextType>;
+  encoding?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  mimetype?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  size?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  thumbnailUrl?: Resolver<
+    Maybe<ResolversTypes["URL"]>,
+    ParentType,
+    ContextType
+  >;
+  updatedAt?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
 
 export interface GuidScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["GUID"], any> {
@@ -685,7 +761,7 @@ export type QueryResolvers<
   ParentType extends
     ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = ResolversObject<{
-  test?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  me?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
 }>;
 
 export interface RgbScalarConfig
@@ -753,6 +829,83 @@ export interface UnsignedIntScalarConfig
   name: "UnsignedInt";
 }
 
+export type UserResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["User"] = ResolversParentTypes["User"],
+> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["EmailAddress"], ParentType, ContextType>;
+  emailLastUpdatedAt?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  firstName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  isEmailVerified?: Resolver<
+    ResolversTypes["Boolean"],
+    ParentType,
+    ContextType
+  >;
+  isPhoneNumberVerified?: Resolver<
+    ResolversTypes["Boolean"],
+    ParentType,
+    ContextType
+  >;
+  language?: Resolver<ResolversTypes["Locale"], ParentType, ContextType>;
+  lastLoggedInAt?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  lastName?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  passwordLastUpdatedAt?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  phoneNumber?: Resolver<
+    Maybe<ResolversTypes["PhoneNumber"]>,
+    ParentType,
+    ContextType
+  >;
+  phoneNumberLastUpdatedAt?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  pictureLastUpdatedAt?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  pictureUrl?: Resolver<
+    Maybe<ResolversTypes["URL"]>,
+    ParentType,
+    ContextType,
+    Partial<UserPictureUrlArgs>
+  >;
+  socialPictureUrl?: Resolver<
+    Maybe<ResolversTypes["URL"]>,
+    ParentType,
+    ContextType
+  >;
+  surname?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  thumbnailUrl?: Resolver<
+    Maybe<ResolversTypes["URL"]>,
+    ParentType,
+    ContextType,
+    Partial<UserThumbnailUrlArgs>
+  >;
+  updatedAt?: Resolver<
+    Maybe<ResolversTypes["DateTime"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export interface UtcOffsetScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["UtcOffset"], any> {
   name: "UtcOffset";
@@ -777,6 +930,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   DeweyDecimal?: GraphQLScalarType;
   Duration?: GraphQLScalarType;
   EmailAddress?: GraphQLScalarType;
+  File?: FileResolvers<ContextType>;
   GUID?: GraphQLScalarType;
   HSL?: GraphQLScalarType;
   HSLA?: GraphQLScalarType;
@@ -829,6 +983,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   UUID?: GraphQLScalarType;
   UnsignedFloat?: GraphQLScalarType;
   UnsignedInt?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
   UtcOffset?: GraphQLScalarType;
   Void?: GraphQLScalarType;
 }>;
