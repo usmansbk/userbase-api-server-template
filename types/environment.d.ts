@@ -22,6 +22,7 @@ declare global {
       TWILIO_ACCOUNT_SID: string;
       TWILIO_AUTH_TOKEN: string;
       TWILIO_VERIFICATION_SID: string;
+      SENDER_EMAIL: string;
     }
   }
 }
