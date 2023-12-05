@@ -1,3 +1,11 @@
+type UserAvatar implements Picture {
+  id: ID!
+  file: File!
+  url(edit: ImageEditInput): URL!
+  thumbnail(edit: ImageEditInput): URL!
+  createdAt: DateTime!
+}
+
 type User {
   id: ID!
   firstName: String!
@@ -9,8 +17,7 @@ type User {
   isEmailVerified: Boolean!
   isPhoneNumberVerified: Boolean!
   socialPictureUrl: URL
-  pictureUrl(edit: ImageEditInput): URL
-  thumbnailUrl(edit: ImageEditInput): URL
+  picture: UserAvatar
   createdAt: DateTime!
   updatedAt: DateTime
   lastLoggedInAt: DateTime
@@ -18,6 +25,71 @@ type User {
   phoneNumberLastUpdatedAt: DateTime
   emailLastUpdatedAt: DateTime
   pictureLastUpdatedAt: DateTime
+  roles: [String]!
+
+  rolesCreatedByUser: [Role]! @auth(rules: [{ allow: owner, ownerField: "id" }])
+  permissionsCreatedByUser: [Permission]!
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
+  rolesAssignedToUser: [UserRole]!
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
+  rolesAssignedByUser: [UserRole]!
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
+  permissionsAssignedToUser: [UserPermission]!
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
+  permissionsAssignedByUser: [UserPermission]!
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
+  rolePermissionsAssignedByUser: [RolePermission]!
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
+}
+
+type Role {
+  id: ID!
+  name: String!
+  creator: User
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+  userRoles: [UserRole]!
+  rolePermissions: [RolePermission]!
+}
+
+type Permission {
+  id: ID!
+  name: String!
+  creator: User
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+  userPermissions: [UserPermission]!
+  rolePermissions: [RolePermission]!
+}
+
+type UserRole {
+  id: ID!
+  role: Role!
+  assignee: User!
+  assignor: User
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type UserPermission {
+  id: ID!
+  permission: Permission!
+  assignee: User!
+  assignor: User
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type RolePermission {
+  id: ID!
+  role: Role!
+  permission: Permission!
+  assignee: User!
+  assignor: User
+  createdAt: DateTime!
+  updatedAt: DateTime
 }
 
 type Query {

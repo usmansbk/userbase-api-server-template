@@ -109,7 +109,6 @@ export type File = {
   mimetype: Scalars['String']['output'];
   name?: Maybe<Scalars['String']['output']>;
   size: Scalars['Int']['output'];
-  thumbnailUrl?: Maybe<Scalars['URL']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -145,9 +144,61 @@ export enum ImageResizeFit {
   Outside = 'outside'
 }
 
+export type Permission = {
+  __typename?: 'Permission';
+  createdAt: Scalars['DateTime']['output'];
+  creator?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  rolePermissions: Array<Maybe<RolePermission>>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userPermissions: Array<Maybe<UserPermission>>;
+};
+
+export type Picture = {
+  file: File;
+  id: Scalars['ID']['output'];
+  thumbnail: Scalars['URL']['output'];
+  url: Scalars['URL']['output'];
+};
+
+
+export type PictureThumbnailArgs = {
+  edit?: InputMaybe<ImageEditInput>;
+};
+
+
+export type PictureUrlArgs = {
+  edit?: InputMaybe<ImageEditInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
   me: User;
+};
+
+export type Role = {
+  __typename?: 'Role';
+  createdAt: Scalars['DateTime']['output'];
+  creator?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  rolePermissions: Array<Maybe<RolePermission>>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userRoles: Array<Maybe<UserRole>>;
+};
+
+export type RolePermission = {
+  __typename?: 'RolePermission';
+  assignee: User;
+  assignor?: Maybe<User>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  permission: Permission;
+  role: Role;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type User = {
@@ -163,24 +214,60 @@ export type User = {
   lastLoggedInAt?: Maybe<Scalars['DateTime']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
   passwordLastUpdatedAt?: Maybe<Scalars['DateTime']['output']>;
+  permissionsAssignedByUser: Array<Maybe<UserPermission>>;
+  permissionsAssignedToUser: Array<Maybe<UserPermission>>;
+  permissionsCreatedByUser: Array<Maybe<Permission>>;
   phoneNumber?: Maybe<Scalars['PhoneNumber']['output']>;
   phoneNumberLastUpdatedAt?: Maybe<Scalars['DateTime']['output']>;
+  picture?: Maybe<UserAvatar>;
   pictureLastUpdatedAt?: Maybe<Scalars['DateTime']['output']>;
-  pictureUrl?: Maybe<Scalars['URL']['output']>;
+  rolePermissionsAssignedByUser: Array<Maybe<RolePermission>>;
+  roles: Array<Maybe<Scalars['String']['output']>>;
+  rolesAssignedByUser: Array<Maybe<UserRole>>;
+  rolesAssignedToUser: Array<Maybe<UserRole>>;
+  rolesCreatedByUser: Array<Maybe<Role>>;
   socialPictureUrl?: Maybe<Scalars['URL']['output']>;
   surname?: Maybe<Scalars['String']['output']>;
-  thumbnailUrl?: Maybe<Scalars['URL']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type UserAvatar = Picture & {
+  __typename?: 'UserAvatar';
+  createdAt: Scalars['DateTime']['output'];
+  file: File;
+  id: Scalars['ID']['output'];
+  thumbnail: Scalars['URL']['output'];
+  url: Scalars['URL']['output'];
+};
 
-export type UserPictureUrlArgs = {
+
+export type UserAvatarThumbnailArgs = {
   edit?: InputMaybe<ImageEditInput>;
 };
 
 
-export type UserThumbnailUrlArgs = {
+export type UserAvatarUrlArgs = {
   edit?: InputMaybe<ImageEditInput>;
+};
+
+export type UserPermission = {
+  __typename?: 'UserPermission';
+  assignee: User;
+  assignor?: Maybe<User>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  permission: Permission;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type UserRole = {
+  __typename?: 'UserRole';
+  assignee: User;
+  assignor?: Maybe<User>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  role: Role;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -252,6 +339,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 
+/** Mapping of interface types */
+export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = ResolversObject<{
+  Picture: ( UserAvatar );
+}>;
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
@@ -311,7 +402,9 @@ export type ResolversTypes = ResolversObject<{
   NonPositiveFloat: ResolverTypeWrapper<Scalars['NonPositiveFloat']['output']>;
   NonPositiveInt: ResolverTypeWrapper<Scalars['NonPositiveInt']['output']>;
   ObjectID: ResolverTypeWrapper<Scalars['ObjectID']['output']>;
+  Permission: ResolverTypeWrapper<Permission>;
   PhoneNumber: ResolverTypeWrapper<Scalars['PhoneNumber']['output']>;
+  Picture: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Picture']>;
   Port: ResolverTypeWrapper<Scalars['Port']['output']>;
   PositiveFloat: ResolverTypeWrapper<Scalars['PositiveFloat']['output']>;
   PositiveInt: ResolverTypeWrapper<Scalars['PositiveInt']['output']>;
@@ -319,6 +412,8 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   RGB: ResolverTypeWrapper<Scalars['RGB']['output']>;
   RGBA: ResolverTypeWrapper<Scalars['RGBA']['output']>;
+  Role: ResolverTypeWrapper<Role>;
+  RolePermission: ResolverTypeWrapper<RolePermission>;
   RoutingNumber: ResolverTypeWrapper<Scalars['RoutingNumber']['output']>;
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']['output']>;
   SemVer: ResolverTypeWrapper<Scalars['SemVer']['output']>;
@@ -332,6 +427,9 @@ export type ResolversTypes = ResolversObject<{
   UnsignedFloat: ResolverTypeWrapper<Scalars['UnsignedFloat']['output']>;
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']['output']>;
   User: ResolverTypeWrapper<User>;
+  UserAvatar: ResolverTypeWrapper<UserAvatar>;
+  UserPermission: ResolverTypeWrapper<UserPermission>;
+  UserRole: ResolverTypeWrapper<UserRole>;
   UtcOffset: ResolverTypeWrapper<Scalars['UtcOffset']['output']>;
   Void: ResolverTypeWrapper<Scalars['Void']['output']>;
 }>;
@@ -392,7 +490,9 @@ export type ResolversParentTypes = ResolversObject<{
   NonPositiveFloat: Scalars['NonPositiveFloat']['output'];
   NonPositiveInt: Scalars['NonPositiveInt']['output'];
   ObjectID: Scalars['ObjectID']['output'];
+  Permission: Permission;
   PhoneNumber: Scalars['PhoneNumber']['output'];
+  Picture: ResolversInterfaceTypes<ResolversParentTypes>['Picture'];
   Port: Scalars['Port']['output'];
   PositiveFloat: Scalars['PositiveFloat']['output'];
   PositiveInt: Scalars['PositiveInt']['output'];
@@ -400,6 +500,8 @@ export type ResolversParentTypes = ResolversObject<{
   Query: {};
   RGB: Scalars['RGB']['output'];
   RGBA: Scalars['RGBA']['output'];
+  Role: Role;
+  RolePermission: RolePermission;
   RoutingNumber: Scalars['RoutingNumber']['output'];
   SafeInt: Scalars['SafeInt']['output'];
   SemVer: Scalars['SemVer']['output'];
@@ -413,6 +515,9 @@ export type ResolversParentTypes = ResolversObject<{
   UnsignedFloat: Scalars['UnsignedFloat']['output'];
   UnsignedInt: Scalars['UnsignedInt']['output'];
   User: User;
+  UserAvatar: UserAvatar;
+  UserPermission: UserPermission;
+  UserRole: UserRole;
   UtcOffset: Scalars['UtcOffset']['output'];
   Void: Scalars['Void']['output'];
 }>;
@@ -483,7 +588,6 @@ export type FileResolvers<ContextType = any, ParentType extends ResolversParentT
   mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  thumbnailUrl?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -620,9 +724,29 @@ export interface ObjectIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'ObjectID';
 }
 
+export type PermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Permission'] = ResolversParentTypes['Permission']> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  rolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  userPermissions?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export interface PhoneNumberScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['PhoneNumber'], any> {
   name: 'PhoneNumber';
 }
+
+export type PictureResolvers<ContextType = any, ParentType extends ResolversParentTypes['Picture'] = ResolversParentTypes['Picture']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UserAvatar', ParentType, ContextType>;
+  file?: Resolver<ResolversTypes['File'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  thumbnail?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<PictureThumbnailArgs>>;
+  url?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<PictureUrlArgs>>;
+}>;
 
 export interface PortScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Port'], any> {
   name: 'Port';
@@ -651,6 +775,29 @@ export interface RgbScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 export interface RgbaScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['RGBA'], any> {
   name: 'RGBA';
 }
+
+export type RoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Role'] = ResolversParentTypes['Role']> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  rolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  userRoles?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RolePermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['RolePermission'] = ResolversParentTypes['RolePermission']> = ResolversObject<{
+  assignee?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  assignor?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  permission?: Resolver<ResolversTypes['Permission'], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
 
 export interface RoutingNumberScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['RoutingNumber'], any> {
   name: 'RoutingNumber';
@@ -708,13 +855,49 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   lastLoggedInAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   passwordLastUpdatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  permissionsAssignedByUser?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
+  permissionsAssignedToUser?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
+  permissionsCreatedByUser?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
   phoneNumber?: Resolver<Maybe<ResolversTypes['PhoneNumber']>, ParentType, ContextType>;
   phoneNumberLastUpdatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  picture?: Resolver<Maybe<ResolversTypes['UserAvatar']>, ParentType, ContextType>;
   pictureLastUpdatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  pictureUrl?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType, Partial<UserPictureUrlArgs>>;
+  rolePermissionsAssignedByUser?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
+  roles?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  rolesAssignedByUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
+  rolesAssignedToUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
+  rolesCreatedByUser?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
   socialPictureUrl?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType>;
   surname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  thumbnailUrl?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType, Partial<UserThumbnailUrlArgs>>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserAvatarResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAvatar'] = ResolversParentTypes['UserAvatar']> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  file?: Resolver<ResolversTypes['File'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  thumbnail?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<UserAvatarThumbnailArgs>>;
+  url?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<UserAvatarUrlArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserPermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserPermission'] = ResolversParentTypes['UserPermission']> = ResolversObject<{
+  assignee?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  assignor?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  permission?: Resolver<ResolversTypes['Permission'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserRoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserRole'] = ResolversParentTypes['UserRole']> = ResolversObject<{
+  assignee?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  assignor?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -775,7 +958,9 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   NonPositiveFloat?: GraphQLScalarType;
   NonPositiveInt?: GraphQLScalarType;
   ObjectID?: GraphQLScalarType;
+  Permission?: PermissionResolvers<ContextType>;
   PhoneNumber?: GraphQLScalarType;
+  Picture?: PictureResolvers<ContextType>;
   Port?: GraphQLScalarType;
   PositiveFloat?: GraphQLScalarType;
   PositiveInt?: GraphQLScalarType;
@@ -783,6 +968,8 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   RGB?: GraphQLScalarType;
   RGBA?: GraphQLScalarType;
+  Role?: RoleResolvers<ContextType>;
+  RolePermission?: RolePermissionResolvers<ContextType>;
   RoutingNumber?: GraphQLScalarType;
   SafeInt?: GraphQLScalarType;
   SemVer?: GraphQLScalarType;
@@ -795,6 +982,9 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   UnsignedFloat?: GraphQLScalarType;
   UnsignedInt?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
+  UserAvatar?: UserAvatarResolvers<ContextType>;
+  UserPermission?: UserPermissionResolvers<ContextType>;
+  UserRole?: UserRoleResolvers<ContextType>;
   UtcOffset?: GraphQLScalarType;
   Void?: GraphQLScalarType;
 }>;

@@ -4,7 +4,6 @@ type File {
   mimetype: String!
   size: Int!
   encoding: String
-  thumbnailUrl: URL
   downloadUrl: URL
   createdAt: DateTime!
   updatedAt: DateTime

@@ -29,3 +29,10 @@ input ImageEditInput {
   negate: Boolean
   normalise: Boolean
 }
+
+interface Picture {
+  id: ID!
+  file: File!
+  url(edit: ImageEditInput): URL!
+  thumbnail(edit: ImageEditInput): URL!
+}
