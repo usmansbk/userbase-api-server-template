@@ -5,10 +5,11 @@ import redisClient, { pubsub } from "@/config/redis";
 import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
 import logger from "@/utils/logger";
+import storage from "@/utils/storage";
 import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
 import type { User } from "@prisma/client";
-import type { SocketContext } from "types";
+import type { AppContext } from "types";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
@@ -22,8 +23,8 @@ export default function useWebSocketServer(
   return useServer(
     {
       schema,
-      context: async (ctx): Promise<SocketContext> => {
-        let currentUser: User | undefined | null;
+      context: async (ctx): Promise<AppContext> => {
+        let currentUser: User | undefined;
 
         try {
           const token = ctx.connectionParams?.Authorization as
@@ -51,6 +52,8 @@ export default function useWebSocketServer(
           prismaClient,
           t: i18next.t,
           language: i18next.language,
+          log: logger,
+          storage,
         };
       },
       onConnect: (ctx) => {

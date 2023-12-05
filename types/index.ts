@@ -3,6 +3,7 @@ import type { TFunction } from "i18next";
 import type { PrismaClient, User } from "@prisma/client";
 import type { RedisPubSub } from "graphql-redis-subscriptions";
 import type { SMS } from "@/utils/sms";
+import type { Storage } from "@/utils/storage";
 import type { Redis } from "ioredis";
 
 export interface AppContext {
@@ -14,16 +15,7 @@ export interface AppContext {
   smsClient: SMS;
   pubsub: RedisPubSub;
   language: string;
-}
-
-export interface SocketContext {
-  prismaClient: PrismaClient;
-  redisClient: Redis;
-  pubsub: RedisPubSub;
-  smsClient: SMS;
-  t: TFunction<"translation" | "error", undefined>;
-  currentUser?: User | null;
-  language: string;
+  storage: Storage;
 }
 
 declare global {

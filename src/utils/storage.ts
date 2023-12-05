@@ -17,6 +17,10 @@ export const getSignedDownloadUrl = async (
   });
 };
 
-export default {
+const storage = {
   getSignedDownloadUrl,
 };
+
+export type Storage = typeof storage;
+
+export default storage;

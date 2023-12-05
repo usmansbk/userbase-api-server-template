@@ -4,6 +4,7 @@ import type { User } from "@prisma/client";
 import redisClient, { pubsub } from "@/config/redis";
 import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
+import storage from "@/utils/storage";
 
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
@@ -19,6 +20,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         redisClient,
         prismaClient,
         smsClient,
+        storage,
       };
 
       if (authorization?.startsWith("Bearer")) {
