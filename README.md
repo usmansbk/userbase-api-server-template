@@ -118,14 +118,15 @@ yarn db:migrate
 - [Scalar Types](https://the-guild.dev/graphql/scalars/docs)
 - [Input validation](https://github.com/confuser/graphql-constraint-directive)
 
-### Error Handling
-
-We use ["wrapping exceptions"](https://javascript.info/custom-errors#wrapping-exceptions) technique to handle client generated errors. This allows us to take full control of the kind of errors we return, and easily translate them before sending to the end-users.
 Run codegen after modifying the graphql schema to generate TypeScript definitions
 
 ```sh
 yarn codegen
 ```
+
+### Error Handling
+
+We use ["wrapping exceptions"](https://javascript.info/custom-errors#wrapping-exceptions) technique to handle client generated errors. This allows us to take full control of the kind of errors we return, and easily translate them before sending to the end-users.
 
 ## Deployment
 
