@@ -58,6 +58,7 @@ async function main() {
 
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
+    enabled: process.env.NODE_ENV === "production",
     integrations: [
       // enable HTTP calls tracing
       new Sentry.Integrations.Http({ tracing: true }),
