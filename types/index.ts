@@ -1,8 +1,8 @@
 import type pino from "pino";
 import type { TFunction } from "i18next";
 import type { PrismaClient, User } from "@prisma/client";
-import type { Twilio } from "twilio";
 import type { RedisPubSub } from "graphql-redis-subscriptions";
+import type { SMS } from "@/utils/sms";
 import type { Redis } from "ioredis";
 
 export interface AppContext {
@@ -11,7 +11,7 @@ export interface AppContext {
   t: TFunction<"translation" | "error", undefined>;
   prismaClient: PrismaClient;
   redisClient: Redis;
-  twilioClient: Twilio;
+  smsClient: SMS;
   pubsub: RedisPubSub;
   language: string;
 }
@@ -20,7 +20,7 @@ export interface SocketContext {
   prismaClient: PrismaClient;
   redisClient: Redis;
   pubsub: RedisPubSub;
-  twilioClient: Twilio;
+  smsClient: SMS;
   t: TFunction<"translation" | "error", undefined>;
   currentUser?: User | null;
   language: string;
