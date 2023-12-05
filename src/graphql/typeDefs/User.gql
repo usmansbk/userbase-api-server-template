@@ -11,9 +11,21 @@ type User {
   firstName: String!
   lastName: String
   surname: String
-  email: EmailAddress! @auth(rules: [{ allow: owner, ownerField: "id" }])
+  email: EmailAddress!
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: "Admin" }
+      ]
+    )
   language: Locale!
-  phoneNumber: PhoneNumber @auth(rules: [{ allow: owner, ownerField: "id" }])
+  phoneNumber: PhoneNumber
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: "Admin" }
+      ]
+    )
   isEmailVerified: Boolean!
   isPhoneNumberVerified: Boolean!
   socialPictureUrl: URL
