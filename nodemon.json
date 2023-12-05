@@ -1,0 +1,5 @@
+{
+  "watch": ["src", "assets", ".env"],
+  "ext": "ts,gql,json",
+  "ignore": ["tests"]
+}

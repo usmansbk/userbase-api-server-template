@@ -9,12 +9,10 @@ import { expressMiddleware } from "@apollo/server/express4";
 import logger from "./utils/logger";
 import createApolloHTTPServer from "./graphql";
 
-const port = 4000;
 const app = express();
 
 app.use(json());
 app.use(cors<cors.CorsRequest>());
-
 app.use(
   PinoHttp({
     logger,
@@ -65,13 +63,12 @@ export default async function main(): Promise<void> {
 
   // Optional fallthrough error handler
 
-  app.listen(port, () => {
-    logger.info(`listening on port ${port}`);
-  });
-
   await new Promise<void>((resolve) => {
     httpServer.listen({ port: 4000 }, resolve);
+    logger.info(`🚀 Server ready at /graphql`);
   });
-
-  logger.info(`🚀 Server ready at /graphql`);
 }
+
+main().catch((e) => {
+  logger.error(e as Error);
+});

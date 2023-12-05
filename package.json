@@ -61,6 +61,7 @@
     "@apollo/server": "^4.9.5",
     "@graphql-tools/load-files": "^7.0.0",
     "@graphql-tools/merge": "^9.0.1",
+    "@graphql-tools/schema": "^10.0.2",
     "@sentry/node": "^7.85.0",
     "@sentry/profiling-node": "^1.2.6",
     "body-parser": "^1.20.2",

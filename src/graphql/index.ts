@@ -5,6 +5,12 @@ import type { Express } from "express";
 import type { AppContext } from "types";
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
 export default async function createApolloHTTPServer(app: Express): Promise<{
   apolloServer: ApolloServer<AppContext>;
@@ -15,8 +21,7 @@ export default async function createApolloHTTPServer(app: Express): Promise<{
 }> {
   const httpServer = http.createServer(app);
   const apolloServer = new ApolloServer<AppContext>({
-    typeDefs,
-    resolvers,
+    schema,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
