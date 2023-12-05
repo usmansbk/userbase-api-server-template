@@ -3,9 +3,9 @@ type User {
   firstName: String!
   lastName: String
   surname: String
-  email: EmailAddress! @auth(rules: [{ allow: owner }])
+  email: EmailAddress! @auth(rules: [{ allow: owner, ownerField: "id" }])
   language: Locale!
-  phoneNumber: PhoneNumber @auth(rules: [{ allow: owner }])
+  phoneNumber: PhoneNumber @auth(rules: [{ allow: owner, ownerField: "id" }])
   isEmailVerified: Boolean!
   isPhoneNumberVerified: Boolean!
   socialPictureUrl: URL
