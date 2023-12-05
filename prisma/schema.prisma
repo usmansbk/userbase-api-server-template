@@ -25,29 +25,60 @@ model File {
   location     String?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime?    @updatedAt
-  UserAvatars  UserAvatar[]
+  userAvatars  UserAvatar[]
+}
+
+model Role {
+  id              String           @id @default(uuid())
+  name            String           @unique
+  description     String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
+  creator         User?            @relation("CreatedRole", fields: [creatorId], references: [id])
+  creatorId       String?
+  userRoles       UserRole[]
+  rolePermissions RolePermission[]
+}
+
+model Permission {
+  id              String           @id @default(uuid())
+  name            String           @unique
+  description     String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
+  creator         User?            @relation("CreatedPermission", fields: [creatorId], references: [id])
+  creatorId       String?
+  userPermissions UserPermission[]
+  rolePermissions RolePermission[]
 }
 
 model User {
-  id                       String      @id @default(uuid())
-  firstName                String
-  lastName                 String?
-  surname                  String?
-  socialPictureUrl         String?
-  email                    String      @unique
-  password                 String
-  phoneNumber              String?     @unique
-  isEmailVerified          Boolean?
-  isPhoneNumberVerified    Boolean?
-  language                 String?     @default("en")
-  createdAt                DateTime    @default(now())
-  updatedAt                DateTime?   @updatedAt
-  lastLoggedInAt           DateTime?
-  passwordLastUpdatedAt    DateTime?
-  phoneNumberLastUpdatedAt DateTime?
-  emailLastUpdatedAt       DateTime?
-  pictureLastUpdatedAt     DateTime?
-  picture                  UserAvatar?
+  id                            String           @id @default(uuid())
+  firstName                     String
+  lastName                      String?
+  surname                       String?
+  socialPictureUrl              String?
+  email                         String           @unique
+  password                      String
+  phoneNumber                   String?          @unique
+  isEmailVerified               Boolean?
+  isPhoneNumberVerified         Boolean?
+  language                      String?          @default("en")
+  createdAt                     DateTime         @default(now())
+  updatedAt                     DateTime?        @updatedAt
+  lastLoggedInAt                DateTime?
+  passwordLastUpdatedAt         DateTime?
+  phoneNumberLastUpdatedAt      DateTime?
+  emailLastUpdatedAt            DateTime?
+  pictureLastUpdatedAt          DateTime?
+  picture                       UserAvatar?
+  rolesCreatedByUser            Role[]           @relation("CreatedRole")
+  permissionsCreatedByUser      Permission[]     @relation("CreatedPermission")
+  rolesAssignedToUser           UserRole[]       @relation("RoleAssignee")
+  rolesAssignedByUser           UserRole[]       @relation("RoleAssignor")
+  permissionsAssignedToUser     UserPermission[] @relation("PermissionAssignee")
+  permissionsAssignedByUser     UserPermission[] @relation("PermissionAssignor")
+  rolePermissionsAssignedByUser RolePermission[] @relation("RolePermissionAssignor")
 }
 
 model UserAvatar {
@@ -58,4 +89,47 @@ model UserAvatar {
   fileId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+}
+
+model UserRole {
+  id         String    @id @default(uuid())
+  assignee   User      @relation("RoleAssignee", fields: [assigneeId], references: [id], onDelete: Cascade)
+  assignor   User?     @relation("RoleAssignor", fields: [assignorId], references: [id])
+  role       Role      @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  assigneeId String
+  roleId     String
+  assignorId String?
+
+  @@unique([roleId, assigneeId])
+}
+
+model UserPermission {
+  id           String     @id @default(uuid())
+  assignee     User       @relation("PermissionAssignee", fields: [assigneeId], references: [id], onDelete: Cascade)
+  assignor     User?      @relation("PermissionAssignor", fields: [assignorId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?  @updatedAt
+  assigneeId   String
+  assignorId   String?
+  permissionId String
+
+  @@unique([permissionId, assigneeId])
+}
+
+model RolePermission {
+  id         String     @id @default(uuid())
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  assignor   User?      @relation("RolePermissionAssignor", fields: [assignorId], references: [id])
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  roleId       String
+  permissionId String
+  assignorId   String?
+
+  @@unique([roleId, permissionId])
 }
