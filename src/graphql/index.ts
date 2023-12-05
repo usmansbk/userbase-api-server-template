@@ -21,6 +21,7 @@ export default async function createApolloHTTPServer(app: Express) {
   const apolloServer = new ApolloServer<AppContext>({
     schema,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    allowBatchedHttpRequests: true,
   });
 
   // Ensure we wait for our server to start

@@ -1,19 +1,20 @@
 import { GraphQLError } from "graphql";
 import type { ErrorRequestHandler, Request } from "express";
 
-const errorHandler: ErrorRequestHandler = (error, req: Request, res, _next) => {
-  const { t } = req.context;
-  req.log.info({
+const errorHandler: ErrorRequestHandler = (error, req: Request, res, next) => {
+  const { t, log } = req.context;
+
+  log.info({
     error,
   });
 
   if (error instanceof GraphQLError) {
-    return res.status(200).json({ errors: [error] });
+    next(error);
+  } else {
+    res.status(500).json({
+      error: new GraphQLError(t("SOMETHING_WENT_WRONG", { ns: "error" })),
+    });
   }
-
-  return res.status(500).json({
-    error: new Error(t("SOMETHING_WENT_WRONG", { ns: "error" })),
-  });
 };
 
 export default errorHandler;

@@ -1,3 +1,4 @@
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 import type { NextFunction, Request, Response } from "express";
 
 const authMiddleware =
@@ -8,7 +9,7 @@ const authMiddleware =
 
     if (!currentUser) {
       next(
-        new Error(
+        new AuthenticationError(
           t("UNAUTHENTICATED", {
             ns: "error",
           }),

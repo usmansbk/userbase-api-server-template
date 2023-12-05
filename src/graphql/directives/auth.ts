@@ -2,6 +2,8 @@ import { defaultFieldResolver, type GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
 import type { AppContext } from "types";
 import type { AuthRule } from "types/graphql";
+import ForbiddenError from "@/utils/errors/ForbiddenError";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default function authDirectiveTransformer(
   schema: GraphQLSchema,
@@ -29,7 +31,7 @@ export default function authDirectiveTransformer(
             const { currentUser, t } = context;
 
             if (!currentUser) {
-              throw new Error(
+              throw new AuthenticationError(
                 t("UNAUTHENTICATED", {
                   ns: "error",
                 }),
@@ -58,7 +60,7 @@ export default function authDirectiveTransformer(
               );
 
               if (!checks.some((allowed) => allowed)) {
-                throw new Error(
+                throw new ForbiddenError(
                   t("UNAUTHORIZED", {
                     ns: "error",
                   }),

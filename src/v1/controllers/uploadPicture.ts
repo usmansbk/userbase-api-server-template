@@ -9,6 +9,7 @@ import {
   SUPPORTED_IMAGE_TYPES,
 } from "@/constants/limits";
 import getImageUrl from "@/utils/getImageUrl";
+import QueryError from "@/utils/errors/QueryError";
 
 const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
   const upload = uploader({
@@ -48,10 +49,10 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
             });
             break;
           default:
-            next(new Error(t("UPLOAD_FAILED", { ns: "error" })));
+            next(new QueryError(t("UPLOAD_FAILED", { ns: "error" })));
             break;
         }
-        next(new Error(errorMessage));
+        next(new QueryError(errorMessage as string));
       } else if (file) {
         const { key, bucket, size, mimetype, fieldname, originalname } = file;
 
@@ -134,7 +135,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
           },
         });
       } else {
-        next(new Error(t("UPLOAD_FAILED", { ns: "error" })));
+        next(new QueryError(t("UPLOAD_FAILED", { ns: "error" })));
       }
     })();
   });
