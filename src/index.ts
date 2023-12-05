@@ -16,6 +16,7 @@ import createApolloHTTPServer from "./graphql";
 import rateLimiter from "./v1/middlewares/rateLimiter";
 import v1Router from "./v1/routes";
 import errorHandler from "./v1/middlewares/errorHandler";
+import appContext from "./v1/middlewares/appContext";
 
 const localesDir = resolve("assets/locales");
 
@@ -76,7 +77,8 @@ async function main() {
   // TracingHandler creates a trace for every incoming request
   app.use(Sentry.Handlers.tracingHandler());
 
-  app.use(rateLimiter);
+  app.use(appContext);
+  app.use(rateLimiter); // Rate limiter depends on Context
 
   app.get("/healthz", (req, res) => res.json({ success: true }));
 

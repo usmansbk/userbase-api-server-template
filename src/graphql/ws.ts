@@ -3,7 +3,7 @@ import { WebSocketServer } from "ws";
 import i18next from "i18next";
 import redisClient, { pubsub } from "@/config/redis";
 import prismaClient from "@/config/database";
-import sms from "@/utils/sms";
+import smsClient from "@/utils/sms";
 import logger from "@/utils/logger";
 import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
@@ -45,12 +45,12 @@ export default function useWebSocketServer(
 
         return {
           pubsub,
+          smsClient,
           currentUser,
           redisClient,
           prismaClient,
           t: i18next.t,
           language: i18next.language,
-          smsClient: sms,
         };
       },
       onConnect: (ctx) => {
