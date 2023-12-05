@@ -15,7 +15,7 @@ type User {
     @auth(
       rules: [
         { allow: owner, ownerField: "id" }
-        { allow: roles, roles: "Admin" }
+        { allow: roles, roles: ["Admin"] }
       ]
     )
   language: Locale!
@@ -23,7 +23,7 @@ type User {
     @auth(
       rules: [
         { allow: owner, ownerField: "id" }
-        { allow: roles, roles: "Admin" }
+        { allow: roles, roles: ["Admin"] }
       ]
     )
   isEmailVerified: Boolean!
