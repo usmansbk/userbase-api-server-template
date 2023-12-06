@@ -4,7 +4,7 @@ import type { ErrorRequestHandler, Request } from "express";
 const errorHandler: ErrorRequestHandler = (error, req: Request, res, next) => {
   const { t, log } = req.context;
 
-  log.info({
+  log.error({
     error,
   });
 
