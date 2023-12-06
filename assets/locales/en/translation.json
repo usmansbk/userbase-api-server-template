@@ -1,1 +1,7 @@
-{}
+{
+  "mutation": {
+    "joinWaitList": {
+      "added": "Thank you for joining the waitlist."
+    }
+  }
+}
