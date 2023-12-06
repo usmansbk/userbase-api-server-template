@@ -86,8 +86,7 @@ export enum AccountStatus {
   /**
    * Accounts have an active status when:
    * - An admin adds a user and sets the user password without requiring email verification.
-   * - An admin adds a user, sets the user password, and requires the user to set their password when they first sign-in.
-   * - A user self-registers into a custom app and email verification is not required.
+   * - A user self-registers and verified their email.
    * - An admin explicitly activate user accounts.
    */
   Active = 'Active',
