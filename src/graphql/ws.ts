@@ -26,6 +26,8 @@ export default function useWebSocketServer(
       context: async (ctx): Promise<AppContext> => {
         let currentUser: User | undefined;
 
+        const prismaClient = getPrismaClient();
+
         try {
           const token = ctx.connectionParams?.Authorization as
             | string
@@ -49,7 +51,7 @@ export default function useWebSocketServer(
           smsClient,
           currentUser,
           redisClient,
-          prismaClient: getPrismaClient(),
+          prismaClient,
           t: i18next.t,
           language: i18next.language,
           log: logger,
