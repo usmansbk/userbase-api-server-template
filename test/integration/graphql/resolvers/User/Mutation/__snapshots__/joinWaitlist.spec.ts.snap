@@ -22,3 +22,26 @@ exports[`Mutation.joinWaitlist should add user to the waitlist 1`] = `
   },
 }
 `;
+
+exports[`Mutation.joinWaitlist should be idempotent 1`] = `
+{
+  "body": {
+    "kind": "single",
+    "singleResult": {
+      "data": {
+        "joinWaitlist": {
+          "message": "mutation.joinWaitlist.message",
+          "success": true,
+        },
+      },
+      "errors": undefined,
+    },
+  },
+  "http": {
+    "headers": Map {
+      "cache-control" => "no-store",
+    },
+    "status": undefined,
+  },
+}
+`;

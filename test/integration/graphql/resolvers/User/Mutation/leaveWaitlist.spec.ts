@@ -13,7 +13,7 @@ describe("Mutation.leaveWaitlist", () => {
     const server = createMockApolloServer();
     const contextValue = await createMockContext();
 
-    const user = await contextValue.prismaClient.user.create({
+    const userWaiting = await contextValue.prismaClient.user.create({
       data: {
         email: "test@email.com",
         firstName: "Testing",
@@ -25,7 +25,7 @@ describe("Mutation.leaveWaitlist", () => {
       {
         query,
         variables: {
-          email: user.email,
+          email: userWaiting.email,
         },
       },
       { contextValue },
@@ -33,7 +33,7 @@ describe("Mutation.leaveWaitlist", () => {
 
     const removed = await contextValue.prismaClient.user.findUnique({
       where: {
-        id: user.id,
+        id: userWaiting.id,
       },
     });
 

@@ -25,4 +25,29 @@ describe("Mutation.joinWaitlist", () => {
 
     expect(response).toMatchSnapshot();
   });
+
+  it("should be idempotent", async () => {
+    const server = createMockApolloServer();
+    const contextValue = await createMockContext();
+
+    const userWaiting = await contextValue.prismaClient.user.create({
+      data: {
+        email: "test@email.com",
+        firstName: "Test",
+        password: "test",
+      },
+    });
+
+    const response = await server.executeOperation(
+      {
+        query,
+        variables: {
+          email: userWaiting.email,
+        },
+      },
+      { contextValue },
+    );
+
+    expect(response).toMatchSnapshot();
+  });
 });
