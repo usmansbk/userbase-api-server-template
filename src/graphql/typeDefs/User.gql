@@ -227,7 +227,8 @@ input VerifyEmailInput {
 }
 
 type Mutation {
-  joinWaitList(email: EmailAddress!): MutationResponse!
+  joinWaitlist(email: EmailAddress!): MutationResponse!
+  leaveWaitlist(email: EmailAddress!): MutationResponse!
 
   loginWithSocialProvider(input: SocialProviderLoginInput!): AuthResponse!
 

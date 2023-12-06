@@ -1,12 +1,12 @@
 import { nanoid } from "nanoid";
-import type { MutationResponse, MutationJoinWaitListArgs } from "types/graphql";
+import type { MutationResponse, MutationJoinWaitlistArgs } from "types/graphql";
 import type { AppContext } from "types";
 
 export default {
   Mutation: {
-    async joinWaitList(
+    async joinWaitlist(
       _parent: unknown,
-      { email }: MutationJoinWaitListArgs,
+      { email }: MutationJoinWaitlistArgs,
       context: AppContext,
     ): Promise<MutationResponse> {
       const { prismaClient, t } = context;
@@ -31,7 +31,7 @@ export default {
 
       return {
         success: true,
-        message: t("mutation.joinWaitList.added"),
+        message: t("mutation.joinWaitlist.message"),
       };
     },
   },
