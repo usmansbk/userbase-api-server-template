@@ -1,8 +1,8 @@
 import { createMockApolloServer } from "test/integration/graphql";
 import createMockContext from "test/integration/graphql/context";
 
-const query = `mutation {
-			joinWaitlist(email: "usmansbk@gmail.com") {
+const query = `mutation JoinWaitlist($email: EmailAddress!) {
+			joinWaitlist(email: $email) {
 				success
 				message
 			}
@@ -16,6 +16,9 @@ describe("Mutation.joinWaitlist", () => {
     const response = await server.executeOperation(
       {
         query,
+        variables: {
+          email: "test@email.com",
+        },
       },
       { contextValue },
     );
