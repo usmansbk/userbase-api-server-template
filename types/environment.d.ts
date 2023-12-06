@@ -23,6 +23,8 @@ declare global {
       TWILIO_AUTH_TOKEN: string;
       TWILIO_VERIFICATION_SID: string;
       SENDER_EMAIL: string;
+      GOOGLE_CLIENT_ID: string;
+      GOOGLE_CLIENT_SECRET: string;
     }
   }
 }
