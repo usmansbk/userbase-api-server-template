@@ -29,6 +29,7 @@ type User {
     )
   isEmailVerified: Boolean!
   isPhoneNumberVerified: Boolean!
+  isMe: Boolean!
   socialPictureUrl: URL
   picture: UserAvatar
   createdAt: DateTime!
@@ -100,4 +101,121 @@ type RolePermission @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
 
 type Query {
   me: User! @auth
+}
+
+type AuthResponse implements Response {
+  success: Boolean
+  message: String
+  accessToken: JWT!
+  refreshToken: JWT
+}
+
+type UserResponse implements Response {
+  success: Boolean
+  message: String
+  user: User!
+}
+
+enum SocialProvider {
+  GOOGLE
+}
+
+input SocialProviderLoginInput {
+  provider: SocialProvider!
+  token: NonEmptyString!
+}
+
+input EmailLoginInput {
+  email: EmailAddress!
+  password: NonEmptyString!
+}
+
+input EmailOTPLoginInput {
+  email: EmailAddress!
+  otp: NonEmptyString!
+}
+
+input SMSOTPLoginInput {
+  phoneNumber: PhoneNumber!
+  otp: NonEmptyString!
+}
+
+input RegisterWithEmailInput {
+  firstName: NonEmptyString!
+  lastName: NonEmptyString
+  surname: NonEmptyString
+  email: EmailAddress!
+  password: NonEmptyString!
+  phoneNumber: PhoneNumber
+  language: Locale
+}
+
+input UpdateBasicInfoInput {
+  firstName: NonEmptyString!
+  lastName: NonEmptyString
+  surname: NonEmptyString
+  language: Locale
+}
+
+input ResetPasswordInput {
+  email: EmailAddress!
+  newPassword: NonEmptyString!
+  token: NonEmptyString!
+}
+
+input VerifyPhoneNumberInput {
+  phoneNumber: PhoneNumber!
+  token: NonEmptyString!
+}
+
+input VerifyNewEmailInput {
+  email: EmailAddress!
+  token: NonEmptyString!
+}
+
+input DeleteAccountInput {
+  password: NonEmptyString!
+  token: NonEmptyString!
+}
+
+input UpdatePhoneNumberInput {
+  phoneNumber: PhoneNumber!
+}
+
+input VerifyEmailInput {
+  token: NonEmptyString!
+}
+
+type Mutation {
+  loginWithSocialProvider(input: SocialProviderLoginInput!): AuthResponse!
+
+  registerWithEmail(input: RegisterWithEmailInput!): AuthResponse!
+  loginWithEmail(input: EmailLoginInput!): AuthResponse!
+
+  requestEmailLoginOTP(email: EmailAddress!): MutationResponse!
+  loginWithEmailOTP(input: EmailOTPLoginInput!): AuthResponse!
+
+  requestSMSLoginOTP(phoneNumber: PhoneNumber!): MutationResponse!
+  loginWithSMSOTP(input: SMSOTPLoginInput!): AuthResponse!
+
+  requestUserPhoneNumberVerification(
+    phoneNumber: PhoneNumber!
+  ): MutationResponse!
+  verifyUserPhoneNumber(input: VerifyPhoneNumberInput!): MutationResponse!
+
+  requestUserEmailVerification(email: EmailAddress!): MutationResponse!
+  verifyUserEmail(input: VerifyEmailInput!): MutationResponse!
+  requestChangeCurrentUserEmailAddress: MutationResponse! @auth
+  verifyUserNewEmailAddress(input: VerifyNewEmailInput!): MutationResponse!
+
+  requestResetUserPassword(email: EmailAddress!): MutationResponse!
+  resetUserPassword(input: ResetPasswordInput!): MutationResponse!
+
+  removeCurrentUserPicture: UserResponse! @auth
+  updateCurrentUserBasicInfo(input: UpdateBasicInfoInput!): UserResponse! @auth
+  updateCurrentUserPhoneNumber(input: UpdatePhoneNumberInput!): UserResponse!
+    @auth
+
+  requestDeleteCurrentUserAccount: MutationResponse! @auth
+  deleteUserAccount(input: DeleteAccountInput!): MutationResponse!
 }

@@ -36,3 +36,13 @@ interface Picture {
   url(edits: ImageEditInput): URL!
   thumbnail(edits: ImageEditInput): URL!
 }
+
+interface Response {
+  success: Boolean
+  message: String
+}
+
+type MutationResponse implements Response {
+  success: Boolean
+  message: String
+}

@@ -6,6 +6,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -81,6 +82,14 @@ export type Scalars = {
   Void: { input: any; output: any; }
 };
 
+export type AuthResponse = Response & {
+  __typename?: 'AuthResponse';
+  accessToken: Scalars['JWT']['output'];
+  message?: Maybe<Scalars['String']['output']>;
+  refreshToken?: Maybe<Scalars['JWT']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type AuthRule = {
   allow: AuthStrategy;
   ownerField?: InputMaybe<Scalars['String']['input']>;
@@ -95,8 +104,24 @@ export enum AuthStrategy {
    */
   Owner = 'owner',
   Permissions = 'permissions',
-  Roles = 'roles'
+  Roles = 'roles',
+  Verified = 'verified'
 }
+
+export type DeleteAccountInput = {
+  password: Scalars['NonEmptyString']['input'];
+  token: Scalars['NonEmptyString']['input'];
+};
+
+export type EmailLoginInput = {
+  email: Scalars['EmailAddress']['input'];
+  password: Scalars['NonEmptyString']['input'];
+};
+
+export type EmailOtpLoginInput = {
+  email: Scalars['EmailAddress']['input'];
+  otp: Scalars['NonEmptyString']['input'];
+};
 
 export type File = {
   __typename?: 'File';
@@ -142,6 +167,121 @@ export enum ImageResizeFit {
   Outside = 'outside'
 }
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  deleteUserAccount: MutationResponse;
+  loginWithEmail: AuthResponse;
+  loginWithEmailOTP: AuthResponse;
+  loginWithSMSOTP: AuthResponse;
+  loginWithSocialProvider: AuthResponse;
+  registerWithEmail: AuthResponse;
+  removeCurrentUserPicture: UserResponse;
+  requestChangeCurrentUserEmailAddress: MutationResponse;
+  requestDeleteCurrentUserAccount: MutationResponse;
+  requestEmailLoginOTP: MutationResponse;
+  requestResetUserPassword: MutationResponse;
+  requestSMSLoginOTP: MutationResponse;
+  requestUserEmailVerification: MutationResponse;
+  requestUserPhoneNumberVerification: MutationResponse;
+  resetUserPassword: MutationResponse;
+  updateCurrentUserBasicInfo: UserResponse;
+  updateCurrentUserPhoneNumber: UserResponse;
+  verifyUserEmail: MutationResponse;
+  verifyUserNewEmailAddress: MutationResponse;
+  verifyUserPhoneNumber: MutationResponse;
+};
+
+
+export type MutationDeleteUserAccountArgs = {
+  input: DeleteAccountInput;
+};
+
+
+export type MutationLoginWithEmailArgs = {
+  input: EmailLoginInput;
+};
+
+
+export type MutationLoginWithEmailOtpArgs = {
+  input: EmailOtpLoginInput;
+};
+
+
+export type MutationLoginWithSmsotpArgs = {
+  input: SmsotpLoginInput;
+};
+
+
+export type MutationLoginWithSocialProviderArgs = {
+  input: SocialProviderLoginInput;
+};
+
+
+export type MutationRegisterWithEmailArgs = {
+  input: RegisterWithEmailInput;
+};
+
+
+export type MutationRequestEmailLoginOtpArgs = {
+  email: Scalars['EmailAddress']['input'];
+};
+
+
+export type MutationRequestResetUserPasswordArgs = {
+  email: Scalars['EmailAddress']['input'];
+};
+
+
+export type MutationRequestSmsLoginOtpArgs = {
+  phoneNumber: Scalars['PhoneNumber']['input'];
+};
+
+
+export type MutationRequestUserEmailVerificationArgs = {
+  email: Scalars['EmailAddress']['input'];
+};
+
+
+export type MutationRequestUserPhoneNumberVerificationArgs = {
+  phoneNumber: Scalars['PhoneNumber']['input'];
+};
+
+
+export type MutationResetUserPasswordArgs = {
+  input: ResetPasswordInput;
+};
+
+
+export type MutationUpdateCurrentUserBasicInfoArgs = {
+  input: UpdateBasicInfoInput;
+};
+
+
+export type MutationUpdateCurrentUserPhoneNumberArgs = {
+  input: UpdatePhoneNumberInput;
+};
+
+
+export type MutationVerifyUserEmailArgs = {
+  input: VerifyEmailInput;
+};
+
+
+export type MutationVerifyUserNewEmailAddressArgs = {
+  input: VerifyNewEmailInput;
+};
+
+
+export type MutationVerifyUserPhoneNumberArgs = {
+  input: VerifyPhoneNumberInput;
+};
+
+export type MutationResponse = Response & {
+  __typename?: 'MutationResponse';
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type Permission = {
   __typename?: 'Permission';
   createdAt: Scalars['DateTime']['output'];
@@ -176,6 +316,27 @@ export type Query = {
   me: User;
 };
 
+export type RegisterWithEmailInput = {
+  email: Scalars['EmailAddress']['input'];
+  firstName: Scalars['NonEmptyString']['input'];
+  language?: InputMaybe<Scalars['Locale']['input']>;
+  lastName?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  password: Scalars['NonEmptyString']['input'];
+  phoneNumber?: InputMaybe<Scalars['PhoneNumber']['input']>;
+  surname?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type ResetPasswordInput = {
+  email: Scalars['EmailAddress']['input'];
+  newPassword: Scalars['NonEmptyString']['input'];
+  token: Scalars['NonEmptyString']['input'];
+};
+
+export type Response = {
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type Role = {
   __typename?: 'Role';
   createdAt: Scalars['DateTime']['output'];
@@ -198,6 +359,31 @@ export type RolePermission = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type SmsotpLoginInput = {
+  otp: Scalars['NonEmptyString']['input'];
+  phoneNumber: Scalars['PhoneNumber']['input'];
+};
+
+export enum SocialProvider {
+  Google = 'GOOGLE'
+}
+
+export type SocialProviderLoginInput = {
+  provider: SocialProvider;
+  token: Scalars['NonEmptyString']['input'];
+};
+
+export type UpdateBasicInfoInput = {
+  firstName: Scalars['NonEmptyString']['input'];
+  language?: InputMaybe<Scalars['Locale']['input']>;
+  lastName?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  surname?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type UpdatePhoneNumberInput = {
+  phoneNumber: Scalars['PhoneNumber']['input'];
+};
+
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['DateTime']['output'];
@@ -206,6 +392,7 @@ export type User = {
   firstName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isEmailVerified: Scalars['Boolean']['output'];
+  isMe: Scalars['Boolean']['output'];
   isPhoneNumberVerified: Scalars['Boolean']['output'];
   language: Scalars['Locale']['output'];
   lastLoggedInAt?: Maybe<Scalars['DateTime']['output']>;
@@ -258,6 +445,13 @@ export type UserPermission = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type UserResponse = Response & {
+  __typename?: 'UserResponse';
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+  user: User;
+};
+
 export type UserRole = {
   __typename?: 'UserRole';
   assignee: User;
@@ -266,6 +460,20 @@ export type UserRole = {
   id: Scalars['ID']['output'];
   role: Role;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type VerifyEmailInput = {
+  token: Scalars['NonEmptyString']['input'];
+};
+
+export type VerifyNewEmailInput = {
+  email: Scalars['EmailAddress']['input'];
+  token: Scalars['NonEmptyString']['input'];
+};
+
+export type VerifyPhoneNumberInput = {
+  phoneNumber: Scalars['PhoneNumber']['input'];
+  token: Scalars['NonEmptyString']['input'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -340,11 +548,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = ResolversObject<{
   Picture: ( UserAvatar );
+  Response: ( AuthResponse ) | ( MutationResponse ) | ( UserResponse );
 }>;
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   AccountNumber: ResolverTypeWrapper<Scalars['AccountNumber']['output']>;
+  AuthResponse: ResolverTypeWrapper<AuthResponse>;
   AuthRule: AuthRule;
   AuthStrategy: AuthStrategy;
   BigInt: ResolverTypeWrapper<Scalars['BigInt']['output']>;
@@ -357,9 +567,12 @@ export type ResolversTypes = ResolversObject<{
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   DateTimeISO: ResolverTypeWrapper<Scalars['DateTimeISO']['output']>;
+  DeleteAccountInput: DeleteAccountInput;
   DeweyDecimal: ResolverTypeWrapper<Scalars['DeweyDecimal']['output']>;
   Duration: ResolverTypeWrapper<Scalars['Duration']['output']>;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
+  EmailLoginInput: EmailLoginInput;
+  EmailOTPLoginInput: EmailOtpLoginInput;
   File: ResolverTypeWrapper<File>;
   GUID: ResolverTypeWrapper<Scalars['GUID']['output']>;
   HSL: ResolverTypeWrapper<Scalars['HSL']['output']>;
@@ -392,6 +605,8 @@ export type ResolversTypes = ResolversObject<{
   Long: ResolverTypeWrapper<Scalars['Long']['output']>;
   Longitude: ResolverTypeWrapper<Scalars['Longitude']['output']>;
   MAC: ResolverTypeWrapper<Scalars['MAC']['output']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  MutationResponse: ResolverTypeWrapper<MutationResponse>;
   NegativeFloat: ResolverTypeWrapper<Scalars['NegativeFloat']['output']>;
   NegativeInt: ResolverTypeWrapper<Scalars['NegativeInt']['output']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
@@ -410,11 +625,17 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   RGB: ResolverTypeWrapper<Scalars['RGB']['output']>;
   RGBA: ResolverTypeWrapper<Scalars['RGBA']['output']>;
+  RegisterWithEmailInput: RegisterWithEmailInput;
+  ResetPasswordInput: ResetPasswordInput;
+  Response: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Response']>;
   Role: ResolverTypeWrapper<Role>;
   RolePermission: ResolverTypeWrapper<RolePermission>;
   RoutingNumber: ResolverTypeWrapper<Scalars['RoutingNumber']['output']>;
+  SMSOTPLoginInput: SmsotpLoginInput;
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']['output']>;
   SemVer: ResolverTypeWrapper<Scalars['SemVer']['output']>;
+  SocialProvider: SocialProvider;
+  SocialProviderLoginInput: SocialProviderLoginInput;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Time: ResolverTypeWrapper<Scalars['Time']['output']>;
   TimeZone: ResolverTypeWrapper<Scalars['TimeZone']['output']>;
@@ -424,17 +645,24 @@ export type ResolversTypes = ResolversObject<{
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
   UnsignedFloat: ResolverTypeWrapper<Scalars['UnsignedFloat']['output']>;
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']['output']>;
+  UpdateBasicInfoInput: UpdateBasicInfoInput;
+  UpdatePhoneNumberInput: UpdatePhoneNumberInput;
   User: ResolverTypeWrapper<User>;
   UserAvatar: ResolverTypeWrapper<UserAvatar>;
   UserPermission: ResolverTypeWrapper<UserPermission>;
+  UserResponse: ResolverTypeWrapper<UserResponse>;
   UserRole: ResolverTypeWrapper<UserRole>;
   UtcOffset: ResolverTypeWrapper<Scalars['UtcOffset']['output']>;
+  VerifyEmailInput: VerifyEmailInput;
+  VerifyNewEmailInput: VerifyNewEmailInput;
+  VerifyPhoneNumberInput: VerifyPhoneNumberInput;
   Void: ResolverTypeWrapper<Scalars['Void']['output']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   AccountNumber: Scalars['AccountNumber']['output'];
+  AuthResponse: AuthResponse;
   AuthRule: AuthRule;
   BigInt: Scalars['BigInt']['output'];
   Boolean: Scalars['Boolean']['output'];
@@ -446,9 +674,12 @@ export type ResolversParentTypes = ResolversObject<{
   Date: Scalars['Date']['output'];
   DateTime: Scalars['DateTime']['output'];
   DateTimeISO: Scalars['DateTimeISO']['output'];
+  DeleteAccountInput: DeleteAccountInput;
   DeweyDecimal: Scalars['DeweyDecimal']['output'];
   Duration: Scalars['Duration']['output'];
   EmailAddress: Scalars['EmailAddress']['output'];
+  EmailLoginInput: EmailLoginInput;
+  EmailOTPLoginInput: EmailOtpLoginInput;
   File: File;
   GUID: Scalars['GUID']['output'];
   HSL: Scalars['HSL']['output'];
@@ -480,6 +711,8 @@ export type ResolversParentTypes = ResolversObject<{
   Long: Scalars['Long']['output'];
   Longitude: Scalars['Longitude']['output'];
   MAC: Scalars['MAC']['output'];
+  Mutation: {};
+  MutationResponse: MutationResponse;
   NegativeFloat: Scalars['NegativeFloat']['output'];
   NegativeInt: Scalars['NegativeInt']['output'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
@@ -498,11 +731,16 @@ export type ResolversParentTypes = ResolversObject<{
   Query: {};
   RGB: Scalars['RGB']['output'];
   RGBA: Scalars['RGBA']['output'];
+  RegisterWithEmailInput: RegisterWithEmailInput;
+  ResetPasswordInput: ResetPasswordInput;
+  Response: ResolversInterfaceTypes<ResolversParentTypes>['Response'];
   Role: Role;
   RolePermission: RolePermission;
   RoutingNumber: Scalars['RoutingNumber']['output'];
+  SMSOTPLoginInput: SmsotpLoginInput;
   SafeInt: Scalars['SafeInt']['output'];
   SemVer: Scalars['SemVer']['output'];
+  SocialProviderLoginInput: SocialProviderLoginInput;
   String: Scalars['String']['output'];
   Time: Scalars['Time']['output'];
   TimeZone: Scalars['TimeZone']['output'];
@@ -512,11 +750,17 @@ export type ResolversParentTypes = ResolversObject<{
   UUID: Scalars['UUID']['output'];
   UnsignedFloat: Scalars['UnsignedFloat']['output'];
   UnsignedInt: Scalars['UnsignedInt']['output'];
+  UpdateBasicInfoInput: UpdateBasicInfoInput;
+  UpdatePhoneNumberInput: UpdatePhoneNumberInput;
   User: User;
   UserAvatar: UserAvatar;
   UserPermission: UserPermission;
+  UserResponse: UserResponse;
   UserRole: UserRole;
   UtcOffset: Scalars['UtcOffset']['output'];
+  VerifyEmailInput: VerifyEmailInput;
+  VerifyNewEmailInput: VerifyNewEmailInput;
+  VerifyPhoneNumberInput: VerifyPhoneNumberInput;
   Void: Scalars['Void']['output'];
 }>;
 
@@ -529,6 +773,14 @@ export type AuthDirectiveResolver<Result, Parent, ContextType = any, Args = Auth
 export interface AccountNumberScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['AccountNumber'], any> {
   name: 'AccountNumber';
 }
+
+export type AuthResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthResponse'] = ResolversParentTypes['AuthResponse']> = ResolversObject<{
+  accessToken?: Resolver<ResolversTypes['JWT'], ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  refreshToken?: Resolver<Maybe<ResolversTypes['JWT']>, ParentType, ContextType>;
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
 
 export interface BigIntScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['BigInt'], any> {
   name: 'BigInt';
@@ -690,6 +942,35 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
   name: 'MAC';
 }
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  deleteUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserAccountArgs, 'input'>>;
+  loginWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailArgs, 'input'>>;
+  loginWithEmailOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailOtpArgs, 'input'>>;
+  loginWithSMSOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithSmsotpArgs, 'input'>>;
+  loginWithSocialProvider?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithSocialProviderArgs, 'input'>>;
+  registerWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationRegisterWithEmailArgs, 'input'>>;
+  removeCurrentUserPicture?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType>;
+  requestChangeCurrentUserEmailAddress?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
+  requestDeleteCurrentUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
+  requestEmailLoginOTP?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestEmailLoginOtpArgs, 'email'>>;
+  requestResetUserPassword?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestResetUserPasswordArgs, 'email'>>;
+  requestSMSLoginOTP?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestSmsLoginOtpArgs, 'phoneNumber'>>;
+  requestUserEmailVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserEmailVerificationArgs, 'email'>>;
+  requestUserPhoneNumberVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserPhoneNumberVerificationArgs, 'phoneNumber'>>;
+  resetUserPassword?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationResetUserPasswordArgs, 'input'>>;
+  updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
+  updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
+  verifyUserEmail?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserEmailArgs, 'input'>>;
+  verifyUserNewEmailAddress?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserNewEmailAddressArgs, 'input'>>;
+  verifyUserPhoneNumber?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserPhoneNumberArgs, 'input'>>;
+}>;
+
+export type MutationResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['MutationResponse'] = ResolversParentTypes['MutationResponse']> = ResolversObject<{
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export interface NegativeFloatScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NegativeFloat'], any> {
   name: 'NegativeFloat';
 }
@@ -774,6 +1055,12 @@ export interface RgbaScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'RGBA';
 }
 
+export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'AuthResponse' | 'MutationResponse' | 'UserResponse', ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+}>;
+
 export type RoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Role'] = ResolversParentTypes['Role']> = ResolversObject<{
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
@@ -847,6 +1134,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isEmailVerified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  isMe?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isPhoneNumberVerified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   language?: Resolver<ResolversTypes['Locale'], ParentType, ContextType>;
   lastLoggedInAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -890,6 +1178,13 @@ export type UserPermissionResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserResponse'] = ResolversParentTypes['UserResponse']> = ResolversObject<{
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserRoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserRole'] = ResolversParentTypes['UserRole']> = ResolversObject<{
   assignee?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   assignor?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
@@ -910,6 +1205,7 @@ export interface VoidScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   AccountNumber?: GraphQLScalarType;
+  AuthResponse?: AuthResponseResolvers<ContextType>;
   BigInt?: GraphQLScalarType;
   Byte?: GraphQLScalarType;
   CountryCode?: GraphQLScalarType;
@@ -948,6 +1244,8 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Long?: GraphQLScalarType;
   Longitude?: GraphQLScalarType;
   MAC?: GraphQLScalarType;
+  Mutation?: MutationResolvers<ContextType>;
+  MutationResponse?: MutationResponseResolvers<ContextType>;
   NegativeFloat?: GraphQLScalarType;
   NegativeInt?: GraphQLScalarType;
   NonEmptyString?: GraphQLScalarType;
@@ -966,6 +1264,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   RGB?: GraphQLScalarType;
   RGBA?: GraphQLScalarType;
+  Response?: ResponseResolvers<ContextType>;
   Role?: RoleResolvers<ContextType>;
   RolePermission?: RolePermissionResolvers<ContextType>;
   RoutingNumber?: GraphQLScalarType;
@@ -982,6 +1281,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   User?: UserResolvers<ContextType>;
   UserAvatar?: UserAvatarResolvers<ContextType>;
   UserPermission?: UserPermissionResolvers<ContextType>;
+  UserResponse?: UserResponseResolvers<ContextType>;
   UserRole?: UserRoleResolvers<ContextType>;
   UtcOffset?: GraphQLScalarType;
   Void?: GraphQLScalarType;

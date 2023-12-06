@@ -16,6 +16,7 @@ enum AuthStrategy {
   owner
   roles
   permissions
+  verified
 }
 
 input AuthRule {

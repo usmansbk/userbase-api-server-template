@@ -3,6 +3,9 @@ import type { AppContext } from "types";
 
 export default {
   User: {
+    isMe(user: User, _args: never, context: AppContext) {
+      return user.id === context.currentUser?.id;
+    },
     async picture(user: User, _args: never, context: AppContext) {
       const { prismaClient } = context;
 
