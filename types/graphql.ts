@@ -196,8 +196,8 @@ export enum ImageResizeFit {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addToWaitList: MutationResponse;
   deleteUserAccount: MutationResponse;
+  joinWaitList: MutationResponse;
   loginWithEmail: AuthResponse;
   loginWithEmailOTP: AuthResponse;
   loginWithSMSOTP: AuthResponse;
@@ -220,13 +220,13 @@ export type Mutation = {
 };
 
 
-export type MutationAddToWaitListArgs = {
-  email: Scalars['EmailAddress']['input'];
+export type MutationDeleteUserAccountArgs = {
+  input: DeleteAccountInput;
 };
 
 
-export type MutationDeleteUserAccountArgs = {
-  input: DeleteAccountInput;
+export type MutationJoinWaitListArgs = {
+  email: Scalars['EmailAddress']['input'];
 };
 
 
@@ -978,8 +978,8 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  addToWaitList?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationAddToWaitListArgs, 'email'>>;
   deleteUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserAccountArgs, 'input'>>;
+  joinWaitList?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationJoinWaitListArgs, 'email'>>;
   loginWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailArgs, 'input'>>;
   loginWithEmailOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailOtpArgs, 'input'>>;
   loginWithSMSOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithSmsotpArgs, 'input'>>;
