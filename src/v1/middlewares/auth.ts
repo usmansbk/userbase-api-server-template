@@ -36,7 +36,7 @@ const authMiddleware =
             );
           }
           case "status": {
-            return status?.includes(currentUser.user.status as AccountStatus);
+            return status?.includes(currentUser.status);
           }
           default: {
             return false;

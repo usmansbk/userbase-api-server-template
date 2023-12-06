@@ -5,13 +5,14 @@ import type { SMS } from "@/utils/sms";
 import type { Storage } from "@/utils/storage";
 import type { Redis } from "ioredis";
 import type { ExtendedPrismaClient } from "@/config/database";
-import type { User } from "@prisma/client";
+import type { AccountStatus } from "./graphql";
 
 export interface CurrentUser {
   id: string;
+  status: AccountStatus;
+  language: string | null;
   roles: string[];
   permissions: string[];
-  user: User;
 }
 
 export interface AppContext {

@@ -25,8 +25,8 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         log.info(token);
         currentUser = await prismaClient.user.currentUser("");
 
-        if (currentUser?.user.language) {
-          await i18n.changeLanguage(currentUser?.user.language);
+        if (currentUser?.language) {
+          await i18n.changeLanguage(currentUser?.language);
         }
       }
 

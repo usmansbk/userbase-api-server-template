@@ -1,7 +1,7 @@
 import { defaultFieldResolver, type GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
 import type { AppContext } from "types";
-import type { AccountStatus, AuthRule } from "types/graphql";
+import type { AuthRule } from "types/graphql";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 
@@ -58,9 +58,7 @@ export default function authDirectiveTransformer(
                       );
                     }
                     case "status": {
-                      return status?.includes(
-                        currentUser.user.status as AccountStatus,
-                      );
+                      return status?.includes(currentUser.status);
                     }
                     default: {
                       return false;

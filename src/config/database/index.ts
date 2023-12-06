@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import type { CurrentUser } from "types";
+import type { AccountStatus } from "types/graphql";
 
 export default function getPrismaClient() {
   const prismaClient = new PrismaClient();
@@ -40,6 +41,8 @@ export default function getPrismaClient() {
 
           return {
             id,
+            status: user.status as AccountStatus,
+            language: user.lastName,
             roles: user.rolesAssignedToUser.map(
               (userRole) => userRole.role.name,
             ),
@@ -52,7 +55,6 @@ export default function getPrismaClient() {
                   ),
                 ),
               ),
-            user,
           };
         },
       },
