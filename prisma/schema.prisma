@@ -52,6 +52,17 @@ model Permission {
   rolePermissions RolePermission[]
 }
 
+enum UserStatus {
+  Staged
+  Provisioned
+  Active
+  Recovery
+  PasswordExpired
+  LockedOut
+  Suspended
+  Deprovisioned
+}
+
 model User {
   id                            String           @id @default(uuid())
   firstName                     String
@@ -71,6 +82,7 @@ model User {
   phoneNumberLastUpdatedAt      DateTime?
   emailLastUpdatedAt            DateTime?
   pictureLastUpdatedAt          DateTime?
+  status                        UserStatus       @default(Staged)
   picture                       UserAvatar?
   rolesCreatedByUser            Role[]           @relation("CreatedRole")
   permissionsCreatedByUser      Permission[]     @relation("CreatedPermission")

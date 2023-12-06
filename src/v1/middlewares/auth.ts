@@ -1,11 +1,13 @@
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { NextFunction, Request, Response } from "express";
+import type { AccountStatus } from "types/graphql";
 
 interface AuthRule {
-  allow: "roles" | "permissions";
-  roles: string[];
-  permissions: string[];
+  allow: "roles" | "permissions" | "status";
+  roles?: string[];
+  permissions?: string[];
+  status?: AccountStatus[];
 }
 
 const authMiddleware =
@@ -23,15 +25,18 @@ const authMiddleware =
         ),
       );
     } else if (rules) {
-      const checks = rules.map(({ allow, roles, permissions }) => {
+      const checks = rules.map(({ allow, roles, permissions, status }) => {
         switch (allow) {
           case "roles": {
-            return roles.some((role) => currentUser.roles.includes(role));
+            return roles?.some((role) => currentUser.roles.includes(role));
           }
           case "permissions": {
-            return permissions.some((permission) =>
+            return permissions?.some((permission) =>
               currentUser.permissions.includes(permission),
             );
+          }
+          case "status": {
+            return status?.includes(currentUser.user.status as AccountStatus);
           }
           default: {
             return false;

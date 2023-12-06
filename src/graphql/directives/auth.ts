@@ -1,7 +1,7 @@
 import { defaultFieldResolver, type GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
 import type { AppContext } from "types";
-import type { AuthRule } from "types/graphql";
+import type { AccountStatus, AuthRule } from "types/graphql";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 
@@ -42,19 +42,24 @@ export default function authDirectiveTransformer(
 
             if (rules) {
               const checks = rules.map(
-                ({ allow, ownerField, roles, permissions }) => {
+                ({ allow, ownerField, roles, permissions, status }) => {
                   switch (allow) {
                     case "owner": {
                       return source[ownerField ?? "ownerId"] === currentUser.id;
                     }
                     case "roles": {
-                      return roles!.some((role) =>
+                      return roles?.some((role) =>
                         currentUser.roles.includes(role!),
                       );
                     }
                     case "permissions": {
-                      return permissions!.some((permission) =>
+                      return permissions?.some((permission) =>
                         currentUser.permissions.includes(permission!),
+                      );
+                    }
+                    case "status": {
+                      return status?.includes(
+                        currentUser.user.status as AccountStatus,
                       );
                     }
                     default: {

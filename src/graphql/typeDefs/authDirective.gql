@@ -27,5 +27,5 @@ input AuthRule {
   ownerField: String = "ownerId"
   roles: [String]
   permissions: [String]
-  status: [String]
+  status: [AccountStatus]
 }

@@ -82,6 +82,31 @@ export type Scalars = {
   Void: { input: any; output: any; }
 };
 
+export enum AccountStatus {
+  /**
+   * Accounts have an active status when:
+   * - An admin adds a user and sets the user password without requiring email verification.
+   * - An admin adds a user, sets the user password, and requires the user to set their password when they first sign-in.
+   * - A user self-registers into a custom app and email verification is not required.
+   * - An admin explicitly activate user accounts.
+   */
+  Active = 'Active',
+  /** Accounts have a deprovisioned status when an admin explicitly deactivates or deprovisions them. All application assignments are removed and the password is permanently deleted. */
+  Deprovisioned = 'Deprovisioned',
+  /** Accounts have a locked out status when the user exceeds the number of login attempts. */
+  LockedOut = 'LockedOut',
+  /** Accounts have a password expired status when the password has expired and the account requires an update to the password before a user is granted access to applications. */
+  PasswordExpired = 'PasswordExpired',
+  /** Accounts have a provisioned status when they are provisioned, but the user has not provided verification by clicking through the activation email or provided a password. */
+  Provisioned = 'Provisioned',
+  /** Accounts have a recovery status when a user requests a password reset or an admin initiates one on their behalf. */
+  Recovery = 'Recovery',
+  /** Accounts have a staged status when they are first created, before the activation flow is initiated, or if there is a pending admin action. */
+  Staged = 'Staged',
+  /** Accounts have a suspended status when an admin explicitly suspends them. The user cannot access applications. Application assignments are unaffected and the user profile can be updated. */
+  Suspended = 'Suspended'
+}
+
 export type AuthResponse = Response & {
   __typename?: 'AuthResponse';
   accessToken: Scalars['JWT']['output'];
@@ -95,7 +120,7 @@ export type AuthRule = {
   ownerField?: InputMaybe<Scalars['String']['input']>;
   permissions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   roles?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  status?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<Array<InputMaybe<AccountStatus>>>;
 };
 
 export enum AuthStrategy {
@@ -413,6 +438,7 @@ export type User = {
   rolesAssignedToUser: Array<Maybe<UserRole>>;
   rolesCreatedByUser: Array<Maybe<Role>>;
   socialPictureUrl?: Maybe<Scalars['URL']['output']>;
+  status?: Maybe<AccountStatus>;
   surname?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -556,6 +582,7 @@ export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = R
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   AccountNumber: ResolverTypeWrapper<Scalars['AccountNumber']['output']>;
+  AccountStatus: AccountStatus;
   AuthResponse: ResolverTypeWrapper<AuthResponse>;
   AuthRule: AuthRule;
   AuthStrategy: AuthStrategy;
@@ -1155,6 +1182,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   rolesAssignedToUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
   rolesCreatedByUser?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
   socialPictureUrl?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['AccountStatus']>, ParentType, ContextType>;
   surname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
