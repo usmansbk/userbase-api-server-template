@@ -23,7 +23,7 @@ const rateLimiter = rateLimit({
     return t("MAX_REQUESTS", {
       ns: "error",
       max: RATE_LIMITER_MAX_REQUESTS_PER_WINDOW,
-      windowMs: RATE_LIMITER_WINDOW_MS,
+      window: RATE_LIMITER_WINDOW_MS,
     });
   },
 });
