@@ -42,14 +42,19 @@ export default function authDirectiveTransformer(
 
             if (rules) {
               const checks = rules.map(
-                ({ allow, identityClaim, ownerField }) => {
+                ({ allow, ownerField, roles, permissions }) => {
                   switch (allow) {
                     case "owner": {
-                      return (
-                        source[ownerField ?? "ownerId"] ===
-                        currentUser[
-                          (identityClaim ?? "id") as keyof typeof currentUser
-                        ]
+                      return source[ownerField ?? "ownerId"] === currentUser.id;
+                    }
+                    case "roles": {
+                      return roles!.some((role) =>
+                        currentUser.roles.includes(role!),
+                      );
+                    }
+                    case "permissions": {
+                      return permissions!.some((permission) =>
+                        currentUser.permissions.includes(permission!),
                       );
                     }
                     default: {

@@ -20,9 +20,7 @@ enum AuthStrategy {
 
 input AuthRule {
   allow: AuthStrategy!
-  identityClaim: String = "id"
   ownerField: String = "ownerId"
   roles: [String]
-  rolesField: String = "roles"
   permissions: [String]
 }

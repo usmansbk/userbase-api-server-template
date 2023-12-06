@@ -7,7 +7,7 @@ import getPrismaClient from "@/config/database";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import QueryError from "@/utils/errors/QueryError";
 import type { NextFunction, Request, Response } from "express";
-import type { User } from "@prisma/client";
+import type { CurrentUser } from "types";
 
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
@@ -17,14 +17,16 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
 
       const prismaClient = getPrismaClient();
 
+      let currentUser: CurrentUser | undefined | null;
+
       if (authorization?.startsWith("Bearer")) {
         const token = authorization.split(/\s+/)[1];
         // TODO: verify token
         log.info(token);
-        let currentUser: User | undefined;
+        currentUser = await prismaClient.user.currentUser("");
 
-        if (currentUser?.language) {
-          await i18n.changeLanguage(currentUser.language);
+        if (currentUser?.user.language) {
+          await i18n.changeLanguage(currentUser?.user.language);
         }
       }
 
@@ -35,6 +37,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         language,
         redisClient,
         prismaClient,
+        currentUser,
         smsClient,
         storage,
       };

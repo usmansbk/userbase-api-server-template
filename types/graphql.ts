@@ -83,11 +83,9 @@ export type Scalars = {
 
 export type AuthRule = {
   allow: AuthStrategy;
-  identityClaim?: InputMaybe<Scalars['String']['input']>;
   ownerField?: InputMaybe<Scalars['String']['input']>;
   permissions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   roles?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  rolesField?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum AuthStrategy {
