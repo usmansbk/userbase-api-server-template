@@ -7,7 +7,7 @@ exports[`Mutation.leaveWaitlist should be idempotent 1`] = `
     "singleResult": {
       "data": {
         "leaveWaitlist": {
-          "message": "You've left the waitlist.",
+          "message": "mutation.leaveWaitlist.message",
           "success": true,
         },
       },
@@ -30,7 +30,7 @@ exports[`Mutation.leaveWaitlist should remove user from the waitlist 1`] = `
     "singleResult": {
       "data": {
         "leaveWaitlist": {
-          "message": "You've left the waitlist.",
+          "message": "mutation.leaveWaitlist.message",
           "success": true,
         },
       },
