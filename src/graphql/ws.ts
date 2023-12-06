@@ -8,8 +8,7 @@ import logger from "@/utils/logger";
 import storage from "@/utils/storage";
 import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
-import type { User } from "@prisma/client";
-import type { AppContext } from "types";
+import type { AppContext, CurrentUser } from "types";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
@@ -24,7 +23,7 @@ export default function useWebSocketServer(
     {
       schema,
       context: async (ctx): Promise<AppContext> => {
-        let currentUser: User | undefined;
+        let currentUser: CurrentUser | undefined | null;
 
         const prismaClient = getPrismaClient();
 
@@ -35,11 +34,11 @@ export default function useWebSocketServer(
 
           // TODO
           const decoded = token;
+
+          currentUser = await prismaClient.user.currentUser("");
           if (decoded) {
-            if (currentUser) {
-              if (currentUser.language) {
-                await i18next.changeLanguage(currentUser.language);
-              }
+            if (currentUser?.user.language) {
+              await i18next.changeLanguage(currentUser.user.language);
             }
           }
         } catch (error) {
