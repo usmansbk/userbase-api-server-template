@@ -95,6 +95,7 @@ export type AuthRule = {
   ownerField?: InputMaybe<Scalars['String']['input']>;
   permissions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   roles?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export enum AuthStrategy {
@@ -105,7 +106,8 @@ export enum AuthStrategy {
   Owner = 'owner',
   Permissions = 'permissions',
   Roles = 'roles',
-  Verified = 'verified'
+  /** Restrict user according to account status */
+  Status = 'status'
 }
 
 export type DeleteAccountInput = {

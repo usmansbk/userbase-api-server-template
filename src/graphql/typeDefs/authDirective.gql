@@ -16,7 +16,10 @@ enum AuthStrategy {
   owner
   roles
   permissions
-  verified
+  """
+  Restrict user according to account status
+  """
+  status
 }
 
 input AuthRule {
@@ -24,4 +27,5 @@ input AuthRule {
   ownerField: String = "ownerId"
   roles: [String]
   permissions: [String]
+  status: [String]
 }
