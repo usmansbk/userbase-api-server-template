@@ -59,9 +59,7 @@ cp .env.example .env
 
 - Create a [Firebase project](https://console.firebase.google.com/) if you don't have one.
 
-- Go to **APIs & Auth > Credentials** in the [Google Developers Console](https://console.cloud.google.com/) and download the secret json
-
-- Set `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the path of your secret
+- Navigate to **APIs & Auth > Credentials** in the [Google Developers Console](https://console.cloud.google.com/) to get your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` environment variables
 
 - Generate an _OAuth2 API v2_ id token from [Google 0Auth 2.0 Playground](https://developers.google.com/oauthplayground/) to test.
 
