@@ -1,9 +1,9 @@
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { GraphQLError } from "graphql";
 import redisClient, { pubsub } from "@/config/redis";
-import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
 import storage from "@/utils/storage";
+import getPrismaClient from "@/config/database";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import QueryError from "@/utils/errors/QueryError";
 import type { NextFunction, Request, Response } from "express";
@@ -15,16 +15,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
     try {
       const { authorization } = headers;
 
-      req.context = {
-        t,
-        log,
-        pubsub,
-        language,
-        redisClient,
-        prismaClient,
-        smsClient,
-        storage,
-      };
+      const prismaClient = getPrismaClient();
 
       if (authorization?.startsWith("Bearer")) {
         const token = authorization.split(/\s+/)[1];
@@ -36,6 +27,17 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
           await i18n.changeLanguage(currentUser.language);
         }
       }
+
+      req.context = {
+        t,
+        log,
+        pubsub,
+        language,
+        redisClient,
+        prismaClient,
+        smsClient,
+        storage,
+      };
 
       next();
     } catch (e) {

@@ -1,16 +1,17 @@
 import type pino from "pino";
 import type { TFunction } from "i18next";
-import type { PrismaClient, User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import type { RedisPubSub } from "graphql-redis-subscriptions";
 import type { SMS } from "@/utils/sms";
 import type { Storage } from "@/utils/storage";
 import type { Redis } from "ioredis";
+import type { ExtendedPrismaClient } from "@/config/database";
 
 export interface AppContext {
   log: pino.Logger<pino.LoggerOptions>;
   currentUser?: User;
   t: TFunction<"translation" | "error", undefined>;
-  prismaClient: PrismaClient;
+  prismaClient: ExtendedPrismaClient;
   redisClient: Redis;
   smsClient: SMS;
   pubsub: RedisPubSub;

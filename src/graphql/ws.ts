@@ -2,7 +2,7 @@ import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
 import i18next from "i18next";
 import redisClient, { pubsub } from "@/config/redis";
-import prismaClient from "@/config/database";
+import getPrismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
 import logger from "@/utils/logger";
 import storage from "@/utils/storage";
@@ -49,7 +49,7 @@ export default function useWebSocketServer(
           smsClient,
           currentUser,
           redisClient,
-          prismaClient,
+          prismaClient: getPrismaClient(),
           t: i18next.t,
           language: i18next.language,
           log: logger,

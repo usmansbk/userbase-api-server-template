@@ -1,5 +1,41 @@
 import { PrismaClient } from "@prisma/client";
 
-const prismaClient = new PrismaClient();
+export default function getPrismaClient() {
+  const prismaClient = new PrismaClient().$extends({
+    model: {
+      user: {
+        async current(id: string) {
+          return await prismaClient.user.findUnique({
+            where: {
+              id,
+            },
+            include: {
+              rolesAssignedToUser: {
+                include: {
+                  role: {
+                    include: {
+                      rolePermissions: {
+                        include: {
+                          permission: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              permissionsAssignedToUser: {
+                include: {
+                  permission: true,
+                },
+              },
+            },
+          });
+        },
+      },
+    },
+  });
 
-export default prismaClient;
+  return prismaClient;
+}
+
+export type ExtendedPrismaClient = ReturnType<typeof getPrismaClient>;
