@@ -1,5 +1,6 @@
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { GraphQLError } from "graphql";
+import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
 import smsClient from "@/utils/sms";
 import storage from "@/utils/storage";
@@ -25,8 +26,14 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         log.info(token);
         currentUser = await prismaClient.user.currentUser("");
 
-        if (currentUser?.language) {
-          await i18n.changeLanguage(currentUser?.language);
+        if (currentUser) {
+          configureScope((scope) => {
+            scope.setUser({ id: currentUser!.id });
+          });
+
+          if (currentUser.language) {
+            await i18n.changeLanguage(currentUser?.language);
+          }
         }
       }
 

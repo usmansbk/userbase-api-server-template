@@ -1,6 +1,7 @@
 import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
 import i18next from "i18next";
+import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
 import getPrismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
@@ -33,12 +34,15 @@ export default function useWebSocketServer(
             | undefined;
 
           // TODO
-          const decoded = token;
 
+          logger.info(token);
           currentUser = await prismaClient.user.currentUser("");
-          if (decoded) {
-            if (currentUser?.user.language) {
-              await i18next.changeLanguage(currentUser.user.language);
+          if (currentUser) {
+            configureScope((scope) => {
+              scope.setUser({ id: currentUser!.id });
+            });
+            if (currentUser?.language) {
+              await i18next.changeLanguage(currentUser.language);
             }
           }
         } catch (error) {
