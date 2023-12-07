@@ -63,7 +63,9 @@
     "docker:clean": "docker system prune -f",
     "docker:stop": "yarn docker:down && yarn docker:clean",
     "docker:sh": "docker exec -it api sh",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen",
+    "keys:generate": "babel-node build/cli/generateKeyPairs",
+    "create:root": "babel-node build/cli/createRootUser"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -78,6 +80,8 @@
     "@graphql-tools/merge": "^9.0.1",
     "@graphql-tools/schema": "^10.0.2",
     "@graphql-tools/utils": "^10.0.11",
+    "@inquirer/password": "^1.1.14",
+    "@inquirer/prompts": "^3.3.0",
     "@prisma/client": "^5.7.0",
     "@sentry/node": "^7.85.0",
     "@sentry/profiling-node": "^1.2.6",

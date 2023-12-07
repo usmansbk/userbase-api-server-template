@@ -40,7 +40,7 @@ export default function authDirectiveTransformer(
 
             const { rules } = authDirective as { rules?: AuthRule[] };
 
-            if (rules) {
+            if (!currentUser.roles.includes("Root") && rules) {
               const checks = rules.map(
                 ({ allow, ownerField, roles, permissions, status }) => {
                   switch (allow) {

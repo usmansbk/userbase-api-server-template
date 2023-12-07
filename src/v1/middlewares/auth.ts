@@ -24,7 +24,7 @@ const authMiddleware =
           }),
         ),
       );
-    } else if (rules) {
+    } else if (!currentUser.roles.includes("Root") && rules) {
       const checks = rules.map(({ allow, roles, permissions, status }) => {
         switch (allow) {
           case "roles": {
