@@ -5,7 +5,7 @@ afterEach(async () => {
   await new Redis().flushall();
 });
 
-afterAll(async () => {
+afterEach(async () => {
   const prisma = getPrismaClient();
 
   await prisma.userPermission.deleteMany();

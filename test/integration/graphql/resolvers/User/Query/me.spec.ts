@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { createMockApolloServer } from "test/integration/graphql";
 import createMockContext from "test/integration/graphql/context";
 import type { AccountStatus } from "types/graphql";
@@ -17,7 +16,7 @@ describe("Query.me", () => {
 
     const user = await contextValue.prismaClient.user.create({
       data: {
-        email: faker.internet.email(),
+        email: "test@email.com",
         firstName: "Test",
         password: "test",
       },
