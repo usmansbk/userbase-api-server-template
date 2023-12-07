@@ -1,14 +1,13 @@
 import { nanoid } from "nanoid";
 import { UserStatus } from "@prisma/client";
-import {
-  type MutationLoginWithSocialProviderArgs,
-  type AuthResponse,
-  SocialProvider,
-} from "types/graphql";
-import type { AppContext } from "types";
 import verifyGoogleIdToken from "@/utils/googleOauth";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
+import type {
+  MutationLoginWithSocialProviderArgs,
+  AuthResponse,
+} from "types/graphql";
+import type { AppContext } from "types";
 
 export default {
   Mutation: {
@@ -22,7 +21,7 @@ export default {
 
       let userPayload;
 
-      if (provider === SocialProvider.Google) {
+      if (provider === "GOOGLE") {
         userPayload = await verifyGoogleIdToken(token);
       }
 
