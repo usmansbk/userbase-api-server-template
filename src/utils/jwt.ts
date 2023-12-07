@@ -39,7 +39,7 @@ function verify(token: string, options: VerifyOptions = {}) {
       : fs.readFileSync("certs/public.pem");
 
   const verified = jwt.verify(token, publicKey, {
-    issuer: process.env.APP_HOST,
+    issuer: process.env.APP_DOMAIN,
     ...options,
   });
 
