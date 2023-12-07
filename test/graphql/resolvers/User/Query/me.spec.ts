@@ -13,13 +13,20 @@ const query = `query {
 describe("Query.me", () => {
   it("should return current logged-in user", async () => {
     const server = createMockApolloServer();
-    const contextValue = await createMockContext();
 
     const user = {
       email: "test@email.com",
       firstName: "Test",
       password: "test",
     } as unknown as User;
+
+    const contextValue = await createMockContext({
+      id: user.id,
+      language: user.language,
+      roles: [],
+      permissions: [],
+      status: "Active" as AccountStatus,
+    });
 
     contextValue.mockPrismaClient.user.findUnique.mockResolvedValue(user);
 
@@ -28,16 +35,7 @@ describe("Query.me", () => {
         query,
       },
       {
-        contextValue: {
-          ...contextValue,
-          currentUser: {
-            id: user.id,
-            language: user.language,
-            roles: [],
-            permissions: [],
-            status: "Active" as AccountStatus,
-          },
-        },
+        contextValue,
       },
     );
 
