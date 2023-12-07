@@ -5,7 +5,7 @@ coverage
 
 # Creds
 google_client_secret.json
-cert
+certs
 
 # Secrets
 .env.production
