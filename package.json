@@ -51,7 +51,7 @@
     "build": "yarn clean && yarn transpile",
     "start": "node build",
     "dev": "nodemon --exec babel-node src --extensions .ts",
-    "test": "jest --runInBand",
+    "test": "jest",
     "prepare": "husky install",
     "generate": "prisma generate",
     "db:migrate": "prisma migrate dev",

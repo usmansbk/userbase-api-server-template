@@ -1,5 +1,6 @@
-import { createMockApolloServer } from "test/integration/graphql";
-import createMockContext from "test/integration/graphql/context";
+import type { User } from "@prisma/client";
+import { createMockApolloServer } from "test/graphql";
+import createMockContext from "test/graphql/context";
 
 const query = `mutation JoinWaitlist($email: EmailAddress!) {
 			joinWaitlist(email: $email) {
@@ -29,25 +30,25 @@ describe("Mutation.joinWaitlist", () => {
   it("should be idempotent", async () => {
     const server = createMockApolloServer();
     const contextValue = await createMockContext();
+    const user = {
+      email: "test@email.com",
+      firstName: "Testing",
+      password: "test",
+    } as unknown as User;
 
-    const userWaiting = await contextValue.prismaClient.user.create({
-      data: {
-        email: "test@email.com",
-        firstName: "Test",
-        password: "test",
-      },
-    });
+    contextValue.mockPrismaClient.user.findFirst.mockResolvedValue(user);
 
     const response = await server.executeOperation(
       {
         query,
         variables: {
-          email: userWaiting.email,
+          email: user.email,
         },
       },
       { contextValue },
     );
 
+    expect(contextValue.mockPrismaClient.user.create).not.toHaveBeenCalled();
     expect(response).toMatchSnapshot();
   });
 });

@@ -1,5 +1,6 @@
-import { createMockApolloServer } from "test/integration/graphql";
-import createMockContext from "test/integration/graphql/context";
+import type { User } from "@prisma/client";
+import { createMockApolloServer } from "test/graphql";
+import createMockContext from "test/graphql/context";
 import type { AccountStatus } from "types/graphql";
 
 const query = `query {
@@ -14,13 +15,13 @@ describe("Query.me", () => {
     const server = createMockApolloServer();
     const contextValue = await createMockContext();
 
-    const user = await contextValue.prismaClient.user.create({
-      data: {
-        email: "test@email.com",
-        firstName: "Test",
-        password: "test",
-      },
-    });
+    const user = {
+      email: "test@email.com",
+      firstName: "Test",
+      password: "test",
+    } as unknown as User;
+
+    contextValue.mockPrismaClient.user.findUnique.mockResolvedValue(user);
 
     const response = await server.executeOperation(
       {
