@@ -38,13 +38,17 @@ export default {
         },
       });
 
-      let isNewUser = false;
-
       const denyList: UserStatus[] = [
         UserStatus.Deprovisioned,
         UserStatus.Suspended,
         UserStatus.Recovery,
       ];
+
+      if (user && denyList.includes(user.status)) {
+        throw new ForbiddenError(t("UNAUTHORIZED", { ns: "error" }));
+      }
+
+      let isNewUser = false;
 
       if (!user) {
         isNewUser = true;
@@ -74,8 +78,16 @@ export default {
             status: UserStatus.Active,
           },
         });
-      } else if (denyList.includes(user.status)) {
-        throw new ForbiddenError(t("UNAUTHORIZED", { ns: "error" }));
+      } else {
+        user = await prismaClient.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            socialPictureUrl,
+            status: UserStatus.Active,
+          },
+        });
       }
 
       if (isNewUser) {
