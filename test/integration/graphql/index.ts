@@ -5,6 +5,7 @@ import type { AppContext } from "types";
 export function createMockApolloServer() {
   const server = new ApolloServer<AppContext>({
     schema,
+    includeStacktraceInErrorResponses: false,
   });
 
   return server;

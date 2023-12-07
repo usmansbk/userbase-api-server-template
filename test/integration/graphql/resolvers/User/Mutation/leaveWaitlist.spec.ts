@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { createMockApolloServer } from "test/integration/graphql";
 import createMockContext from "test/integration/graphql/context";
 
@@ -15,7 +16,7 @@ describe("Mutation.leaveWaitlist", () => {
 
     const userWaiting = await contextValue.prismaClient.user.create({
       data: {
-        email: "test@email.com",
+        email: faker.internet.email(),
         firstName: "Testing",
         password: "test",
       },
@@ -49,7 +50,7 @@ describe("Mutation.leaveWaitlist", () => {
       {
         query,
         variables: {
-          email: "test2@email.com",
+          email: faker.internet.email(),
         },
       },
       { contextValue },
