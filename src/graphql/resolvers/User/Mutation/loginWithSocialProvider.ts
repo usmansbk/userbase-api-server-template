@@ -41,7 +41,6 @@ export default {
       const denyList: UserStatus[] = [
         UserStatus.Deprovisioned,
         UserStatus.Suspended,
-        UserStatus.Recovery,
       ];
 
       if (user && denyList.includes(user.status)) {
