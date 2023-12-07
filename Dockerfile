@@ -15,6 +15,8 @@ RUN yarn build
 FROM node:16 as prod
 ENV NODE_ENV=production
 WORKDIR /app
+RUN mkdir /app/certs
+VOLUME /app/certs
 COPY package.json yarn.lock ./
 RUN yarn
 COPY --from=builder /app/build ./build
