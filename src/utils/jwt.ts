@@ -25,7 +25,7 @@ function sign(payload: JwtPayload, options: SignOptions = {}) {
 
   const token = jwt.sign(payload, privateKey, {
     algorithm: "RS256",
-    issuer: process.env.APP_HOST,
+    issuer: process.env.APP_DOMAIN,
     ...options,
   });
 
