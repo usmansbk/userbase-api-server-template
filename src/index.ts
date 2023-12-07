@@ -17,10 +17,13 @@ import rateLimiter from "./v1/middlewares/rateLimiter";
 import v1Router from "./v1/routes";
 import errorHandler from "./v1/middlewares/errorHandler";
 import appContext from "./v1/middlewares/appContext";
+import { generateKeys } from "./utils/generateKeys";
 
 const localesDir = resolve("assets/locales");
 
 async function main() {
+  generateKeys();
+
   await i18next
     .use(Backend)
     .use(i18nextMiddleware.LanguageDetector)
