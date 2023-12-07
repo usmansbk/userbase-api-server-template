@@ -1,5 +1,5 @@
 import express from "express";
-import uploadPicture from "@/v1/controllers/uploadPicture";
+import uploadPicture from "@/v1/controllers/user/uploadPicture";
 
 const userRouter = express.Router();
 
