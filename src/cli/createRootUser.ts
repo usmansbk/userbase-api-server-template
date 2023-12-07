@@ -16,12 +16,29 @@ export default async function createRootUser() {
     });
 
     if (!superUserRole) {
-      console.log("Creating role");
+      console.log("Creating Root role");
       superUserRole = await prismaClient.role.create({
         data: {
           name: "Root",
           description:
             "For administrative purposes, and has the highest access rights in the organisation.",
+        },
+      });
+      console.log("Role created");
+    }
+
+    const adminRole = await prismaClient.role.findFirst({
+      where: {
+        name: "Admin",
+      },
+    });
+
+    if (!adminRole) {
+      console.log("Creating admin role");
+      superUserRole = await prismaClient.role.create({
+        data: {
+          name: "Admin",
+          description: "For administrative purposes",
         },
       });
       console.log("Role created");

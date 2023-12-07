@@ -6,10 +6,7 @@ const authRouter = express.Router();
 
 authRouter.post(
   "/keys/rotate",
-  authMiddleware([
-    { allow: "roles", roles: ["Admin"] },
-    { allow: "permissions", permissions: ["RotateKeys"] },
-  ]),
+  authMiddleware([{ allow: "roles", roles: ["Admin"] }]),
   rotateKeys,
 );
 
