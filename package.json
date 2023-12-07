@@ -62,7 +62,7 @@
     "docker:down": "docker compose down",
     "docker:clean": "docker system prune -f",
     "docker:stop": "yarn docker:down && yarn docker:clean",
-    "docker:sh": "docker exec -it api sh",
+    "sh": "docker exec -it api sh",
     "codegen": "graphql-codegen",
     "keys:generate": "babel-node build/cli/generateKeyPairs",
     "create:root": "babel-node build/cli/createRootUser"
