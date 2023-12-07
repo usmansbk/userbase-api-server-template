@@ -25,10 +25,10 @@ export default async function verifyGoogleIdToken(idToken: string) {
   } = payload;
 
   return {
-    firstName: firstName ?? email,
+    firstName: firstName ?? email!,
     lastName,
     locale,
-    email,
+    email: email!,
     socialPictureUrl,
   };
 }

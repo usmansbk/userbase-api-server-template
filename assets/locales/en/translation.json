@@ -5,6 +5,10 @@
     },
     "leaveWaitlist": {
       "message": "You've left the waitlist."
+    },
+    "login": {
+      "welcome": "Welcome, {{name}}!",
+      "welcomeBack": "Welcome back, {{name}}!"
     }
   }
 }

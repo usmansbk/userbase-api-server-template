@@ -42,7 +42,7 @@ enum AccountStatus {
   LockedOut
 
   """
-  Accounts have a suspended status when an admin explicitly suspends them. The user cannot access applications. Application assignments are unaffected and the user profile can be updated.
+  Accounts have a suspended status when an admin explicitly suspends them. The user cannot access applications.
   """
   Suspended
 
