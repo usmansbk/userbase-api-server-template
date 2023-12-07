@@ -3,6 +3,7 @@ import { GraphQLError } from "graphql";
 import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
 import smsClient from "@/utils/sms";
+import jwtClient from "@/utils/jwt";
 import storage from "@/utils/storage";
 import getPrismaClient from "@/config/database";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
@@ -46,6 +47,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         prismaClient,
         currentUser,
         smsClient,
+        jwtClient,
         storage,
       };
 

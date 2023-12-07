@@ -6,6 +6,7 @@ import type { Storage } from "@/utils/storage";
 import type { Redis } from "ioredis";
 import type { ExtendedPrismaClient } from "@/config/database";
 import type { AccountStatus } from "./graphql";
+import type { JWTClient } from "@/utils/jwt";
 
 export interface CurrentUser {
   id: string;
@@ -22,6 +23,7 @@ export interface AppContext {
   prismaClient: ExtendedPrismaClient;
   redisClient: Redis;
   smsClient: SMS;
+  jwtClient: JWTClient;
   pubsub: RedisPubSub;
   language: string;
   storage: Storage;

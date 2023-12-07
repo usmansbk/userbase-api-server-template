@@ -7,6 +7,7 @@ import getPrismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
 import logger from "@/utils/logger";
 import storage from "@/utils/storage";
+import jwtClient from "@/utils/jwt";
 import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
 import type { AppContext, CurrentUser } from "types";
@@ -52,6 +53,7 @@ export default function useWebSocketServer(
         return {
           pubsub,
           smsClient,
+          jwtClient,
           currentUser,
           redisClient,
           prismaClient,
