@@ -42,9 +42,8 @@
     "nodemon": "^3.0.2",
     "prettier": "3.1.0",
     "prettier-plugin-prisma": "^5.0.0",
-    "prismock": "^1.23.2",
     "rimraf": "^5.0.5",
-    "typescript": "*"
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "transpile": "babel src -d build --copy-files --extensions .ts",
@@ -71,15 +70,15 @@
   },
   "dependencies": {
     "@apollo/server": "^4.9.5",
-    "@aws-sdk/client-dynamodb": "^3.465.0",
-    "@aws-sdk/client-s3": "^3.465.0",
-    "@aws-sdk/lib-dynamodb": "^3.465.0",
-    "@aws-sdk/s3-request-presigner": "^3.465.0",
+    "@aws-sdk/client-dynamodb": "^3.468.0",
+    "@aws-sdk/client-s3": "^3.468.0",
+    "@aws-sdk/lib-dynamodb": "^3.468.0",
+    "@aws-sdk/s3-request-presigner": "^3.468.0",
     "@graphql-tools/load-files": "^7.0.0",
     "@graphql-tools/merge": "^9.0.1",
     "@graphql-tools/schema": "^10.0.2",
     "@graphql-tools/utils": "^10.0.11",
-    "@prisma/client": "^5.6.0",
+    "@prisma/client": "^5.7.0",
     "@sentry/node": "^7.85.0",
     "@sentry/profiling-node": "^1.2.6",
     "awesome-phonenumber": "^6.2.0",
@@ -93,8 +92,8 @@
     "graphql": "^16.8.1",
     "graphql-redis-subscriptions": "^2.6.0",
     "graphql-scalars": "^1.22.4",
-    "i18next": "^23.7.7",
-    "i18next-fs-backend": "^2.3.0",
+    "i18next": "^23.7.8",
+    "i18next-fs-backend": "^2.3.1",
     "i18next-http-middleware": "^3.5.0",
     "ioredis": "^5.3.2",
     "jsonwebtoken": "^9.0.2",
@@ -104,7 +103,7 @@
     "numeral": "^2.0.6",
     "pino": "^8.16.2",
     "pino-http": "^8.5.1",
-    "prisma": "^5.6.0",
+    "prisma": "^5.7.0",
     "rate-limit-redis": "^4.2.0",
     "twilio": "^4.19.3"
   }
