@@ -96,6 +96,11 @@ type User {
   rolePermissionsAssignedByUser: [RolePermission]!
 }
 
+"""
+Essentially, a role is a collection of permissions that you can apply to users.
+Using roles makes it easier to add, remove, and adjust permissions than assigning permissions to users individually.
+As your user base increases in scale and complexity, roles become particularly useful.
+"""
 type Role @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
   id: ID!
   name: String!

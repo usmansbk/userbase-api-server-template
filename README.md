@@ -1,5 +1,7 @@
 # Userbase
 
+[![dotenv-vault](https://badge.dotenv.org/works-with.svg?r=1)](https://www.dotenv.org/r/github.com/dotenv-org/dotenv-vault?r=1)
+
 User management system api server base template
 
 ## Features
@@ -131,8 +133,6 @@ We use ["wrapping exceptions"](https://javascript.info/custom-errors#wrapping-ex
 ### Secrets
 
 #### [Dotenv Vault](https://www.dotenv.org/docs/quickstart#sync)
-
-[![dotenv-vault](https://badge.dotenv.org/fork.svg?r=1)](https://vault.dotenv.org/project/vlt_d58b61c8b19f6c19c95442b7f144d743c582effc071b5847060fb5b39f6c42c0/example)
 
 Begin by creating your project's env vault and authenticating against it.
 

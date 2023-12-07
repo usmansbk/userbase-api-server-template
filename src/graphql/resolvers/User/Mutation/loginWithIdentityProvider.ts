@@ -16,7 +16,7 @@ export default {
       { input }: MutationLoginWithIdentityProviderArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { prismaClient, t } = context;
+      const { prismaClient, t, jwtClient } = context;
       const { provider, token } = input;
 
       let userPayload;
@@ -93,15 +93,18 @@ export default {
         // TODO: send welcome email
       }
 
-      // TODO: generate tokens
+      const { accessToken, refreshToken } = jwtClient.getAuthTokens({
+        sub: user.id,
+      });
+
       return {
         success: true,
         message: t(
           isNewUser ? "mutation.login.welcome" : "mutation.login.welcomeBack",
           { name: user.firstName },
         ),
-        accessToken: "",
-        refreshToken: "",
+        accessToken,
+        refreshToken,
       };
     },
   },
