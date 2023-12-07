@@ -102,7 +102,7 @@ export enum AccountStatus {
   Recovery = 'Recovery',
   /** Accounts have a staged status when they are first created, before the activation flow is initiated, or if there is a pending admin action. */
   Staged = 'Staged',
-  /** Accounts have a suspended status when an admin explicitly suspends them. The user cannot access applications. Application assignments are unaffected and the user profile can be updated. */
+  /** Accounts have a suspended status when an admin explicitly suspends them. The user cannot access applications. */
   Suspended = 'Suspended'
 }
 
@@ -161,6 +161,15 @@ export type File = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export enum IdentityProvider {
+  Google = 'GOOGLE'
+}
+
+export type IdentityProviderLoginInput = {
+  provider: IdentityProvider;
+  token: Scalars['NonEmptyString']['input'];
+};
+
 export type ImageEditInput = {
   flatten?: InputMaybe<Scalars['Boolean']['input']>;
   flip?: InputMaybe<Scalars['Boolean']['input']>;
@@ -200,8 +209,8 @@ export type Mutation = {
   leaveWaitlist: MutationResponse;
   loginWithEmail: AuthResponse;
   loginWithEmailOTP: AuthResponse;
+  loginWithIdentityProvider: AuthResponse;
   loginWithSMSOTP: AuthResponse;
-  loginWithSocialProvider: AuthResponse;
   registerWithEmail: AuthResponse;
   removeCurrentUserPicture: UserResponse;
   requestChangeCurrentUserEmailAddress: MutationResponse;
@@ -245,13 +254,13 @@ export type MutationLoginWithEmailOtpArgs = {
 };
 
 
-export type MutationLoginWithSmsotpArgs = {
-  input: SmsotpLoginInput;
+export type MutationLoginWithIdentityProviderArgs = {
+  input: IdentityProviderLoginInput;
 };
 
 
-export type MutationLoginWithSocialProviderArgs = {
-  input: SocialProviderLoginInput;
+export type MutationLoginWithSmsotpArgs = {
+  input: SmsotpLoginInput;
 };
 
 
@@ -400,15 +409,6 @@ export type RolePermission = {
 export type SmsotpLoginInput = {
   otp: Scalars['NonEmptyString']['input'];
   phoneNumber: Scalars['PhoneNumber']['input'];
-};
-
-export enum SocialProvider {
-  Google = 'GOOGLE'
-}
-
-export type SocialProviderLoginInput = {
-  provider: SocialProvider;
-  token: Scalars['NonEmptyString']['input'];
 };
 
 export type UpdateBasicInfoInput = {
@@ -627,6 +627,8 @@ export type ResolversTypes = ResolversObject<{
   IPv6: ResolverTypeWrapper<Scalars['IPv6']['output']>;
   ISBN: ResolverTypeWrapper<Scalars['ISBN']['output']>;
   ISO8601Duration: ResolverTypeWrapper<Scalars['ISO8601Duration']['output']>;
+  IdentityProvider: IdentityProvider;
+  IdentityProviderLoginInput: IdentityProviderLoginInput;
   ImageEditInput: ImageEditInput;
   ImageResize: ImageResize;
   ImageResizeBackgroundInput: ImageResizeBackgroundInput;
@@ -674,8 +676,6 @@ export type ResolversTypes = ResolversObject<{
   SMSOTPLoginInput: SmsotpLoginInput;
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']['output']>;
   SemVer: ResolverTypeWrapper<Scalars['SemVer']['output']>;
-  SocialProvider: SocialProvider;
-  SocialProviderLoginInput: SocialProviderLoginInput;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Time: ResolverTypeWrapper<Scalars['Time']['output']>;
   TimeZone: ResolverTypeWrapper<Scalars['TimeZone']['output']>;
@@ -734,6 +734,7 @@ export type ResolversParentTypes = ResolversObject<{
   IPv6: Scalars['IPv6']['output'];
   ISBN: Scalars['ISBN']['output'];
   ISO8601Duration: Scalars['ISO8601Duration']['output'];
+  IdentityProviderLoginInput: IdentityProviderLoginInput;
   ImageEditInput: ImageEditInput;
   ImageResize: ImageResize;
   ImageResizeBackgroundInput: ImageResizeBackgroundInput;
@@ -780,7 +781,6 @@ export type ResolversParentTypes = ResolversObject<{
   SMSOTPLoginInput: SmsotpLoginInput;
   SafeInt: Scalars['SafeInt']['output'];
   SemVer: Scalars['SemVer']['output'];
-  SocialProviderLoginInput: SocialProviderLoginInput;
   String: Scalars['String']['output'];
   Time: Scalars['Time']['output'];
   TimeZone: Scalars['TimeZone']['output'];
@@ -988,8 +988,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   leaveWaitlist?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationLeaveWaitlistArgs, 'email'>>;
   loginWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailArgs, 'input'>>;
   loginWithEmailOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailOtpArgs, 'input'>>;
+  loginWithIdentityProvider?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithIdentityProviderArgs, 'input'>>;
   loginWithSMSOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithSmsotpArgs, 'input'>>;
-  loginWithSocialProvider?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithSocialProviderArgs, 'input'>>;
   registerWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationRegisterWithEmailArgs, 'input'>>;
   removeCurrentUserPicture?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType>;
   requestChangeCurrentUserEmailAddress?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;

@@ -162,12 +162,12 @@ type UserResponse implements Response {
   user: User!
 }
 
-enum SocialProvider {
+enum IdentityProvider {
   GOOGLE
 }
 
-input SocialProviderLoginInput {
-  provider: SocialProvider!
+input IdentityProviderLoginInput {
+  provider: IdentityProvider!
   token: NonEmptyString!
 }
 
@@ -236,7 +236,7 @@ type Mutation {
   joinWaitlist(email: EmailAddress!): MutationResponse!
   leaveWaitlist(email: EmailAddress!): MutationResponse!
 
-  loginWithSocialProvider(input: SocialProviderLoginInput!): AuthResponse!
+  loginWithIdentityProvider(input: IdentityProviderLoginInput!): AuthResponse!
 
   registerWithEmail(input: RegisterWithEmailInput!): AuthResponse!
   loginWithEmail(input: EmailLoginInput!): AuthResponse!

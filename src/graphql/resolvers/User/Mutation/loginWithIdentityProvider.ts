@@ -4,16 +4,16 @@ import verifyGoogleIdToken from "@/utils/googleOauth";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type {
-  MutationLoginWithSocialProviderArgs,
+  MutationLoginWithIdentityProviderArgs,
   AuthResponse,
 } from "types/graphql";
 import type { AppContext } from "types";
 
 export default {
   Mutation: {
-    async loginWithSocialProvider(
+    async loginWithIdentityProvider(
       _parent: unknown,
-      { input }: MutationLoginWithSocialProviderArgs,
+      { input }: MutationLoginWithIdentityProviderArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
       const { prismaClient, t } = context;
