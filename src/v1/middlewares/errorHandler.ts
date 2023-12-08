@@ -6,10 +6,6 @@ import ForbiddenError from "@/utils/errors/ForbiddenError";
 const errorHandler: ErrorRequestHandler = (error, req: Request, res, next) => {
   const { t, log } = req.context;
 
-  log.error({
-    error,
-  });
-
   if (error instanceof AuthenticationError) {
     res.status(401).json({
       error,
@@ -23,6 +19,7 @@ const errorHandler: ErrorRequestHandler = (error, req: Request, res, next) => {
       error,
     });
   } else {
+    log.error(error);
     res.status(500).json({
       error: new GraphQLError(t("SOMETHING_WENT_WRONG", { ns: "error" })),
     });

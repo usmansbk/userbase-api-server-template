@@ -53,7 +53,7 @@ function verify(token: string, options: VerifyOptions = {}) {
 }
 
 function decode(token: string) {
-  return jwt.decode(token) as JwtPayload;
+  return jwt.decode(token) as JwtPayload & { azp?: string };
 }
 
 function getAuthTokens(payload: JwtPayload) {

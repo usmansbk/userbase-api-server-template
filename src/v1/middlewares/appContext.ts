@@ -6,7 +6,6 @@ import smsClient from "@/utils/sms";
 import jwtClient from "@/utils/jwt";
 import storage from "@/utils/storage";
 import prismaClient from "@/config/database";
-import QueryError from "@/utils/errors/QueryError";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { NextFunction, Request, Response } from "express";
@@ -79,11 +78,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       } else if (e instanceof JsonWebTokenError) {
         next(new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" })));
       } else {
-        next(
-          new QueryError(t("SOMETHING_WENT_WRONG", { ns: "error" }), {
-            originalError: e as Error,
-          }),
-        );
+        next(e);
       }
     }
   })();
