@@ -29,6 +29,11 @@ export default {
         const { email, language, phoneNumber } = input;
 
         const form = z.object({
+          email: z
+            .string()
+            .email(
+              t("mutation.registerWithEmail.errors.fields.email.invalidEmail"),
+            ),
           firstName: z
             .string()
             .trim()

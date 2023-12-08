@@ -18,7 +18,8 @@
         "message": "Failed to create account.",
         "fields": {
           "email": {
-            "alreadyExist": "Your email has already been registered."
+            "alreadyExist": "Your email has already been registered.",
+            "invalidEmail": "Invalid email address"
           },
           "password": {
             "tooShort": "Password must be at least {{count}} characters.",
