@@ -47,6 +47,12 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
+      const sessions = new Map(Object.entries(user.sessions as UserSessions));
+
+      if (!sessions.has(oldAzp!)) {
+        throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
+      }
+
       const { accessToken, refreshToken, jti, azp } = jwtClient.getAuthTokens({
         sub,
       });
@@ -56,12 +62,6 @@ export default function refreshToken(
         dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
         jti,
       );
-
-      const sessions = new Map(Object.entries(user.sessions as UserSessions));
-
-      if (!sessions.has(oldAzp!)) {
-        throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
-      }
 
       sessions.delete(oldAzp!);
       sessions.set(azp, {
