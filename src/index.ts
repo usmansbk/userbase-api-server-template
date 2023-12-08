@@ -46,6 +46,8 @@ async function main() {
 
   const app = express();
 
+  app.use(i18nextMiddleware.handle(i18next));
+
   app.use(json());
   app.use(cors<cors.CorsRequest>());
   app.use(
@@ -56,8 +58,6 @@ async function main() {
 
   // https://express-rate-limit.mintlify.app/guides/troubleshooting-proxy-issues
   app.set("trust proxy", 1);
-
-  app.use(i18nextMiddleware.handle(i18next));
 
   Sentry.init({
     dsn: process.env.SENTRY_DSN,

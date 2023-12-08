@@ -15,6 +15,19 @@ import type { CurrentUser } from "types";
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
     const { t, language, i18n, headers, log } = req;
+
+    req.context = {
+      t,
+      log,
+      pubsub,
+      language,
+      redisClient,
+      prismaClient,
+      smsClient,
+      jwtClient,
+      storage,
+    };
+
     try {
       const { authorization, client_id: clientId } = headers;
 
@@ -23,22 +36,23 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       }
 
       if (clientId) {
+        req.context.clientId = clientId;
         jwtClient.setAudience(clientId);
       }
 
       let currentUser: CurrentUser | undefined | null;
-      let sessionId: string | undefined;
 
       if (authorization?.startsWith("Bearer")) {
         const token = authorization.split(/\s+/)[1];
         const payload = jwtClient.verify(token);
 
         if (payload) {
-          sessionId = payload.azp;
+          req.context.sessionId = payload.azp;
           currentUser = await prismaClient.user.currentUser(payload.sub!);
         }
 
         if (currentUser) {
+          req.context.currentUser = currentUser;
           configureScope((scope) => {
             scope.setUser({ id: currentUser!.id });
           });
@@ -48,21 +62,6 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
           }
         }
       }
-
-      req.context = {
-        t,
-        log,
-        pubsub,
-        language,
-        redisClient,
-        prismaClient,
-        currentUser,
-        smsClient,
-        jwtClient,
-        clientId,
-        storage,
-        sessionId,
-      };
 
       next();
     } catch (e) {

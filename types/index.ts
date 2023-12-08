@@ -19,7 +19,7 @@ export interface CurrentUser {
 
 export interface AppContext {
   sessionId?: string;
-  clientId: string;
+  clientId?: string;
   log: pino.Logger<pino.LoggerOptions>;
   currentUser?: CurrentUser | null;
   t: TFunction<"translation" | "error", undefined>;
