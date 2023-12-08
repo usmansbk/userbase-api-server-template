@@ -2,7 +2,7 @@ import dayjs from "@/utils/dayjs";
 import { UserStatus } from "@prisma/client";
 import { AUTH_PREFIX, LOGIN_ATTEMPT } from "@/constants/cachePrefixes";
 import {
-  CLEAR_LOGIN_ATTEMPTS_IN,
+  RESET_LOGIN_ATTEMPTS_IN,
   MAX_LOGIN_ATTEMPT,
   REFRESH_TOKEN_EXPIRES_IN,
 } from "@/constants/limits";
@@ -61,7 +61,7 @@ export default {
 
           await redisClient.setex(
             attemptsKey,
-            dayjs.duration(...CLEAR_LOGIN_ATTEMPTS_IN).asSeconds(),
+            dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
             count + 1,
           );
         }
