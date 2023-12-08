@@ -23,16 +23,31 @@
             "required": "Email is required"
           },
           "password": {
-            "tooShort": "Password must be at least {{count}} characters",
-            "tooLong": "Password must not be longer than {{count}} charaters",
+            "min": "Password must be at least {{count}} characters",
+            "max": "Password must not be longer than {{count}} charaters",
             "required": "Password is required ({{min}} - {{max}} characters"
           },
           "firstName": {
             "required": "First name is required"
           },
           "name": {
-            "tooShort": "Name must be at least {{count}} characters",
-            "tooLong": "Name must not be longer than {{count}} characters"
+            "min": "Name must be at least {{count}} characters",
+            "max": "Name must not be longer than {{count}} characters"
+          }
+        }
+      }
+    },
+    "updateCurrentUserBasicInfo": {
+      "message": "User info updated",
+      "errors": {
+        "message": "Failed to update user info.",
+        "fields": {
+          "firstName": {
+            "required": "First name is required"
+          },
+          "name": {
+            "min": "Name must be at least {{count}} characters",
+            "max": "Name must not be longer than {{count}} characters"
           }
         }
       }

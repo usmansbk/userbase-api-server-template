@@ -8,7 +8,6 @@ User management system api server base template
 
 - [x] Join/Leave waiting list
 - [x] Login with identity provider (Google)
-- [x] Refresh access token
 - [x] Refresh token rotation
 - [x] Role Based Access Control
 - [x] Register with email and Password
@@ -19,12 +18,12 @@ User management system api server base template
 - [ ] Login with verified phone number SMS OTP
 - [ ] Login with verified email OTP
 - [ ] Reset password
-- [ ] Logout from all devices
+- [x] Logout from all devices
 - [ ] Request delete account
-- [ ] Update user profile
-- [ ] Upload profile picture
+- [x] Update user profile
+- [x] Upload profile picture
 - [ ] MFA
-- [ ] Admin In-app notifications
+- [ ] Admin Dashboard
 
 ## Prerequisites
 

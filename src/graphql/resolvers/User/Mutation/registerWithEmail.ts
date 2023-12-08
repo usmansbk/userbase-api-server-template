@@ -47,13 +47,13 @@ export default {
             .trim()
             .min(
               MIN_NAME_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.name.tooShort", {
+              t("mutation.registerWithEmail.errors.fields.name.min", {
                 count: MIN_NAME_LENGTH,
               }),
             )
             .max(
               MAX_NAME_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.name.tooLong", {
+              t("mutation.registerWithEmail.errors.fields.name.max", {
                 count: MAX_NAME_LENGTH,
               }),
             ),
@@ -62,13 +62,13 @@ export default {
             .trim()
             .min(
               MIN_NAME_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.name.tooShort", {
+              t("mutation.registerWithEmail.errors.fields.name.min", {
                 count: MIN_NAME_LENGTH,
               }),
             )
             .max(
               MAX_NAME_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.name.tooLong", {
+              t("mutation.registerWithEmail.errors.fields.name.max", {
                 count: MAX_NAME_LENGTH,
               }),
             )
@@ -78,13 +78,13 @@ export default {
             .trim()
             .min(
               MIN_NAME_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.name.tooShort", {
+              t("mutation.registerWithEmail.errors.fields.name.min", {
                 count: MIN_NAME_LENGTH,
               }),
             )
             .max(
               MAX_NAME_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.name.tooLong", {
+              t("mutation.registerWithEmail.errors.fields.name.max", {
                 count: MAX_NAME_LENGTH,
               }),
             )
@@ -94,13 +94,13 @@ export default {
             .trim()
             .min(
               MIN_PASSWORD_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.password.tooShort", {
+              t("mutation.registerWithEmail.errors.fields.password.min", {
                 count: MIN_PASSWORD_LENGTH,
               }),
             )
             .max(
               MAX_PASSWORD_LENGTH,
-              t("mutation.registerWithEmail.errors.fields.password.tooLong", {
+              t("mutation.registerWithEmail.errors.fields.password.max", {
                 count: MAX_PASSWORD_LENGTH,
               }),
             ),
