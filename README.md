@@ -6,17 +6,25 @@ User management system api server base template
 
 ## Features
 
-- [ ] User Profile
-- [ ] RBAC
-- [ ] Email authentication
-- [ ] Social authentication
-- [ ] SMS OTP authentication
-- [ ] Email OTP authentication
+- [x] Join/Leave waiting list
+- [x] Login with identity provider (Google)
+- [x] Refresh access token
+- [x] Refresh token rotation
+- [ ] Register with email and Password
+- [ ] Login with email
+- [ ] Verify email address
+- [ ] Change email address
+- [ ] Verify phone number
+- [ ] Login with verified phone number SMS OTP
+- [ ] Login with verified email OTP
+- [ ] Reset password
+- [ ] Logout from all devices
+- [ ] Request delete account
+- [ ] Update user profile
+- [ ] Upload profile picture
+- [x] RBAC
 - [ ] MFA
-- [ ] In-app notifications
-- [ ] Email notifications
-- [ ] SMS notifications
-- [ ] File uploads
+- [ ] Admin In-app notifications
 
 ## Prerequisites
 
