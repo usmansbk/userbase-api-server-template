@@ -10,6 +10,17 @@
       "welcome": "Welcome, {{name}}!",
       "welcomeBack": "Welcome back, {{name}}!"
     },
+    "loginWithEmail": {
+      "errors": {
+        "message": "Incorrect email or password.",
+        "unauthorized": "You're not allowed.",
+        "unauthorized_Suspended": "Your account has been suspended.",
+        "unauthorized_LockedOut": "Verify your email address to continue.",
+        "unauthorized_Deprovisioned": "Your account has been deactivated.",
+        "unauthorized_Recovery": "Reset your password to continue.",
+        "unauthorized_PasswordExpired": "Reset your password to continue."
+      }
+    },
     "logoutFromAllDevices": {
       "message": "You've logged out from all devices."
     },
@@ -18,36 +29,36 @@
         "message": "Failed to create account.",
         "fields": {
           "email": {
-            "alreadyExist": "Your email has already been registered",
-            "invalidEmail": "Invalid email address",
-            "required": "Email is required"
+            "alreadyExist": "Your email has already been registered.",
+            "invalidEmail": "Invalid email address.",
+            "required": "Email is required."
           },
           "password": {
-            "min": "Password must be at least {{count}} characters",
-            "max": "Password must not be longer than {{count}} charaters",
-            "required": "Password is required ({{min}} - {{max}} characters"
+            "min": "Password must be at least {{count}} characters.",
+            "max": "Password must not be longer than {{count}} charaters.",
+            "required": "Password is required ({{min}} - {{max}} characters."
           },
           "firstName": {
-            "required": "First name is required"
+            "required": "First name is required."
           },
           "name": {
-            "min": "Name must be at least {{count}} characters",
-            "max": "Name must not be longer than {{count}} characters"
+            "min": "Name must be at least {{count}} characters.",
+            "max": "Name must not be longer than {{count}} characters."
           }
         }
       }
     },
     "updateCurrentUserBasicInfo": {
-      "message": "User info updated",
+      "message": "User info updated.",
       "errors": {
         "message": "Failed to update user info.",
         "fields": {
           "firstName": {
-            "required": "First name is required"
+            "required": "First name is required."
           },
           "name": {
-            "min": "Name must be at least {{count}} characters",
-            "max": "Name must not be longer than {{count}} characters"
+            "min": "Name must be at least {{count}} characters.",
+            "max": "Name must not be longer than {{count}} characters."
           }
         }
       }
