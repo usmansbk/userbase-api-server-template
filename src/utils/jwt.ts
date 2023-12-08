@@ -14,6 +14,12 @@ import {
 const testSecret = "secret";
 let audience: string;
 
+const clientIds = [
+  process.env.ANDROID_CLIENT_ID,
+  process.env.IOS_CLIENT_ID,
+  process.env.WEB_CLIENT_ID,
+];
+
 /**
  *
  * payload exp field should contain the number of seconds since the epoch
@@ -91,6 +97,7 @@ const jwtClient = {
   decode,
   getAuthTokens,
   setAudience,
+  clientIds,
 };
 
 export type JWTClient = typeof jwtClient;

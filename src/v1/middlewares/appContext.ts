@@ -14,18 +14,11 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
     const { t, language, i18n, headers, log } = req;
 
-    const clientIds = [
-      process.env.ANDROID_CLIENT_ID,
-      process.env.IOS_CLIENT_ID,
-      process.env.WEB_CLIENT_ID,
-    ];
-
     req.context = {
       t,
       log,
       pubsub,
       language,
-      clientIds,
       redisClient,
       prismaClient,
       smsClient,
@@ -36,7 +29,10 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
     try {
       const { authorization, client_id: clientId } = headers;
 
-      if (process.env.NODE_ENV === "production" && !clientId) {
+      if (
+        process.env.NODE_ENV === "production" &&
+        !(clientId && jwtClient.clientIds.includes(clientId))
+      ) {
         throw new ForbiddenError(t("UNSUPPORTED_CLIENT", { ns: "error" }));
       }
 

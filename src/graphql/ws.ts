@@ -12,6 +12,7 @@ import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
 import type { AppContext, CurrentUser } from "types";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
+import ForbiddenError from "@/utils/errors/ForbiddenError";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
@@ -28,14 +29,16 @@ export default function useWebSocketServer(
       context: async (ctx): Promise<AppContext> => {
         let currentUser: CurrentUser | undefined | null;
         let sessionId: string | undefined;
-
-        const clientIds = [
-          process.env.ANDROID_CLIENT_ID,
-          process.env.IOS_CLIENT_ID,
-          process.env.WEB_CLIENT_ID,
-        ];
+        const { t } = i18next;
 
         const clientId = ctx.connectionParams?.client_id as string;
+
+        if (
+          process.env.NODE_ENV === "production" &&
+          !(clientId && jwtClient.clientIds.includes(clientId))
+        ) {
+          throw new ForbiddenError(t("UNSUPPORTED_CLIENT", { ns: "error" }));
+        }
 
         if (clientId) {
           jwtClient.setAudience(clientId);
@@ -63,7 +66,7 @@ export default function useWebSocketServer(
               }
               if (!currentUser.sessions?.[payload.azp!]) {
                 throw new AuthenticationError(
-                  i18next.t("INVALID_AUTH_TOKEN", { ns: "error" }),
+                  t("INVALID_AUTH_TOKEN", { ns: "error" }),
                 );
               }
             }
@@ -73,19 +76,18 @@ export default function useWebSocketServer(
         }
 
         return {
+          t,
           pubsub,
           smsClient,
           jwtClient,
           currentUser,
           redisClient,
           prismaClient,
-          t: i18next.t,
           language: i18next.language,
           log: logger,
           storage,
           clientId,
           sessionId,
-          clientIds,
         };
       },
       onConnect: (ctx) => {
