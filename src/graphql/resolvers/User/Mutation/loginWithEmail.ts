@@ -2,6 +2,7 @@ import dayjs from "@/utils/dayjs";
 import { UserStatus } from "@prisma/client";
 import { AUTH_PREFIX, LOGIN_ATTEMPT } from "@/constants/cachePrefixes";
 import {
+  CLEAR_LOGIN_ATTEMPTS_IN,
   MAX_LOGIN_ATTEMPT,
   REFRESH_TOKEN_EXPIRES_IN,
 } from "@/constants/limits";
@@ -38,14 +39,15 @@ export default {
         UserStatus.Deprovisioned,
       ];
 
+      const attemptsKey = `${LOGIN_ATTEMPT}:${input.email}`;
       const isMatched = await user.comparePassword(input.password);
       if (!isMatched) {
         if (!denyList.includes(user.status)) {
-          const attempts = await redisClient.incr(
-            `${LOGIN_ATTEMPT}:${input.email}`,
-          );
+          const attempts = await redisClient.get(attemptsKey);
 
-          if (attempts === MAX_LOGIN_ATTEMPT) {
+          const count = attempts ? Number.parseInt(attempts, 10) : 1;
+
+          if (count === MAX_LOGIN_ATTEMPT) {
             // TODO: send email
             await prismaClient.user.update({
               where: {
@@ -56,12 +58,19 @@ export default {
               },
             });
           }
+
+          await redisClient.setex(
+            attemptsKey,
+            dayjs.duration(...CLEAR_LOGIN_ATTEMPTS_IN).asSeconds(),
+            count + 1,
+          );
         }
 
         throw new AuthenticationError(
           t("mutation.loginWithEmail.errors.message"),
         );
       }
+      await redisClient.del(attemptsKey);
 
       if (denyList.includes(user.status)) {
         throw new ForbiddenError(
