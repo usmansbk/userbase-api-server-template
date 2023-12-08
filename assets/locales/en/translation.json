@@ -18,16 +18,21 @@
         "message": "Failed to create account.",
         "fields": {
           "email": {
-            "alreadyExist": "Your email has already been registered.",
-            "invalidEmail": "Invalid email address"
+            "alreadyExist": "Your email has already been registered",
+            "invalidEmail": "Invalid email address",
+            "required": "Email is required"
           },
           "password": {
-            "tooShort": "Password must be at least {{count}} characters.",
-            "tooLong": "Password must not be longer than {{count}} charaters."
+            "tooShort": "Password must be at least {{count}} characters",
+            "tooLong": "Password must not be longer than {{count}} charaters",
+            "required": "Password is required ({{min}} - {{max}} characters"
+          },
+          "firstName": {
+            "required": "First name is required"
           },
           "name": {
-            "tooShort": "Name must be at least {{count}} characters.",
-            "tooLong": "Name must not be longer than {{count}} characters."
+            "tooShort": "Name must be at least {{count}} characters",
+            "tooLong": "Name must not be longer than {{count}} characters"
           }
         }
       }

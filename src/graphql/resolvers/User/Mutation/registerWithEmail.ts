@@ -30,7 +30,14 @@ export default {
 
         const form = z.object({
           email: z
-            .string()
+            .string({
+              required_error: t(
+                "mutation.registerWithEmail.errors.fields.email.required",
+              ),
+              invalid_type_error: t(
+                "mutation.registerWithEmail.errors.fields.email.invalidEmail",
+              ),
+            })
             .trim()
             .email(
               t("mutation.registerWithEmail.errors.fields.email.invalidEmail"),
