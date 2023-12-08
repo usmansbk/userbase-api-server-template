@@ -5,6 +5,7 @@ import smsClient from "@/utils/sms";
 import jwtClient from "@/utils/jwt";
 import storage from "@/utils/storage";
 import prismaClient from "@/config/database";
+import emailClient from "@/utils/email";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { NextFunction, Request, Response } from "express";
@@ -21,6 +22,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       language,
       redisClient,
       prismaClient,
+      emailClient,
       smsClient,
       jwtClient,
       storage,

@@ -7,6 +7,7 @@ import type { Redis } from "ioredis";
 import type { ExtendedPrismaClient } from "@/config/database";
 import type { AccountStatus, UserSession } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
+import type { Emailer } from "@/utils/email";
 
 export interface UserSessions {
   [key: string]: UserSession;
@@ -29,6 +30,7 @@ export interface AppContext {
   t: TFunction<"translation" | "error", undefined>;
   prismaClient: ExtendedPrismaClient;
   redisClient: Redis;
+  emailClient: Emailer;
   smsClient: SMS;
   jwtClient: JWTClient;
   pubsub: RedisPubSub;

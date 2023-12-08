@@ -5,7 +5,8 @@ import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
 import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
-import logger from "@/utils/logger";
+import emailClient from "@/utils/email";
+import log from "@/utils/logger";
 import storage from "@/utils/storage";
 import jwtClient from "@/utils/jwt";
 import type { IncomingMessage, ServerResponse, Server } from "http";
@@ -29,7 +30,7 @@ export default function useWebSocketServer(
       context: async (ctx): Promise<AppContext> => {
         let currentUser: CurrentUser | undefined | null;
         let sessionId: string | undefined;
-        const { t } = i18next;
+        const { t, language } = i18next;
 
         const clientId = ctx.connectionParams?.client_id as string;
 
@@ -72,22 +73,23 @@ export default function useWebSocketServer(
             }
           }
         } catch (error) {
-          logger.info({ error });
+          log.info({ error });
         }
 
         return {
           t,
+          log,
           pubsub,
           smsClient,
           jwtClient,
           currentUser,
           redisClient,
           prismaClient,
-          language: i18next.language,
-          log: logger,
-          storage,
-          clientId,
+          emailClient,
           sessionId,
+          clientId,
+          language,
+          storage,
         };
       },
       onConnect: (ctx) => {
