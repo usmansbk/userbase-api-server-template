@@ -18,7 +18,10 @@ let audience: string;
  *
  * payload exp field should contain the number of seconds since the epoch
  */
-function sign(payload: JwtPayload, options: SignOptions = {}) {
+function sign(
+  payload: JwtPayload & { azp?: string },
+  options: SignOptions = {},
+) {
   const privateKey =
     process.env.NODE_ENV === "test"
       ? testSecret
@@ -46,7 +49,7 @@ function verify(token: string, options: VerifyOptions = {}) {
     ...options,
   });
 
-  return verified as JwtPayload;
+  return verified as JwtPayload & { azp?: string };
 }
 
 function decode(token: string) {

@@ -14,6 +14,7 @@ export interface CurrentUser {
   language: string | null;
   roles: string[];
   permissions: string[];
+  sessions: string[];
 }
 
 export interface AppContext {

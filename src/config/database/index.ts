@@ -42,6 +42,7 @@ export default function getPrismaClient() {
           return {
             id,
             status: user.status as AccountStatus,
+            sessions: user.sessions,
             language: user.lastName,
             roles: user.rolesAssignedToUser.map(
               (userRole) => userRole.role.name,
