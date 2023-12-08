@@ -18,6 +18,7 @@ export interface CurrentUser {
 }
 
 export interface AppContext {
+  sessionId?: string;
   clientId: string;
   log: pino.Logger<pino.LoggerOptions>;
   currentUser?: CurrentUser | null;

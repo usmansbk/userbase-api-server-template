@@ -26,6 +26,7 @@ export default function useWebSocketServer(
       schema,
       context: async (ctx): Promise<AppContext> => {
         let currentUser: CurrentUser | undefined | null;
+        let sessionId: string | undefined;
 
         const prismaClient = getPrismaClient();
         const clientId = ctx.connectionParams?.client_id as string;
@@ -35,20 +36,27 @@ export default function useWebSocketServer(
         }
 
         try {
-          const token = ctx.connectionParams?.authorization as
+          const authorization = ctx.connectionParams?.authorization as
             | string
             | undefined;
 
-          // TODO
+          if (authorization?.startsWith("Bearer")) {
+            const token = authorization.split(/\s+/)[1];
+            if (token) {
+              const payload = jwtClient.verify(token);
+              if (payload) {
+                sessionId = payload.azp;
+                currentUser = await prismaClient.user.currentUser(payload.sub!);
+              }
+            }
 
-          logger.info(token);
-          currentUser = await prismaClient.user.currentUser("");
-          if (currentUser) {
-            configureScope((scope) => {
-              scope.setUser({ id: currentUser!.id });
-            });
-            if (currentUser?.language) {
-              await i18next.changeLanguage(currentUser.language);
+            if (currentUser) {
+              configureScope((scope) => {
+                scope.setUser({ id: currentUser!.id });
+              });
+              if (currentUser?.language) {
+                await i18next.changeLanguage(currentUser.language);
+              }
             }
           }
         } catch (error) {
@@ -67,19 +75,22 @@ export default function useWebSocketServer(
           log: logger,
           storage,
           clientId,
+          sessionId,
         };
       },
       onConnect: (ctx) => {
         try {
-          const token = ctx.connectionParams?.Authorization as
+          const token = ctx.connectionParams?.authorization as
             | string
             | undefined;
+          if (token) {
+            return !!jwtClient.verify(token);
+          }
 
-          return !!token;
+          return false;
         } catch (error) {
-          logger.info({ error });
+          return false;
         }
-        return false;
       },
     },
     wsServer,

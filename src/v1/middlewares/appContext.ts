@@ -29,12 +29,16 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       const prismaClient = getPrismaClient();
 
       let currentUser: CurrentUser | undefined | null;
+      let sessionId: string | undefined;
 
       if (authorization?.startsWith("Bearer")) {
         const token = authorization.split(/\s+/)[1];
-        // TODO: verify token
-        log.info(token);
-        currentUser = await prismaClient.user.currentUser("");
+        const payload = jwtClient.verify(token);
+
+        if (payload) {
+          sessionId = payload.azp;
+          currentUser = await prismaClient.user.currentUser(payload.sub!);
+        }
 
         if (currentUser) {
           configureScope((scope) => {
@@ -59,6 +63,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         jwtClient,
         clientId,
         storage,
+        sessionId,
       };
 
       next();
