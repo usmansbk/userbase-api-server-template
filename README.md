@@ -10,6 +10,7 @@ User management system api server base template
 - [x] Login with identity provider (Google)
 - [x] Refresh access token
 - [x] Refresh token rotation
+- [x] Role Based Access Control
 - [ ] Register with email and Password
 - [ ] Login with email
 - [ ] Verify email address
@@ -22,7 +23,6 @@ User management system api server base template
 - [ ] Request delete account
 - [ ] Update user profile
 - [ ] Upload profile picture
-- [x] RBAC
 - [ ] MFA
 - [ ] Admin In-app notifications
 
