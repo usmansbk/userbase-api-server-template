@@ -57,19 +57,18 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         }
 
         if (currentUser) {
+          if (currentUser.language) {
+            await i18n.changeLanguage(currentUser?.language);
+          }
+          configureScope((scope) => {
+            scope.setUser({ id: currentUser!.id });
+          });
           if (!currentUser.sessions?.[payload.azp!]) {
             throw new AuthenticationError(
               t("INVALID_AUTH_TOKEN", { ns: "error" }),
             );
           }
           req.context.currentUser = currentUser;
-          configureScope((scope) => {
-            scope.setUser({ id: currentUser!.id });
-          });
-
-          if (currentUser.language) {
-            await i18n.changeLanguage(currentUser?.language);
-          }
         }
       }
 

@@ -55,16 +55,16 @@ export default function useWebSocketServer(
             }
 
             if (currentUser) {
-              if (!currentUser.sessions?.[payload.azp!]) {
-                throw new AuthenticationError(
-                  i18next.t("INVALID_AUTH_TOKEN", { ns: "error" }),
-                );
-              }
               configureScope((scope) => {
                 scope.setUser({ id: currentUser!.id });
               });
               if (currentUser?.language) {
                 await i18next.changeLanguage(currentUser.language);
+              }
+              if (!currentUser.sessions?.[payload.azp!]) {
+                throw new AuthenticationError(
+                  i18next.t("INVALID_AUTH_TOKEN", { ns: "error" }),
+                );
               }
             }
           }
