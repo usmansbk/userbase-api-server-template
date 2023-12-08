@@ -10,10 +10,10 @@ function sendMessage(message: Message) {
   logger.info(message);
 }
 
-const sms = {
+const smsClient = {
   sendMessage,
 };
 
-export type SMS = typeof sms;
+export type SMS = typeof smsClient;
 
-export default sms;
+export default smsClient;
