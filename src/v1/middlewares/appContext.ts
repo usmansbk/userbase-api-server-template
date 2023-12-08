@@ -1,5 +1,4 @@
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
-import { GraphQLError } from "graphql";
 import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
 import smsClient from "@/utils/sms";
@@ -71,9 +70,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
 
       next();
     } catch (e) {
-      if (e instanceof GraphQLError) {
-        next(e);
-      } else if (e instanceof TokenExpiredError) {
+      if (e instanceof TokenExpiredError) {
         next(new AuthenticationError(t("EXPIRED_AUTH_TOKEN", { ns: "error" })));
       } else if (e instanceof JsonWebTokenError) {
         next(new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" })));
