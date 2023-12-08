@@ -5,7 +5,7 @@ import redisClient, { pubsub } from "@/config/redis";
 import smsClient from "@/utils/sms";
 import jwtClient from "@/utils/jwt";
 import storage from "@/utils/storage";
-import getPrismaClient from "@/config/database";
+import prismaClient from "@/config/database";
 import QueryError from "@/utils/errors/QueryError";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
@@ -25,8 +25,6 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       if (clientId) {
         jwtClient.setAudience(clientId);
       }
-
-      const prismaClient = getPrismaClient();
 
       let currentUser: CurrentUser | undefined | null;
       let sessionId: string | undefined;

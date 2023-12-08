@@ -3,7 +3,7 @@ import { WebSocketServer } from "ws";
 import i18next from "i18next";
 import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
-import getPrismaClient from "@/config/database";
+import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
 import logger from "@/utils/logger";
 import storage from "@/utils/storage";
@@ -28,7 +28,6 @@ export default function useWebSocketServer(
         let currentUser: CurrentUser | undefined | null;
         let sessionId: string | undefined;
 
-        const prismaClient = getPrismaClient();
         const clientId = ctx.connectionParams?.client_id as string;
 
         if (clientId) {
