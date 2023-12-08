@@ -4,7 +4,9 @@ import ValidationError from "@/utils/errors/ValidationError";
 import dayjs from "@/utils/dayjs";
 import { AUTH_PREFIX } from "@/constants/cachePrefixes";
 import {
+  MAX_NAME_LENGTH,
   MAX_PASSWORD_LENGTH,
+  MIN_NAME_LENGTH,
   MIN_PASSWORD_LENGTH,
   REFRESH_TOKEN_EXPIRES_IN,
 } from "@/constants/limits";
@@ -24,12 +26,59 @@ export default {
       const { prismaClient, t, jwtClient, redisClient, clientId } = context;
 
       try {
-        const { email, firstName, lastName, surname, language, phoneNumber } =
-          input;
+        const { email, language, phoneNumber } = input;
 
         const form = z.object({
+          firstName: z
+            .string()
+            .trim()
+            .min(
+              MIN_NAME_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.name.tooShort", {
+                count: MIN_NAME_LENGTH,
+              }),
+            )
+            .max(
+              MAX_NAME_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.name.tooLong", {
+                count: MAX_NAME_LENGTH,
+              }),
+            ),
+          lastName: z
+            .string()
+            .trim()
+            .min(
+              MIN_NAME_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.name.tooShort", {
+                count: MIN_NAME_LENGTH,
+              }),
+            )
+            .max(
+              MAX_NAME_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.name.tooLong", {
+                count: MAX_NAME_LENGTH,
+              }),
+            )
+            .optional(),
+          surname: z
+            .string()
+            .trim()
+            .min(
+              MIN_NAME_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.name.tooShort", {
+                count: MIN_NAME_LENGTH,
+              }),
+            )
+            .max(
+              MAX_NAME_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.name.tooLong", {
+                count: MAX_NAME_LENGTH,
+              }),
+            )
+            .optional(),
           password: z
             .string()
+            .trim()
             .min(
               MIN_PASSWORD_LENGTH,
               t("mutation.registerWithEmail.errors.fields.password.tooShort", {
@@ -44,9 +93,7 @@ export default {
             ),
         });
 
-        const { password } = form.parse({
-          password: input.password,
-        });
+        const { password, firstName, lastName, surname } = form.parse(input);
 
         let user = await prismaClient.user.findFirst({
           where: {

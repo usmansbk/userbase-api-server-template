@@ -18,5 +18,8 @@ export const MAX_LOGIN_ATTEMPT = 5;
 export const ACCESS_TOKEN_EXPIRES_IN: DurationType = [15, "minutes"];
 export const REFRESH_TOKEN_EXPIRES_IN: DurationType = [7, "days"];
 export const ID_TOKEN_EXPIRES_IN: DurationType = [7, "days"];
+
 export const MIN_PASSWORD_LENGTH = 10;
 export const MAX_PASSWORD_LENGTH = 32;
+export const MIN_NAME_LENGTH = 2;
+export const MAX_NAME_LENGTH = 30;

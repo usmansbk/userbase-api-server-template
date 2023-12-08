@@ -23,6 +23,10 @@
           "password": {
             "tooShort": "Password must be at least {{count}} characters.",
             "tooLong": "Password must not be longer than {{count}} charaters."
+          },
+          "name": {
+            "tooShort": "Name must be at least {{count}} characters.",
+            "tooLong": "Name must not be longer than {{count}} characters."
           }
         }
       }
