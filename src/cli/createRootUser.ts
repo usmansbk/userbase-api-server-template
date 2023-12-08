@@ -65,7 +65,7 @@ export default async function createRootUser() {
           required_error: "Email is required",
         })
         .trim()
-        .email()
+        .email("Invalid email address")
         .parse(emailInput);
 
       const newPasswordInput = await password({
