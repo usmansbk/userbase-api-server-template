@@ -83,7 +83,7 @@
     "@inquirer/password": "^1.1.14",
     "@inquirer/prompts": "^3.3.0",
     "@prisma/client": "^5.7.0",
-    "@sentry/node": "^7.85.0",
+    "@sentry/node": "^7.86.0",
     "@sentry/profiling-node": "^1.2.6",
     "awesome-phonenumber": "^6.2.0",
     "body-parser": "^1.20.2",

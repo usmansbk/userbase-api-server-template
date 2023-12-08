@@ -1,9 +1,13 @@
-import { ZodError } from "zod";
+import { ZodError, z } from "zod";
 import { UserStatus } from "@prisma/client";
 import ValidationError from "@/utils/errors/ValidationError";
 import dayjs from "@/utils/dayjs";
 import { AUTH_PREFIX } from "@/constants/cachePrefixes";
-import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import {
+  MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  REFRESH_TOKEN_EXPIRES_IN,
+} from "@/constants/limits";
 import type { AppContext, UserSessions } from "types";
 import type {
   MutationRegisterWithEmailArgs,
@@ -20,15 +24,29 @@ export default {
       const { prismaClient, t, jwtClient, redisClient, clientId } = context;
 
       try {
-        const {
-          email,
-          password,
-          firstName,
-          lastName,
-          surname,
-          language,
-          phoneNumber,
-        } = input;
+        const { email, firstName, lastName, surname, language, phoneNumber } =
+          input;
+
+        const form = z.object({
+          password: z
+            .string()
+            .min(
+              MIN_PASSWORD_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.password.tooShort", {
+                count: MIN_PASSWORD_LENGTH,
+              }),
+            )
+            .max(
+              MAX_PASSWORD_LENGTH,
+              t("mutation.registerWithEmail.errors.fields.password.tooLong", {
+                count: MAX_PASSWORD_LENGTH,
+              }),
+            ),
+        });
+
+        const { password } = form.parse({
+          password: input.password,
+        });
 
         let user = await prismaClient.user.findFirst({
           where: {
@@ -58,9 +76,11 @@ export default {
               fieldErrors: [
                 {
                   name: "email",
-                  message: t(
-                    "mutation.registerWithEmail.errors.fields.email.alreadyExist",
-                  ),
+                  messages: [
+                    t(
+                      "mutation.registerWithEmail.errors.fields.email.alreadyExist",
+                    ),
+                  ],
                 },
               ],
             },
@@ -117,8 +137,19 @@ export default {
         };
       } catch (e) {
         if (e instanceof ZodError) {
+          const fieldErrors = Object.entries(e.formErrors.fieldErrors).map(
+            ([name, messages]) => ({
+              name,
+              messages,
+            }),
+          );
+
           throw new ValidationError(
             t("mutation.registerWithEmail.errors.message"),
+            {
+              originalError: e,
+              fieldErrors,
+            },
           );
         }
         throw e;

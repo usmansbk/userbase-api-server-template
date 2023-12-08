@@ -2,7 +2,7 @@ import { GraphQLError } from "graphql";
 
 interface FieldError {
   name: string;
-  message: string;
+  messages: string[] | undefined;
 }
 
 interface Options {

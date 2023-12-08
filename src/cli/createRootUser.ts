@@ -1,14 +1,13 @@
 import { input } from "@inquirer/prompts";
 import password from "@inquirer/password";
 import "@/config/env";
-import getPrismaClient from "@/config/database";
+import prismaClient from "@/config/database";
 import logger from "@/utils/logger";
 import { UserStatus } from "@prisma/client";
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from "@/constants/limits";
 
 export default async function createRootUser() {
   try {
-    const prismaClient = getPrismaClient();
-
     let superUserRole = await prismaClient.role.findFirst({
       where: {
         name: "Root",
@@ -59,11 +58,14 @@ export default async function createRootUser() {
     if (!rootUser) {
       const email = await input({ message: "Email:" });
       const newPassword = await password({
-        message: "Password (6 - 32 characters long):",
+        message: "Password (10 - 32 characters long):",
       });
 
-      if (newPassword.length < 6 && password.length > 32) {
-        console.log("Password should be 6 - 32 characters long");
+      if (
+        newPassword.length < MIN_PASSWORD_LENGTH &&
+        password.length > MAX_PASSWORD_LENGTH
+      ) {
+        console.log("Password should be 8 - 32 characters long");
         return;
       }
 
