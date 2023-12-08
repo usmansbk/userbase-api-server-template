@@ -6,8 +6,34 @@ import type { AccountStatus } from "types/graphql";
 const prismaClient = new PrismaClient();
 const salt = bcrypt.genSaltSync(10);
 
-const checkPasswordExtension = Prisma.defineExtension({
-  name: "check password",
+const hasPasswordExtension = Prisma.defineExtension({
+  name: "hash-password-extension",
+  query: {
+    user: {
+      async create({ args, query }) {
+        if (args.data.password) {
+          args.data.password = await bcrypt.hash(args.data.password, salt);
+        }
+        return await query(args);
+      },
+      async createMany({ args, query }) {
+        if (Array.isArray(args.data)) {
+          await Promise.all(
+            args.data.map(async (data) => {
+              data.password = await bcrypt.hash(data.password, salt);
+            }),
+          );
+        } else {
+          args.data.password = await bcrypt.hash(args.data.password, salt);
+        }
+        return await query(args);
+      },
+    },
+  },
+});
+
+const comparePasswordExtension = Prisma.defineExtension({
+  name: "compare-password-extension",
   result: {
     user: {
       comparePassword: {
@@ -21,6 +47,7 @@ const checkPasswordExtension = Prisma.defineExtension({
 });
 
 const currentUserExtension = Prisma.defineExtension({
+  name: "current-user-extension",
   model: {
     user: {
       async currentUser(id: string): Promise<CurrentUser | null> {
@@ -77,7 +104,8 @@ const currentUserExtension = Prisma.defineExtension({
 
 const client = prismaClient
   .$extends(currentUserExtension)
-  .$extends(checkPasswordExtension);
+  .$extends(comparePasswordExtension)
+  .$extends(hasPasswordExtension);
 
 export type ExtendedPrismaClient = typeof client;
 
