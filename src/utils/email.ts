@@ -1,5 +1,5 @@
 const emailClient = {};
 
-export type Emailer = typeof emailClient;
+export type EmailClient = typeof emailClient;
 
 export default emailClient;

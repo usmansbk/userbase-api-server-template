@@ -14,6 +14,6 @@ const smsClient = {
   sendMessage,
 };
 
-export type SMS = typeof smsClient;
+export type SMSClient = typeof smsClient;
 
 export default smsClient;

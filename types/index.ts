@@ -1,13 +1,13 @@
 import type pino from "pino";
 import type { TFunction } from "i18next";
 import type { RedisPubSub } from "graphql-redis-subscriptions";
-import type { SMS } from "@/utils/sms";
+import type { SMSClient } from "@/utils/sms";
 import type { Storage } from "@/utils/storage";
 import type { Redis } from "ioredis";
 import type { ExtendedPrismaClient } from "@/config/database";
 import type { AccountStatus, UserSession } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
-import type { Emailer } from "@/utils/email";
+import type { EmailClient } from "@/utils/email";
 
 export interface UserSessions {
   [key: string]: UserSession;
@@ -30,8 +30,8 @@ export interface AppContext {
   t: TFunction<"translation" | "error", undefined>;
   prismaClient: ExtendedPrismaClient;
   redisClient: Redis;
-  emailClient: Emailer;
-  smsClient: SMS;
+  emailClient: EmailClient;
+  smsClient: SMSClient;
   jwtClient: JWTClient;
   pubsub: RedisPubSub;
   language: string;
