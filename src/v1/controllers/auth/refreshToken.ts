@@ -49,7 +49,9 @@ export default function refreshToken(
 
       const sessions = new Map(Object.entries(user.sessions as UserSessions));
 
-      if (!sessions.has(oldAzp!)) {
+      const oldSession = sessions.get(oldAzp!);
+
+      if (!oldSession || oldSession.jti !== decodedRefreshToken.sub) {
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
