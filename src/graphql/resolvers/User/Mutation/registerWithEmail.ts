@@ -1,14 +1,14 @@
 import { ZodError } from "zod";
 import { UserStatus } from "@prisma/client";
-import type {
-  MutationRegisterWithEmailArgs,
-  AuthResponse,
-} from "types/graphql";
 import ValidationError from "@/utils/errors/ValidationError";
 import dayjs from "@/utils/dayjs";
 import { AUTH_PREFIX } from "@/constants/cachePrefixes";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import type { AppContext, UserSessions } from "types";
+import type {
+  MutationRegisterWithEmailArgs,
+  AuthResponse,
+} from "types/graphql";
 
 export default {
   Mutation: {
