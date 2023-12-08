@@ -39,7 +39,7 @@ const comparePasswordExtension = Prisma.defineExtension({
       comparePassword: {
         needs: { password: true },
         compute(user) {
-          return (password: string) => bcrypt.compare(user.password, password);
+          return (password: string) => bcrypt.compare(password, user.password);
         },
       },
     },

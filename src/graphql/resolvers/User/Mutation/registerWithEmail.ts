@@ -114,12 +114,20 @@ export default {
           },
         });
 
-        if (user && user.status === UserStatus.Staged) {
-          user = await prismaClient.user.update({
+        const tempAccountList: UserStatus[] = [
+          UserStatus.Staged,
+          UserStatus.Provisioned,
+        ];
+
+        if (user && tempAccountList.includes(user.status)) {
+          await prismaClient.user.delete({
             where: {
               id: user.id,
             },
+          });
+          user = await prismaClient.user.create({
             data: {
+              email,
               password,
               firstName,
               lastName,

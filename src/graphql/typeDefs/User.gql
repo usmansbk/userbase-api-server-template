@@ -21,7 +21,7 @@ enum AccountStatus {
   Staged
 
   """
-  Accounts have a provisioned status when they are provisioned, but the user has not provided verification by clicking through the activation email or provided a password.
+  Accounts have a provisioned status when the user has not provided verification by clicking through the activation email.
   """
   Provisioned
 
