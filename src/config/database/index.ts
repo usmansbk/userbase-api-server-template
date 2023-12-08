@@ -1,8 +1,24 @@
 import { Prisma, PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import type { CurrentUser, UserSessions } from "types";
 import type { AccountStatus } from "types/graphql";
 
 const prismaClient = new PrismaClient();
+const salt = bcrypt.genSaltSync(10);
+
+const checkPasswordExtension = Prisma.defineExtension({
+  name: "check password",
+  result: {
+    user: {
+      comparePassword: {
+        needs: { password: true },
+        compute(user) {
+          return (password: string) => bcrypt.compare(user.password, password);
+        },
+      },
+    },
+  },
+});
 
 const currentUserExtension = Prisma.defineExtension({
   model: {
@@ -59,7 +75,9 @@ const currentUserExtension = Prisma.defineExtension({
   },
 });
 
-const client = prismaClient.$extends(currentUserExtension);
+const client = prismaClient
+  .$extends(currentUserExtension)
+  .$extends(checkPasswordExtension);
 
 export type ExtendedPrismaClient = typeof client;
 

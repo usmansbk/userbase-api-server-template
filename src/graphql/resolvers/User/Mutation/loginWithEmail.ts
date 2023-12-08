@@ -1,7 +1,10 @@
 import dayjs from "@/utils/dayjs";
 import { UserStatus } from "@prisma/client";
-import { AUTH_PREFIX } from "@/constants/cachePrefixes";
-import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import { AUTH_PREFIX, LOGIN_ATTEMPT } from "@/constants/cachePrefixes";
+import {
+  MAX_LOGIN_ATTEMPT,
+  REFRESH_TOKEN_EXPIRES_IN,
+} from "@/constants/limits";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { MutationLoginWithEmailArgs, AuthResponse } from "types/graphql";
@@ -27,9 +30,6 @@ export default {
         );
       }
 
-      // TODO: check password extension
-      // TODO: check failed attempts
-
       const denyList: UserStatus[] = [
         UserStatus.LockedOut,
         UserStatus.Suspended,
@@ -37,6 +37,31 @@ export default {
         UserStatus.Recovery,
         UserStatus.Deprovisioned,
       ];
+
+      const isMatched = await user.comparePassword(input.password);
+      if (!isMatched) {
+        if (!denyList.includes(user.status)) {
+          const attempts = await redisClient.incr(
+            `${LOGIN_ATTEMPT}:${input.email}`,
+          );
+
+          if (attempts === MAX_LOGIN_ATTEMPT) {
+            // TODO: send email
+            await prismaClient.user.update({
+              where: {
+                id: user.id,
+              },
+              data: {
+                status: UserStatus.LockedOut,
+              },
+            });
+          }
+        }
+
+        throw new AuthenticationError(
+          t("mutation.loginWithEmail.errors.message"),
+        );
+      }
 
       if (denyList.includes(user.status)) {
         throw new ForbiddenError(
