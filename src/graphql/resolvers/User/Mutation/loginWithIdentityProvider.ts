@@ -10,6 +10,7 @@ import type {
 import type { AppContext } from "types";
 import dayjs from "@/utils/dayjs";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import { AUTH_PREFX } from "@/constants/cachePrefixes";
 
 export default {
   Mutation: {
@@ -18,7 +19,7 @@ export default {
       { input }: MutationLoginWithIdentityProviderArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { prismaClient, t, jwtClient, redisClient } = context;
+      const { prismaClient, t, jwtClient, redisClient, clientId } = context;
       const { provider, token } = input;
 
       let userPayload;
@@ -91,19 +92,32 @@ export default {
         });
       }
 
+      const { accessToken, refreshToken, jwtid, azp } = jwtClient.getAuthTokens(
+        {
+          sub: user.id,
+        },
+      );
+
+      await redisClient.setex(
+        `${AUTH_PREFX}:${clientId}:${azp}:${user.id}`,
+        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
+        jwtid,
+      );
+
+      await prismaClient.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          sessions: {
+            push: azp,
+          },
+        },
+      });
+
       if (isNewUser) {
         // TODO: send welcome email
       }
-
-      const { accessToken, refreshToken, jti } = jwtClient.getAuthTokens({
-        sub: user.id,
-      });
-
-      await redisClient.setex(
-        "",
-        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        jti,
-      );
 
       return {
         success: true,
