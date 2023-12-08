@@ -92,16 +92,14 @@ export default {
         });
       }
 
-      const { accessToken, refreshToken, jwtid, azp } = jwtClient.getAuthTokens(
-        {
-          sub: user.id,
-        },
-      );
+      const { accessToken, refreshToken, jti, azp } = jwtClient.getAuthTokens({
+        sub: user.id,
+      });
 
       await redisClient.setex(
         `${AUTH_PREFX}:${clientId}:${azp}:${user.id}`,
         dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        jwtid,
+        jti,
       );
 
       await prismaClient.user.update({
