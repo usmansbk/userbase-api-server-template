@@ -31,6 +31,7 @@ export default {
         const form = z.object({
           email: z
             .string()
+            .trim()
             .email(
               t("mutation.registerWithEmail.errors.fields.email.invalidEmail"),
             ),
