@@ -12,6 +12,16 @@
     },
     "logoutFromAllDevices": {
       "message": "You've logged out from all devices."
+    },
+    "registerWithEmail": {
+      "errors": {
+        "message": "Failed to create account.",
+        "fields": {
+          "email": {
+            "alreadyExist": "Your email has already been registered."
+          }
+        }
+      }
     }
   }
 }
