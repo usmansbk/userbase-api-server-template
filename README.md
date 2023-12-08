@@ -11,7 +11,7 @@ User management system api server base template
 - [x] Refresh access token
 - [x] Refresh token rotation
 - [x] Role Based Access Control
-- [ ] Register with email and Password
+- [x] Register with email and Password
 - [ ] Login with email
 - [ ] Verify email address
 - [ ] Change email address
