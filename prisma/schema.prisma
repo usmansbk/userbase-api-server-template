@@ -91,7 +91,7 @@ model User {
   permissionsAssignedToUser     UserPermission[] @relation("PermissionAssignee")
   permissionsAssignedByUser     UserPermission[] @relation("PermissionAssignor")
   rolePermissionsAssignedByUser RolePermission[] @relation("RolePermissionAssignor")
-  sessions                      String[]
+  sessions                      Json             @default("{}")
 }
 
 model UserAvatar {

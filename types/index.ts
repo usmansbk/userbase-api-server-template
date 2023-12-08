@@ -7,6 +7,11 @@ import type { Redis } from "ioredis";
 import type { ExtendedPrismaClient } from "@/config/database";
 import type { AccountStatus } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
+import type { Prisma } from "@prisma/client";
+
+export interface UserSession {
+  [key: string]: Prisma.JsonValue;
+}
 
 export interface CurrentUser {
   id: string;
@@ -14,7 +19,7 @@ export interface CurrentUser {
   language: string | null;
   roles: string[];
   permissions: string[];
-  sessions: string[];
+  sessions: Prisma.JsonValue;
 }
 
 export interface AppContext {

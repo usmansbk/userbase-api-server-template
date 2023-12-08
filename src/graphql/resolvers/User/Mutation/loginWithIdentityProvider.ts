@@ -7,7 +7,7 @@ import type {
   MutationLoginWithIdentityProviderArgs,
   AuthResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
+import type { AppContext, UserSession } from "types";
 import dayjs from "@/utils/dayjs";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { AUTH_PREFX } from "@/constants/cachePrefixes";
@@ -102,14 +102,18 @@ export default {
         jti,
       );
 
+      const sessions = new Map(Object.entries(user.sessions as UserSession));
+      sessions.set(azp, {
+        jti,
+        createdAt: dayjs.utc().toISOString(),
+      });
+
       await prismaClient.user.update({
         where: {
           id: user.id,
         },
         data: {
-          sessions: {
-            push: azp,
-          },
+          sessions: Object.fromEntries(sessions),
         },
       });
 

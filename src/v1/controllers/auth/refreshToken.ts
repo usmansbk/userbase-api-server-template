@@ -4,6 +4,7 @@ import { AUTH_PREFX } from "@/constants/cachePrefixes";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import type { NextFunction, Request, Response } from "express";
+import type { UserSession } from "types";
 
 export default function refreshToken(
   req: Request,
@@ -56,15 +57,18 @@ export default function refreshToken(
         jti,
       );
 
+      const sessions = new Map(Object.entries(user.sessions as UserSession));
+      sessions.delete(oldAzp!);
+      sessions.set(azp, {
+        jti,
+        createdAt: dayjs.utc().toISOString(),
+      });
+
       await prismaClient.user.update({
         where: {
           id: user.id,
         },
-        data: {
-          sessions: {
-            set: user.sessions.filter((session) => session !== azp).concat(azp),
-          },
-        },
+        data: { sessions: Object.fromEntries(sessions) },
       });
 
       res.status(200).json({
