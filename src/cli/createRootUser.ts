@@ -1,3 +1,4 @@
+import { ZodError, z } from "zod";
 import { input } from "@inquirer/prompts";
 import password from "@inquirer/password";
 import "@/config/env";
@@ -56,18 +57,35 @@ export default async function createRootUser() {
     });
 
     if (!rootUser) {
-      const email = await input({ message: "Email:" });
-      const newPassword = await password({
+      const emailInput = await input({ message: "Email:" });
+
+      const email = z
+        .string({
+          invalid_type_error: "Invalid email address",
+          required_error: "Email is required",
+        })
+        .trim()
+        .email()
+        .parse(emailInput);
+
+      const newPasswordInput = await password({
         message: "Password (10 - 32 characters long):",
       });
 
-      if (
-        newPassword.length < MIN_PASSWORD_LENGTH &&
-        password.length > MAX_PASSWORD_LENGTH
-      ) {
-        console.log("Password should be 8 - 32 characters long");
-        return;
-      }
+      const newPassword = z
+        .string({
+          required_error: "Password is required",
+        })
+        .trim()
+        .min(
+          MIN_PASSWORD_LENGTH,
+          `Password must be at least ${MIN_PASSWORD_LENGTH} characters`,
+        )
+        .max(
+          MAX_PASSWORD_LENGTH,
+          `Password must not be longer than ${MAX_PASSWORD_LENGTH} characters`,
+        )
+        .parse(newPasswordInput);
 
       const confirmPassword = await password({ message: "Confirm password:" });
 
@@ -100,7 +118,11 @@ export default async function createRootUser() {
       console.log("User already exist.");
     }
   } catch (e) {
-    logger.error(e);
+    if (e instanceof ZodError) {
+      console.log(e.formErrors.formErrors);
+    } else {
+      logger.error(e);
+    }
   }
 }
 
