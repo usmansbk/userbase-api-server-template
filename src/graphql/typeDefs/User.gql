@@ -7,6 +7,11 @@ type UserAvatar implements Picture {
   updatedAt: DateTime
 }
 
+type UserSession {
+  jti: ID!
+  createdAt: DateTime!
+}
+
 enum AccountStatus {
   """
   Accounts have a staged status when they are first created, before the activation flow is initiated, or if there is a pending admin action.

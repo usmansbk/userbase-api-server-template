@@ -4,7 +4,7 @@ import { AUTH_PREFX } from "@/constants/cachePrefixes";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import type { NextFunction, Request, Response } from "express";
-import type { UserSession } from "types";
+import type { UserSessions } from "types";
 
 export default function refreshToken(
   req: Request,
@@ -57,7 +57,7 @@ export default function refreshToken(
         jti,
       );
 
-      const sessions = new Map(Object.entries(user.sessions as UserSession));
+      const sessions = new Map(Object.entries(user.sessions as UserSessions));
       sessions.delete(oldAzp!);
       sessions.set(azp, {
         jti,

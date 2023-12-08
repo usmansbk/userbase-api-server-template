@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import type { CurrentUser } from "types";
+import type { CurrentUser, UserSessions } from "types";
 import type { AccountStatus } from "types/graphql";
 
 const prismaClient = new PrismaClient();
@@ -41,7 +41,7 @@ const currentUserExtension = Prisma.defineExtension({
         return {
           id,
           status: user.status as AccountStatus,
-          sessions: user.sessions,
+          sessions: user.sessions as UserSessions,
           language: user.lastName,
           roles: user.rolesAssignedToUser.map((userRole) => userRole.role.name),
           permissions: user.permissionsAssignedToUser

@@ -5,12 +5,11 @@ import type { SMS } from "@/utils/sms";
 import type { Storage } from "@/utils/storage";
 import type { Redis } from "ioredis";
 import type { ExtendedPrismaClient } from "@/config/database";
-import type { AccountStatus } from "./graphql";
+import type { AccountStatus, UserSession } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
-import type { Prisma } from "@prisma/client";
 
-export interface UserSession {
-  [key: string]: Prisma.JsonValue;
+export interface UserSessions {
+  [key: string]: UserSession;
 }
 
 export interface CurrentUser {
@@ -19,7 +18,7 @@ export interface CurrentUser {
   language: string | null;
   roles: string[];
   permissions: string[];
-  sessions: Prisma.JsonValue;
+  sessions: UserSessions;
 }
 
 export interface AppContext {

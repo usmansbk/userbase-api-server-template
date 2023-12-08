@@ -11,6 +11,7 @@ import jwtClient from "@/utils/jwt";
 import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
 import type { AppContext, CurrentUser } from "types";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
@@ -47,15 +48,18 @@ export default function useWebSocketServer(
 
           if (authorization?.startsWith("Bearer")) {
             const token = authorization.split(/\s+/)[1];
-            if (token) {
-              const payload = jwtClient.verify(token);
-              if (payload) {
-                sessionId = payload.azp;
-                currentUser = await prismaClient.user.currentUser(payload.sub!);
-              }
+            const payload = jwtClient.verify(token);
+            if (payload) {
+              sessionId = payload.azp;
+              currentUser = await prismaClient.user.currentUser(payload.sub!);
             }
 
             if (currentUser) {
+              if (!currentUser.sessions?.[payload.azp!]) {
+                throw new AuthenticationError(
+                  i18next.t("INVALID_AUTH_TOKEN", { ns: "error" }),
+                );
+              }
               configureScope((scope) => {
                 scope.setUser({ id: currentUser!.id });
               });

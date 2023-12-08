@@ -7,7 +7,7 @@ import type {
   MutationLoginWithIdentityProviderArgs,
   AuthResponse,
 } from "types/graphql";
-import type { AppContext, UserSession } from "types";
+import type { AppContext, UserSessions } from "types";
 import dayjs from "@/utils/dayjs";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { AUTH_PREFX } from "@/constants/cachePrefixes";
@@ -102,7 +102,7 @@ export default {
         jti,
       );
 
-      const sessions = new Map(Object.entries(user.sessions as UserSession));
+      const sessions = new Map(Object.entries(user.sessions as UserSessions));
       sessions.set(azp, {
         jti,
         createdAt: dayjs.utc().toISOString(),

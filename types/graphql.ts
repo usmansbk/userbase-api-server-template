@@ -509,6 +509,12 @@ export type UserRole = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type UserSession = {
+  __typename?: 'UserSession';
+  createdAt: Scalars['DateTime']['output'];
+  jti: Scalars['ID']['output'];
+};
+
 export type VerifyEmailInput = {
   token: Scalars['NonEmptyString']['input'];
 };
@@ -700,6 +706,7 @@ export type ResolversTypes = ResolversObject<{
   UserPermission: ResolverTypeWrapper<UserPermission>;
   UserResponse: ResolverTypeWrapper<UserResponse>;
   UserRole: ResolverTypeWrapper<UserRole>;
+  UserSession: ResolverTypeWrapper<UserSession>;
   UtcOffset: ResolverTypeWrapper<Scalars['UtcOffset']['output']>;
   VerifyEmailInput: VerifyEmailInput;
   VerifyNewEmailInput: VerifyNewEmailInput;
@@ -805,6 +812,7 @@ export type ResolversParentTypes = ResolversObject<{
   UserPermission: UserPermission;
   UserResponse: UserResponse;
   UserRole: UserRole;
+  UserSession: UserSession;
   UtcOffset: Scalars['UtcOffset']['output'];
   VerifyEmailInput: VerifyEmailInput;
   VerifyNewEmailInput: VerifyNewEmailInput;
@@ -1247,6 +1255,12 @@ export type UserRoleResolvers<ContextType = any, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserSessionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserSession'] = ResolversParentTypes['UserSession']> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  jti?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export interface UtcOffsetScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['UtcOffset'], any> {
   name: 'UtcOffset';
 }
@@ -1335,6 +1349,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   UserPermission?: UserPermissionResolvers<ContextType>;
   UserResponse?: UserResponseResolvers<ContextType>;
   UserRole?: UserRoleResolvers<ContextType>;
+  UserSession?: UserSessionResolvers<ContextType>;
   UtcOffset?: GraphQLScalarType;
   Void?: GraphQLScalarType;
 }>;

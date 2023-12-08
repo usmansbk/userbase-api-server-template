@@ -57,6 +57,11 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         }
 
         if (currentUser) {
+          if (!currentUser.sessions?.[payload.azp!]) {
+            throw new AuthenticationError(
+              t("INVALID_AUTH_TOKEN", { ns: "error" }),
+            );
+          }
           req.context.currentUser = currentUser;
           configureScope((scope) => {
             scope.setUser({ id: currentUser!.id });
