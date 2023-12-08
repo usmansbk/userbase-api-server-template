@@ -162,10 +162,6 @@ type AuthResponse implements Response {
   """
   accessToken: JWT!
   """
-  ID tokens have requestor information, such as user metadata to better the user experience.
-  """
-  idToken: JWT
-  """
   Token used to obtain a renewed Access Token without forcing users to log in again.
   """
   refreshToken: JWT
@@ -280,6 +276,7 @@ type Mutation {
   updateCurrentUserPhoneNumber(input: UpdatePhoneNumberInput!): UserResponse!
     @auth
 
+  logoutFromAllDevices: MutationResponse! @auth
   requestDeleteCurrentUserAccount: MutationResponse! @auth
   deleteUserAccount(input: DeleteAccountInput!): MutationResponse!
 }

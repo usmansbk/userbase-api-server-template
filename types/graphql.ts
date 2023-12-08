@@ -108,8 +108,10 @@ export enum AccountStatus {
 
 export type AuthResponse = Response & {
   __typename?: 'AuthResponse';
+  /** Access tokens contain information about what scopes, or permissions. */
   accessToken: Scalars['JWT']['output'];
   message?: Maybe<Scalars['String']['output']>;
+  /** Token used to obtain a renewed Access Token without forcing users to log in again. */
   refreshToken?: Maybe<Scalars['JWT']['output']>;
   success?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -211,6 +213,7 @@ export type Mutation = {
   loginWithEmailOTP: AuthResponse;
   loginWithIdentityProvider: AuthResponse;
   loginWithSMSOTP: AuthResponse;
+  logoutFromAllDevices: MutationResponse;
   registerWithEmail: AuthResponse;
   removeCurrentUserPicture: UserResponse;
   requestChangeCurrentUserEmailAddress: MutationResponse;
@@ -384,6 +387,11 @@ export type Response = {
   success?: Maybe<Scalars['Boolean']['output']>;
 };
 
+/**
+ * Essentially, a role is a collection of permissions that you can apply to users.
+ * Using roles makes it easier to add, remove, and adjust permissions than assigning permissions to users individually.
+ * As your user base increases in scale and complexity, roles become particularly useful.
+ */
 export type Role = {
   __typename?: 'Role';
   createdAt: Scalars['DateTime']['output'];
@@ -990,6 +998,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   loginWithEmailOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailOtpArgs, 'input'>>;
   loginWithIdentityProvider?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithIdentityProviderArgs, 'input'>>;
   loginWithSMSOTP?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithSmsotpArgs, 'input'>>;
+  logoutFromAllDevices?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   registerWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationRegisterWithEmailArgs, 'input'>>;
   removeCurrentUserPicture?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType>;
   requestChangeCurrentUserEmailAddress?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;

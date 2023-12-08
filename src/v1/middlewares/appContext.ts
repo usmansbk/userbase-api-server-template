@@ -16,11 +16,18 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
     const { t, language, i18n, headers, log } = req;
 
+    const clientIds = [
+      process.env.ANDROID_CLIENT_ID,
+      process.env.IOS_CLIENT_ID,
+      process.env.WEB_CLIENT_ID,
+    ];
+
     req.context = {
       t,
       log,
       pubsub,
       language,
+      clientIds,
       redisClient,
       prismaClient,
       smsClient,

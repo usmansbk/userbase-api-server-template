@@ -28,6 +28,12 @@ export default function useWebSocketServer(
         let currentUser: CurrentUser | undefined | null;
         let sessionId: string | undefined;
 
+        const clientIds = [
+          process.env.ANDROID_CLIENT_ID,
+          process.env.IOS_CLIENT_ID,
+          process.env.WEB_CLIENT_ID,
+        ];
+
         const clientId = ctx.connectionParams?.client_id as string;
 
         if (clientId) {
@@ -75,6 +81,7 @@ export default function useWebSocketServer(
           storage,
           clientId,
           sessionId,
+          clientIds,
         };
       },
       onConnect: (ctx) => {
