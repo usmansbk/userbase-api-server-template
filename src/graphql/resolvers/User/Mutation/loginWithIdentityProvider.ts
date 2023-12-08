@@ -8,6 +8,8 @@ import type {
   AuthResponse,
 } from "types/graphql";
 import type { AppContext } from "types";
+import dayjs from "@/utils/dayjs";
+import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 
 export default {
   Mutation: {
@@ -16,7 +18,7 @@ export default {
       { input }: MutationLoginWithIdentityProviderArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { prismaClient, t, jwtClient } = context;
+      const { prismaClient, t, jwtClient, redisClient } = context;
       const { provider, token } = input;
 
       let userPayload;
@@ -93,9 +95,15 @@ export default {
         // TODO: send welcome email
       }
 
-      const { accessToken, refreshToken } = jwtClient.getAuthTokens({
+      const { accessToken, refreshToken, jti } = jwtClient.getAuthTokens({
         sub: user.id,
       });
+
+      await redisClient.setex(
+        "",
+        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
+        jti,
+      );
 
       return {
         success: true,

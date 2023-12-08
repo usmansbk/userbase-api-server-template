@@ -30,9 +30,10 @@ declare global {
 }
 
 declare module "http" {
-  interface IncomingHttpHeaders {
+  export interface IncomingHttpHeaders {
     access_token?: string;
     refresh_token?: string;
+    client_id: string;
   }
 }
 

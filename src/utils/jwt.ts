@@ -12,6 +12,7 @@ import {
 } from "@/constants/limits";
 
 const testSecret = "secret";
+let audience: string;
 
 /**
  *
@@ -26,6 +27,7 @@ function sign(payload: JwtPayload, options: SignOptions = {}) {
   const token = jwt.sign(payload, privateKey, {
     algorithm: "RS256",
     issuer: process.env.APP_DOMAIN,
+    audience,
     ...options,
   });
 
@@ -40,6 +42,7 @@ function verify(token: string, options: VerifyOptions = {}) {
 
   const verified = jwt.verify(token, publicKey, {
     issuer: process.env.APP_DOMAIN,
+    audience,
     ...options,
   });
 
@@ -72,11 +75,16 @@ function getAuthTokens(payload: JwtPayload) {
   };
 }
 
+function setAudience(aud: string) {
+  audience = aud;
+}
+
 const jwtClient = {
   sign,
   verify,
   decode,
   getAuthTokens,
+  setAudience,
 };
 
 export type JWTClient = typeof jwtClient;

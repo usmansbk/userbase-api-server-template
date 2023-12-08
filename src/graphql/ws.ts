@@ -28,9 +28,14 @@ export default function useWebSocketServer(
         let currentUser: CurrentUser | undefined | null;
 
         const prismaClient = getPrismaClient();
+        const clientId = ctx.connectionParams?.client_id as string;
+
+        if (clientId) {
+          jwtClient.setAudience(clientId);
+        }
 
         try {
-          const token = ctx.connectionParams?.Authorization as
+          const token = ctx.connectionParams?.authorization as
             | string
             | undefined;
 
@@ -61,6 +66,7 @@ export default function useWebSocketServer(
           language: i18next.language,
           log: logger,
           storage,
+          clientId,
         };
       },
       onConnect: (ctx) => {

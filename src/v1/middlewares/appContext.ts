@@ -6,8 +6,9 @@ import smsClient from "@/utils/sms";
 import jwtClient from "@/utils/jwt";
 import storage from "@/utils/storage";
 import getPrismaClient from "@/config/database";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
 import QueryError from "@/utils/errors/QueryError";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
+import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { NextFunction, Request, Response } from "express";
 import type { CurrentUser } from "types";
 
@@ -15,7 +16,15 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
     const { t, language, i18n, headers, log } = req;
     try {
-      const { authorization } = headers;
+      const { authorization, client_id: clientId } = headers;
+
+      if (process.env.NODE_ENV === "production" && !clientId) {
+        throw new ForbiddenError(t("UNSUPPORTED_CLIENT", { ns: "error" }));
+      }
+
+      if (clientId) {
+        jwtClient.setAudience(clientId);
+      }
 
       const prismaClient = getPrismaClient();
 
@@ -48,6 +57,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         currentUser,
         smsClient,
         jwtClient,
+        clientId,
         storage,
       };
 
