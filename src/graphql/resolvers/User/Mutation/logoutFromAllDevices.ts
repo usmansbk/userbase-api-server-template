@@ -14,9 +14,9 @@ export default {
       await Promise.all(
         Object.values(currentUser!.sessions).map(
           async ({ clientId, id }) =>
-            await redisClient.del(`
-${AUTH_PREFIX}:${clientId}:${id}:${currentUser!.id}
-			`),
+            await redisClient.del(
+              `${AUTH_PREFIX}:${clientId}:${id}:${currentUser!.id}`,
+            ),
         ),
       );
 
