@@ -58,6 +58,11 @@ export default function refreshToken(
       );
 
       const sessions = new Map(Object.entries(user.sessions as UserSessions));
+
+      if (!sessions.has(oldAzp!)) {
+        throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
+      }
+
       sessions.delete(oldAzp!);
       sessions.set(azp, {
         jti,
