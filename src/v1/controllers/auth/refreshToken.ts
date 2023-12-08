@@ -1,6 +1,6 @@
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import dayjs from "@/utils/dayjs";
-import { AUTH_PREFX } from "@/constants/cachePrefixes";
+import { AUTH_PREFIX } from "@/constants/cachePrefixes";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import type { NextFunction, Request, Response } from "express";
@@ -30,7 +30,7 @@ export default function refreshToken(
       const { azp: oldAzp, sub } = decodedAccessToken;
       const decodedRefreshToken = jwtClient.verify(oldRefreshToken!);
       const oldJti = await redisClient.getdel(
-        `${AUTH_PREFX}:${clientId}:${oldAzp}:${sub}`,
+        `${AUTH_PREFIX}:${clientId}:${oldAzp}:${sub}`,
       );
 
       if (!oldJti || decodedRefreshToken.sub !== oldJti) {
@@ -60,14 +60,16 @@ export default function refreshToken(
       });
 
       await redisClient.setex(
-        `${AUTH_PREFX}:${clientId}:${azp}:${sub}`,
+        `${AUTH_PREFIX}:${clientId}:${azp}:${sub}`,
         dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
         jti,
       );
 
       sessions.delete(oldAzp!);
       sessions.set(azp, {
+        id: azp,
         jti,
+        clientId: clientId!,
         createdAt: dayjs.utc().toISOString(),
       });
 

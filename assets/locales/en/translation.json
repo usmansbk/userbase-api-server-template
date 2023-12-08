@@ -9,6 +9,9 @@
     "login": {
       "welcome": "Welcome, {{name}}!",
       "welcomeBack": "Welcome back, {{name}}!"
+    },
+    "logoutFromAllDevices": {
+      "message": "You've logged out from all devices."
     }
   }
 }

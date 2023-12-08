@@ -511,7 +511,9 @@ export type UserRole = {
 
 export type UserSession = {
   __typename?: 'UserSession';
+  clientId: Scalars['ID']['output'];
   createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
   jti: Scalars['ID']['output'];
 };
 
@@ -1256,7 +1258,9 @@ export type UserRoleResolvers<ContextType = any, ParentType extends ResolversPar
 }>;
 
 export type UserSessionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserSession'] = ResolversParentTypes['UserSession']> = ResolversObject<{
+  clientId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   jti?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;

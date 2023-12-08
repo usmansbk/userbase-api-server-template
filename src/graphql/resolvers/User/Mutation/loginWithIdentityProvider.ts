@@ -10,7 +10,7 @@ import type {
 import type { AppContext, UserSessions } from "types";
 import dayjs from "@/utils/dayjs";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
-import { AUTH_PREFX } from "@/constants/cachePrefixes";
+import { AUTH_PREFIX } from "@/constants/cachePrefixes";
 
 export default {
   Mutation: {
@@ -97,14 +97,16 @@ export default {
       });
 
       await redisClient.setex(
-        `${AUTH_PREFX}:${clientId}:${azp}:${user.id}`,
+        `${AUTH_PREFIX}:${clientId}:${azp}:${user.id}`,
         dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
         jti,
       );
 
       const sessions = new Map(Object.entries(user.sessions as UserSessions));
       sessions.set(azp, {
+        id: azp,
         jti,
+        clientId: clientId!,
         createdAt: dayjs.utc().toISOString(),
       });
 

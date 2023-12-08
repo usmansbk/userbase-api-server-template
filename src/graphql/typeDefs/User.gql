@@ -8,7 +8,9 @@ type UserAvatar implements Picture {
 }
 
 type UserSession {
+  id: ID!
   jti: ID!
+  clientId: ID!
   createdAt: DateTime!
 }
 
