@@ -22,12 +22,12 @@ export default {
     ): Promise<AuthResponse> {
       const {
         t,
-        prismaClient,
+        ip,
+        clientId,
         jwtClient,
         redisClient,
-        clientId,
         emailClient,
-        ip,
+        prismaClient,
       } = context;
 
       const user = await prismaClient.user.findFirst({
