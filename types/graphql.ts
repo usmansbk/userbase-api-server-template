@@ -96,7 +96,7 @@ export enum AccountStatus {
   LockedOut = 'LockedOut',
   /** Accounts have a password expired status when the password has expired and the account requires an update to the password before a user is granted access to applications. */
   PasswordExpired = 'PasswordExpired',
-  /** Accounts have a provisioned status when they are provisioned, but the user has not provided verification by clicking through the activation email or provided a password. */
+  /** Accounts have a provisioned status when the user has not provided verification by clicking through the activation email. */
   Provisioned = 'Provisioned',
   /** Accounts have a recovery status when a user requests a password reset or an admin initiates one on their behalf. */
   Recovery = 'Recovery',
@@ -216,7 +216,6 @@ export type Mutation = {
   logoutFromAllDevices: MutationResponse;
   registerWithEmail: AuthResponse;
   removeCurrentUserPicture: UserResponse;
-  requestChangeCurrentUserEmailAddress: MutationResponse;
   requestDeleteCurrentUserAccount: MutationResponse;
   requestEmailLoginOTP: MutationResponse;
   requestResetUserPassword: MutationResponse;
@@ -227,7 +226,6 @@ export type Mutation = {
   updateCurrentUserBasicInfo: UserResponse;
   updateCurrentUserPhoneNumber: UserResponse;
   verifyUserEmail: MutationResponse;
-  verifyUserNewEmailAddress: MutationResponse;
   verifyUserPhoneNumber: MutationResponse;
 };
 
@@ -314,11 +312,6 @@ export type MutationUpdateCurrentUserPhoneNumberArgs = {
 
 export type MutationVerifyUserEmailArgs = {
   input: VerifyEmailInput;
-};
-
-
-export type MutationVerifyUserNewEmailAddressArgs = {
-  input: VerifyNewEmailInput;
 };
 
 
@@ -1011,7 +1004,6 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   logoutFromAllDevices?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   registerWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationRegisterWithEmailArgs, 'input'>>;
   removeCurrentUserPicture?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType>;
-  requestChangeCurrentUserEmailAddress?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   requestDeleteCurrentUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   requestEmailLoginOTP?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestEmailLoginOtpArgs, 'email'>>;
   requestResetUserPassword?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestResetUserPasswordArgs, 'email'>>;
@@ -1022,7 +1014,6 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
   verifyUserEmail?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserEmailArgs, 'input'>>;
-  verifyUserNewEmailAddress?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserNewEmailAddressArgs, 'input'>>;
   verifyUserPhoneNumber?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserPhoneNumberArgs, 'input'>>;
 }>;
 
