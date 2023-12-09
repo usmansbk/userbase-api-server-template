@@ -56,13 +56,12 @@ export default {
         },
       });
 
-      const denyList: UserStatus[] = [
-        UserStatus.Deprovisioned,
-        UserStatus.Suspended,
-      ];
+      const allowList: UserStatus[] = [UserStatus.Staged, UserStatus.Active];
 
-      if (user && denyList.includes(user.status)) {
-        throw new ForbiddenError(t("UNAUTHORIZED", { ns: "error" }));
+      if (user && !allowList.includes(user.status)) {
+        throw new ForbiddenError(
+          t("mutation.login.errors.unauthorized", { context: user.status }),
+        );
       }
 
       let isNewUser = false;
