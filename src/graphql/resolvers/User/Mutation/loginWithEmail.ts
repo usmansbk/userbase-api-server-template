@@ -6,7 +6,7 @@ import {
   MAX_LOGIN_ATTEMPT,
   REFRESH_TOKEN_EXPIRES_IN,
 } from "@/constants/limits";
-import { ACCOUNT_LOCKED } from "@/constants/templates";
+import { ACCOUNT_LOCKED_TEMPLATE } from "@/constants/templates";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { MutationLoginWithEmailArgs, AuthResponse } from "types/graphql";
@@ -52,7 +52,7 @@ export default {
 
           if (count === MAX_LOGIN_ATTEMPT) {
             emailClient.send({
-              template: ACCOUNT_LOCKED,
+              template: ACCOUNT_LOCKED_TEMPLATE,
               message: {
                 to: user.email,
               },

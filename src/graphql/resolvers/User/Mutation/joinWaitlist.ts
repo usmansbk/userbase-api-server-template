@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import type { MutationResponse, MutationJoinWaitlistArgs } from "types/graphql";
 import type { AppContext } from "types";
-import { JOIN_WAITLIST } from "@/constants/templates";
+import { JOIN_WAITLIST_TEMPLATE } from "@/constants/templates";
 
 export default {
   Mutation: {
@@ -28,7 +28,7 @@ export default {
         });
 
         emailClient.send({
-          template: JOIN_WAITLIST,
+          template: JOIN_WAITLIST_TEMPLATE,
           message: {
             to: email,
           },
