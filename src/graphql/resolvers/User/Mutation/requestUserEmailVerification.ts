@@ -5,7 +5,6 @@ import type {
 } from "types/graphql";
 import type { AppContext } from "types";
 import { UserStatus } from "@prisma/client";
-import getOTP from "@/utils/getOTP";
 import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { VERIFY_EMAIL_TEMPLATE } from "@/constants/templates";
@@ -17,7 +16,7 @@ export default {
       { email }: MutationRequestUserEmailVerificationArgs,
       context: AppContext,
     ): Promise<MutationResponse> {
-      const { prismaClient, t, emailClient, redisClient } = context;
+      const { prismaClient, t, emailClient, redisClient, jwtClient } = context;
 
       const user = await prismaClient.user.findFirst({
         where: {
@@ -34,7 +33,17 @@ export default {
         const sentToken = await redisClient.get(cacheKey);
 
         if (!sentToken) {
-          const token = getOTP();
+          const expiresIn = dayjs
+            .duration(...EMAIL_VERIFICATION_TOKEN_EXPIRES_IN)
+            .asSeconds();
+
+          const token = jwtClient.signForAllClients(
+            { email },
+            {
+              expiresIn,
+            },
+          );
+          console.log(token);
 
           emailClient.send({
             template: VERIFY_EMAIL_TEMPLATE,
@@ -47,11 +56,7 @@ export default {
             },
           });
 
-          await redisClient.setex(
-            cacheKey,
-            dayjs.duration(...EMAIL_VERIFICATION_TOKEN_EXPIRES_IN).asSeconds(),
-            token,
-          );
+          await redisClient.setex(cacheKey, expiresIn, token);
         }
       }
 

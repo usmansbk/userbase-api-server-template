@@ -23,6 +23,8 @@ const clientIds = [
 /**
  *
  * payload exp field should contain the number of seconds since the epoch
+ * This function return a signed token that can only be used for a single client, i.e
+ * Example: A token generated from an android client won't be verified when sent from a iOS client
  */
 function sign(
   payload: JwtPayload & { azp?: string },
@@ -41,6 +43,36 @@ function sign(
   });
 
   return token;
+}
+
+function signForAllClients(payload: JwtPayload, options: SignOptions = {}) {
+  const privateKey =
+    process.env.NODE_ENV === "test"
+      ? testSecret
+      : fs.readFileSync("certs/private.pem");
+  const token = jwt.sign(payload, privateKey, {
+    algorithm: "RS256",
+    issuer: process.env.APP_DOMAIN,
+    audience: clientIds,
+    ...options,
+  });
+
+  return token;
+}
+
+function verifyForAllClients(token: string, options: VerifyOptions = {}) {
+  const publicKey =
+    process.env.NODE_ENV === "test"
+      ? testSecret
+      : fs.readFileSync("certs/public.pem");
+
+  const verified = jwt.verify(token, publicKey, {
+    issuer: process.env.APP_DOMAIN,
+    audience: clientIds,
+    ...options,
+  });
+
+  return verified as JwtPayload;
 }
 
 function verify(token: string, options: VerifyOptions = {}) {
@@ -96,6 +128,8 @@ const jwtClient = {
   verify,
   decode,
   getAuthTokens,
+  signForAllClients,
+  verifyForAllClients,
   setAudience,
   clientIds,
 };

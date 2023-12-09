@@ -26,6 +26,12 @@
     "requestUserEmailVerification": {
       "message": "If you've got an account, watch out for an email from us with further instructions!"
     },
+    "verifyUserEmail": {
+      "message": "You have verified your email.",
+      "errors": {
+        "message": "Your token is invalid or expired."
+      }
+    },
     "requestEmailLoginOTP": {
       "message": "If you possess an account, we'll dispatch an OTP code to you."
     },
