@@ -69,7 +69,7 @@ export default async function createRootUser() {
         .parse(emailInput);
 
       const newPasswordInput = await password({
-        message: "Password (10 - 32 characters long):",
+        message: `Password (${MIN_PASSWORD_LENGTH} - ${MAX_PASSWORD_LENGTH} characters long):`,
       });
 
       const newPassword = z
