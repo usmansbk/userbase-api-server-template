@@ -24,7 +24,7 @@ const clientIds = [
  *
  * payload exp field should contain the number of seconds since the epoch
  * This function return a signed token that can only be used for a single client, i.e
- * Example: A token generated from an android client won't be verified when sent from a iOS client
+ * Example: A token generated from an android app client won't be verified when sent for a iOS app client
  */
 function sign(
   payload: JwtPayload & { azp?: string },
