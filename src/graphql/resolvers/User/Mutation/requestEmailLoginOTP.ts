@@ -8,6 +8,7 @@ import dayjs from "@/utils/dayjs";
 import { EMAIL_PREFIX, OTP_PREFIX } from "@/constants/cachePrefixes";
 import { LOGIN_OTP_EXPIRES_IN } from "@/constants/limits";
 import { EMAIL_LOGIN_OTP_TEMPLATE } from "@/constants/templates";
+import getOTP from "@/utils/getOTP";
 
 export default {
   Mutation: {
@@ -31,7 +32,7 @@ export default {
         const sentToken = await redisClient.get(cacheKey);
 
         if (!sentToken) {
-          const token = "";
+          const token = getOTP();
 
           emailClient.send({
             template: EMAIL_LOGIN_OTP_TEMPLATE,
