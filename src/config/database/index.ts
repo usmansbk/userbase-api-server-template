@@ -6,7 +6,7 @@ import type { AccountStatus } from "types/graphql";
 const prismaClient = new PrismaClient();
 const salt = bcrypt.genSaltSync(10);
 
-const hasPasswordExtension = Prisma.defineExtension({
+const hashPasswordExtension = Prisma.defineExtension({
   name: "hash-password-extension",
   query: {
     user: {
@@ -125,7 +125,7 @@ const currentUserExtension = Prisma.defineExtension({
 const client = prismaClient
   .$extends(currentUserExtension)
   .$extends(comparePasswordExtension)
-  .$extends(hasPasswordExtension);
+  .$extends(hashPasswordExtension);
 
 export type ExtendedPrismaClient = typeof client;
 
