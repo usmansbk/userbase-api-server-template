@@ -4,11 +4,7 @@ import PinoHttp from "pino-http";
 import { json } from "body-parser";
 import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
-import i18nextMiddleware from "i18next-http-middleware";
-import { join, resolve } from "path";
-import { lstatSync, readdirSync } from "fs";
-import Backend from "i18next-fs-backend";
-import i18next from "i18next";
+import { initializeI18n } from "./config/i18n";
 import logger from "./utils/logger";
 import createApolloHTTPServer from "./graphql";
 import rateLimiter from "./v1/middlewares/rateLimiter";
@@ -18,34 +14,12 @@ import appContext from "./v1/middlewares/appContext";
 import { generateKeys } from "./utils/generateKeys";
 import { initializeSentry } from "./config/sentry";
 
-const localesDir = resolve("assets/locales");
-
 async function main() {
   generateKeys();
 
-  await i18next
-    .use(Backend)
-    .use(i18nextMiddleware.LanguageDetector)
-    .init({
-      initImmediate: false,
-      fallbackLng: "en",
-      ns: ["translation", "error"],
-      defaultNS: "translation",
-      preload: readdirSync(localesDir).filter((fileName) => {
-        const joinedPath = join(localesDir, fileName);
-        return lstatSync(joinedPath).isDirectory();
-      }),
-      backend: {
-        loadPath: join(localesDir, "{{lng}}/{{ns}}.json"),
-      },
-      interpolation: {
-        skipOnVariables: false,
-      },
-    });
-
   const app = express();
 
-  app.use(i18nextMiddleware.handle(i18next));
+  await initializeI18n(app);
 
   app.use(json());
   app.use(cors<cors.CorsRequest>());

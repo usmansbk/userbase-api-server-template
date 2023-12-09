@@ -1,8 +1,8 @@
 import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
-import i18next from "i18next";
 import { configureScope } from "@sentry/node";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import i18next from "@/config/i18n";
 import redisClient, { pubsub } from "@/config/redis";
 import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";

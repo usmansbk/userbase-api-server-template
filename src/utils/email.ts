@@ -34,8 +34,8 @@ async function send(options: EmailOptions) {
   try {
     await email.send(options);
   } catch (e) {
-    Sentry.captureException(e);
     logger.error(e);
+    Sentry.captureException(e);
   }
 }
 
