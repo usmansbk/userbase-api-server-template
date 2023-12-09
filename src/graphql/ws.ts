@@ -14,6 +14,7 @@ import type { GraphQLSchema } from "graphql";
 import type { AppContext, CurrentUser } from "types";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
@@ -73,6 +74,16 @@ export default function useWebSocketServer(
             }
           }
         } catch (error) {
+          if (error instanceof TokenExpiredError) {
+            throw new AuthenticationError(
+              t("EXPIRED_AUTH_TOKEN", { ns: "error" }),
+            );
+          }
+          if (error instanceof JsonWebTokenError) {
+            throw new AuthenticationError(
+              t("INVALID_AUTH_TOKEN", { ns: "error" }),
+            );
+          }
           log.info({ error });
         }
 

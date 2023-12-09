@@ -2,6 +2,7 @@ import Email, { type EmailOptions } from "email-templates";
 import nodemailer from "nodemailer";
 import path from "path";
 import ses, { aws } from "@/config/aws/ses";
+import Sentry from "@/config/sentry";
 import logger from "./logger";
 
 const transporter = nodemailer.createTransport({
@@ -33,6 +34,7 @@ async function send(options: EmailOptions) {
   try {
     await email.send(options);
   } catch (e) {
+    Sentry.captureException(e);
     logger.error(e);
   }
 }

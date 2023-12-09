@@ -1,8 +1,6 @@
 import "@/config/env";
 import express from "express";
 import PinoHttp from "pino-http";
-import * as Sentry from "@sentry/node";
-import { ProfilingIntegration } from "@sentry/profiling-node";
 import { json } from "body-parser";
 import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
@@ -18,6 +16,7 @@ import v1Router from "./v1/routes";
 import errorHandler from "./v1/middlewares/errorHandler";
 import appContext from "./v1/middlewares/appContext";
 import { generateKeys } from "./utils/generateKeys";
+import { initializeSentry } from "./config/sentry";
 
 const localesDir = resolve("assets/locales");
 
@@ -59,21 +58,7 @@ async function main() {
   // https://express-rate-limit.mintlify.app/guides/troubleshooting-proxy-issues
   app.set("trust proxy", 1);
 
-  Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    enabled: process.env.NODE_ENV === "production",
-    integrations: [
-      // enable HTTP calls tracing
-      new Sentry.Integrations.Http({ tracing: true }),
-      // enable Express.js middleware tracing
-      new Sentry.Integrations.Express({ app }),
-      new ProfilingIntegration(),
-    ],
-    // Performance Monitoring
-    tracesSampleRate: 1.0,
-    // Set sampling rate for profiling - this is relative to tracesSampleRate
-    profilesSampleRate: 1.0,
-  });
+  const Sentry = initializeSentry(app);
 
   // The request handler must be the first middleware on the app
   app.use(Sentry.Handlers.requestHandler());
