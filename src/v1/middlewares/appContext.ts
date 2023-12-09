@@ -23,6 +23,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       redisClient,
       prismaClient,
       emailClient,
+      userAgent: headers["user-agent"],
       smsClient,
       jwtClient,
       storage,

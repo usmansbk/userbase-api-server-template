@@ -23,6 +23,7 @@ export interface CurrentUser {
 }
 
 export interface AppContext {
+  userAgent?: string;
   sessionId?: string;
   clientId?: string;
   log: pino.Logger<pino.LoggerOptions>;
