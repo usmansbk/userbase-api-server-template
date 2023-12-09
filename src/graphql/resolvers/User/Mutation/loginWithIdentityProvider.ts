@@ -11,6 +11,7 @@ import type { AppContext, UserSessions } from "types";
 import dayjs from "@/utils/dayjs";
 import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { AUTH_PREFIX } from "@/constants/cachePrefixes";
+import { WELCOME } from "@/constants/templates";
 
 export default {
   Mutation: {
@@ -137,7 +138,7 @@ export default {
 
       if (isNewUser && isEmailVerified) {
         emailClient.send({
-          template: "welcome",
+          template: WELCOME,
           message: {
             to: user.email,
           },
