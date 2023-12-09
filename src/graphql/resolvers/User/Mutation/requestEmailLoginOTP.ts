@@ -33,6 +33,7 @@ export default {
 
         if (!sentToken) {
           const token = getOTP();
+          console.log(token);
 
           emailClient.send({
             template: EMAIL_LOGIN_OTP_TEMPLATE,

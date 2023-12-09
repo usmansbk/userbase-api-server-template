@@ -73,7 +73,7 @@ export default {
         );
       }
 
-      if (!otp !== input.otp) {
+      if (otp !== input.otp) {
         const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${input.email}`;
         const attempts = await redisClient.get(attemptsKey);
 
