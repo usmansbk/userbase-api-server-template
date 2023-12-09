@@ -56,7 +56,11 @@ export default {
         },
       });
 
-      const allowList: UserStatus[] = [UserStatus.Staged, UserStatus.Active];
+      const allowList: UserStatus[] = [
+        UserStatus.Staged,
+        UserStatus.Provisioned,
+        UserStatus.Active,
+      ];
 
       if (user && !allowList.includes(user.status)) {
         throw new ForbiddenError(
