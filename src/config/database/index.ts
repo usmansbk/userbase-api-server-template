@@ -42,10 +42,8 @@ const hasPasswordExtension = Prisma.defineExtension({
               data.password = await bcrypt.hash(data.password, salt);
             }),
           );
-        } else {
-          if (typeof args.data.password === "string") {
-            args.data.password = await bcrypt.hash(args.data.password, salt);
-          }
+        } else if (typeof args.data.password === "string") {
+          args.data.password = await bcrypt.hash(args.data.password, salt);
         }
         return await query(args);
       },
