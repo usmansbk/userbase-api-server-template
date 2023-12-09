@@ -41,7 +41,7 @@ export default {
             },
             locals: {
               locale: user.language,
-              token,
+              link: token,
             },
           });
 
