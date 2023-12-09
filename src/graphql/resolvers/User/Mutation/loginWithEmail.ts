@@ -55,13 +55,13 @@ export default {
       const blockedIps = new Map(Object.entries(user.blockedIps!));
       const blockedIpAt = ip ? blockedIps.get(ip) : undefined;
 
-      if (
-        isMatched &&
+      const isBlocked =
         blockedIpAt &&
-        dayjs().diff(blockedIpAt, "days") <= BLOCK_IP_DURATION[0]
-      ) {
+        dayjs().diff(blockedIpAt, "days") <= BLOCK_IP_DURATION[0];
+
+      if (isBlocked) {
         throw new AuthenticationError(
-          t("mutation.loginWithEmail.errors.ip_blocked"),
+          t("mutation.loginWithEmail.errors.message"),
         );
       }
 
