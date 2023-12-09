@@ -272,8 +272,6 @@ type Mutation {
 
   requestUserEmailVerification(email: EmailAddress!): MutationResponse!
   verifyUserEmail(input: VerifyEmailInput!): MutationResponse!
-  requestChangeCurrentUserEmailAddress: MutationResponse! @auth
-  verifyUserNewEmailAddress(input: VerifyNewEmailInput!): MutationResponse!
 
   requestResetUserPassword(email: EmailAddress!): MutationResponse!
   resetUserPassword(input: ResetPasswordInput!): MutationResponse!

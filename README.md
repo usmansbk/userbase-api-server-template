@@ -13,7 +13,6 @@ User management system api server base template
 - [x] Register with email and Password
 - [x] Login with email (Brute-force protection)
 - [x] Verify email address
-- [ ] Change email address
 - [ ] Verify phone number
 - [ ] Login with verified phone number SMS OTP
 - [ ] Login with verified email OTP
