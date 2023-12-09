@@ -37,5 +37,8 @@ export default async function createMockContext(
     smsClient: {
       sendMessage: jest.fn(),
     },
+    emailClient: {
+      send: jest.fn(),
+    },
   };
 }
