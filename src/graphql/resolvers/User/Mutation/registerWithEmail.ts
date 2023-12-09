@@ -114,12 +114,12 @@ export default {
           },
         });
 
-        const tempAccountList: UserStatus[] = [
+        const tempUserList: UserStatus[] = [
           UserStatus.Staged,
           UserStatus.Provisioned,
         ];
 
-        if (user && tempAccountList.includes(user.status)) {
+        if (user && tempUserList.includes(user.status)) {
           await prismaClient.user.delete({
             where: {
               id: user.id,
