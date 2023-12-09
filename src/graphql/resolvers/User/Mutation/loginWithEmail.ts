@@ -18,7 +18,9 @@ export default {
       { input }: MutationLoginWithEmailArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { t, prismaClient, jwtClient, redisClient, clientId } = context;
+      const { t, prismaClient, jwtClient, redisClient, clientId, emailClient } =
+        context;
+
       const user = await prismaClient.user.findFirst({
         where: {
           email: input.email,
@@ -48,7 +50,15 @@ export default {
           const count = attempts ? Number.parseInt(attempts, 10) : 1;
 
           if (count === MAX_LOGIN_ATTEMPT) {
-            // TODO: send email
+            emailClient.send({
+              template: "account-locked",
+              message: {
+                to: user.email,
+              },
+              locals: {
+                locale: user.language,
+              },
+            });
             await prismaClient.user.update({
               where: {
                 id: user.id,
