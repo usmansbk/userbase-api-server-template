@@ -8,6 +8,8 @@ const query = `
 
 describe("Mutation", () => {
   describe("doSomething", () => {
-    expect(query).toBeDefined();
+    test("should run some mutations", () => {
+      expect(query).toBeDefined();
+    });
   });
 });
