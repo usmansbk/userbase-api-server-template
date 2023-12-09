@@ -18,6 +18,11 @@
         "unauthorized_PasswordExpired": "Reset your password to continue."
       }
     },
+    "loginWithOTP": {
+      "errors": {
+        "message": "Your OTP is invalid or expired."
+      }
+    },
     "loginWithEmail": {
       "errors": {
         "message": "Incorrect email or password."
