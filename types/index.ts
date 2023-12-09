@@ -23,6 +23,7 @@ export interface CurrentUser {
 }
 
 export interface AppContext {
+  ip?: string;
   userAgent?: string;
   sessionId?: string;
   clientId?: string;

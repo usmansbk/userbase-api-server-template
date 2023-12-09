@@ -3,10 +3,11 @@ import { UserStatus } from "@prisma/client";
 import { AUTH_PREFIX, LOGIN_ATTEMPT } from "@/constants/cachePrefixes";
 import {
   RESET_LOGIN_ATTEMPTS_IN,
-  MAX_LOGIN_ATTEMPT,
   REFRESH_TOKEN_EXPIRES_IN,
+  BRUTE_FORCE_THRESHOLD,
+  BLOCK_IP_DURATION,
 } from "@/constants/limits";
-import { ACCOUNT_LOCKED_TEMPLATE } from "@/constants/templates";
+import { BLOCKED_IP_TEMPLATE } from "@/constants/templates";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { MutationLoginWithEmailArgs, AuthResponse } from "types/graphql";
@@ -19,8 +20,15 @@ export default {
       { input }: MutationLoginWithEmailArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { t, prismaClient, jwtClient, redisClient, clientId, emailClient } =
-        context;
+      const {
+        t,
+        prismaClient,
+        jwtClient,
+        redisClient,
+        clientId,
+        emailClient,
+        ip,
+      } = context;
 
       const user = await prismaClient.user.findFirst({
         where: {
@@ -42,22 +50,40 @@ export default {
         UserStatus.Deprovisioned,
       ];
 
-      const attemptsKey = `${LOGIN_ATTEMPT}:${input.email}`;
       const isMatched = await user.comparePassword(input.password);
+
+      const blockedIps = new Map(Object.entries(user.blockedIps!));
+      const blockedIpAt = ip ? blockedIps.get(ip) : undefined;
+
+      if (
+        isMatched &&
+        blockedIpAt &&
+        dayjs().diff(blockedIpAt, "days") <= BLOCK_IP_DURATION[0]
+      ) {
+        throw new AuthenticationError(
+          t("mutation.loginWithEmail.errors.ip_blocked"),
+        );
+      }
+
       if (!isMatched) {
         if (!denyList.includes(user.status)) {
+          const attemptsKey = `${LOGIN_ATTEMPT}:${ip}:${input.email}`;
           const attempts = await redisClient.get(attemptsKey);
 
           const count = attempts ? Number.parseInt(attempts, 10) : 1;
 
-          if (count === MAX_LOGIN_ATTEMPT) {
+          if (count === BRUTE_FORCE_THRESHOLD) {
+            if (ip) {
+              blockedIps.set(ip, dayjs().toISOString());
+            }
             emailClient.send({
-              template: ACCOUNT_LOCKED_TEMPLATE,
+              template: BLOCKED_IP_TEMPLATE,
               message: {
                 to: user.email,
               },
               locals: {
                 locale: user.language,
+                ip,
               },
             });
             await prismaClient.user.update({
@@ -65,7 +91,7 @@ export default {
                 id: user.id,
               },
               data: {
-                status: UserStatus.LockedOut,
+                blockedIps: Object.fromEntries(blockedIps),
               },
             });
           }
@@ -81,7 +107,6 @@ export default {
           t("mutation.loginWithEmail.errors.message"),
         );
       }
-      await redisClient.del(attemptsKey);
 
       if (denyList.includes(user.status)) {
         throw new ForbiddenError(

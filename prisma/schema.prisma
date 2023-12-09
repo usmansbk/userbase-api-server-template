@@ -92,6 +92,7 @@ model User {
   permissionsAssignedByUser     UserPermission[] @relation("PermissionAssignor")
   rolePermissionsAssignedByUser RolePermission[] @relation("RolePermissionAssignor")
   sessions                      Json             @default("{}")
+  blockedIps                    Json             @default("{}")
 }
 
 model UserAvatar {

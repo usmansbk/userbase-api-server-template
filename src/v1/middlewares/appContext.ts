@@ -13,10 +13,11 @@ import type { CurrentUser } from "types";
 
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
-    const { t, language, i18n, headers, log } = req;
+    const { t, language, i18n, headers, log, ip } = req;
 
     req.context = {
       t,
+      ip,
       log,
       pubsub,
       language,
