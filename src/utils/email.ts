@@ -6,7 +6,7 @@ import Sentry from "@/config/sentry";
 import logger from "./logger";
 
 const transporter = nodemailer.createTransport({
-  SES: { ses, aws },
+  SES: { aws, ses },
 });
 
 const isProd = process.env.NODE_ENV === "production";
@@ -19,6 +19,7 @@ const email = new Email({
     locales: ["en"],
     directory: path.resolve("assets/emails/locales"),
   },
+  send: true,
   transport: isProd
     ? transporter
     : {
@@ -32,7 +33,8 @@ const email = new Email({
 
 async function send(options: EmailOptions) {
   try {
-    await email.send(options);
+    const result = await email.send(options);
+    logger.info(result);
   } catch (e) {
     logger.error(e);
     Sentry.captureException(e);

@@ -1,5 +1,5 @@
 {
   "watch": ["src", "assets", ".env"],
-  "ext": "ts,gql,json",
+  "ext": "ts,gql,json,pug",
   "ignore": ["tests"]
 }

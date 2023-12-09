@@ -1,10 +1,12 @@
-import { SES, SendEmailCommand } from "@aws-sdk/client-ses";
+import { SES, SendRawEmailCommand } from "@aws-sdk/client-ses";
+import { defaultProvider } from "@aws-sdk/credential-provider-node";
 
 const ses = new SES({
   apiVersion: "2010-12-01",
-  region: "us-east-1",
+  region: process.env.AWS_REGION,
+  credentialDefaultProvider: defaultProvider,
 });
 
-export const aws = { SendEmailCommand };
+export const aws = { SendRawEmailCommand };
 
 export default ses;
