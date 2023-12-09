@@ -18,21 +18,21 @@ export default {
     ): Promise<MutationResponse> {
       const { prismaClient, t, emailClient, redisClient, jwtClient } = context;
 
-      const user = await prismaClient.user.findFirst({
-        where: {
-          email,
-          isEmailVerified: {
-            not: true,
+      const cacheKey = `${VERIFY_EMAIL_OTP_PREFIX}:${email}`;
+      const sentToken = await redisClient.get(cacheKey);
+
+      if (!sentToken) {
+        const user = await prismaClient.user.findFirst({
+          where: {
+            email,
+            isEmailVerified: {
+              not: true,
+            },
+            status: UserStatus.Provisioned,
           },
-          status: UserStatus.Provisioned,
-        },
-      });
+        });
 
-      if (user) {
-        const cacheKey = `${VERIFY_EMAIL_OTP_PREFIX}:${email}`;
-        const sentToken = await redisClient.get(cacheKey);
-
-        if (!sentToken) {
+        if (user) {
           const expiresIn = dayjs
             .duration(...EMAIL_VERIFICATION_TOKEN_EXPIRES_IN)
             .asSeconds();
