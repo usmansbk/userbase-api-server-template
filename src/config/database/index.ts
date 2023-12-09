@@ -28,6 +28,27 @@ const hasPasswordExtension = Prisma.defineExtension({
         }
         return await query(args);
       },
+      async update({ args, query }) {
+        if (typeof args.data.password === "string") {
+          args.data.password = await bcrypt.hash(args.data.password, salt);
+        }
+
+        return await query(args);
+      },
+      async updateMany({ args, query }) {
+        if (Array.isArray(args.data)) {
+          await Promise.all(
+            args.data.map(async (data) => {
+              data.password = await bcrypt.hash(data.password, salt);
+            }),
+          );
+        } else {
+          if (typeof args.data.password === "string") {
+            args.data.password = await bcrypt.hash(args.data.password, salt);
+          }
+        }
+        return await query(args);
+      },
     },
   },
 });
