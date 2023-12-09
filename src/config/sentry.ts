@@ -5,7 +5,7 @@ import type { Express } from "express";
 export function initializeSentry(app: Express) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    // enabled: process.env.NODE_ENV === "production",
+    enabled: process.env.NODE_ENV === "production",
     integrations: [
       // enable HTTP calls tracing
       new Sentry.Integrations.Http({ tracing: true }),
