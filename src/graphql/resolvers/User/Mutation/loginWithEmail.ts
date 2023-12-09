@@ -56,8 +56,6 @@ export default {
         );
       }
 
-      const isMatched = await user.comparePassword(input.password);
-
       const denyList: UserStatus[] = [
         UserStatus.LockedOut,
         UserStatus.Suspended,
@@ -65,6 +63,8 @@ export default {
         UserStatus.Recovery,
         UserStatus.Deprovisioned,
       ];
+
+      const isMatched = await user.comparePassword(input.password);
 
       if (!isMatched) {
         if (!denyList.includes(user.status)) {
