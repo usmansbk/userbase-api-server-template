@@ -19,21 +19,20 @@ export default {
     ): Promise<MutationResponse> {
       const { prismaClient, t, emailClient, redisClient } = context;
 
-      const user = await prismaClient.user.findFirst({
-        where: {
-          email,
-          status: UserStatus.Active,
-          isEmailVerified: true,
-        },
-      });
+      const cacheKey = `${EMAIL_LOGIN_OTP_PREFIX}:${email}`;
+      const sentToken = await redisClient.get(cacheKey);
 
-      if (user) {
-        const cacheKey = `${EMAIL_LOGIN_OTP_PREFIX}:${email}`;
-        const sentToken = await redisClient.get(cacheKey);
+      if (!sentToken) {
+        const user = await prismaClient.user.findFirst({
+          where: {
+            email,
+            status: UserStatus.Active,
+            isEmailVerified: true,
+          },
+        });
 
-        if (!sentToken) {
+        if (user) {
           const token = getOTP();
-          console.log(token);
 
           emailClient.send({
             template: EMAIL_LOGIN_OTP_TEMPLATE,
