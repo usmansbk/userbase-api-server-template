@@ -4,35 +4,46 @@ import type {
 } from "types/graphql";
 import { UserStatus } from "@prisma/client";
 import type { AppContext } from "types";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default {
   Mutation: {
     async leaveWaitlist(
       _parent: unknown,
-      { email }: MutationLeaveWaitlistArgs,
+      { token }: MutationLeaveWaitlistArgs,
       context: AppContext,
     ): Promise<MutationResponse> {
-      const { prismaClient, t } = context;
+      const { prismaClient, t, jwtClient } = context;
 
-      const user = await prismaClient.user.findFirst({
-        where: {
-          email,
-          status: UserStatus.Staged,
-        },
-      });
+      try {
+        const verified = jwtClient.verifyForAllClients(token);
 
-      if (user) {
-        await prismaClient.user.delete({
+        const user = await prismaClient.user.findFirst({
           where: {
-            id: user.id,
+            email: verified.email,
+            status: UserStatus.Staged,
           },
         });
-      }
 
-      return {
-        success: true,
-        message: t("mutation.leaveWaitlist.message"),
-      };
+        if (user) {
+          await prismaClient.user.delete({
+            where: {
+              id: user.id,
+            },
+          });
+        }
+
+        return {
+          success: true,
+          message: t("mutation.leaveWaitlist.message"),
+        };
+      } catch (e) {
+        if (e instanceof JsonWebTokenError || e instanceof TokenExpiredError) {
+          throw new AuthenticationError(t("mutation.leaveWaitlist.message"));
+        }
+        throw e;
+      }
     },
   },
 };

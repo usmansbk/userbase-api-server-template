@@ -252,7 +252,7 @@ input VerifyEmailInput {
 
 type Mutation {
   joinWaitlist(email: EmailAddress!): MutationResponse!
-  leaveWaitlist(email: EmailAddress!): MutationResponse!
+  leaveWaitlist(token: NonEmptyString!): MutationResponse!
 
   loginWithIdentityProvider(input: IdentityProviderLoginInput!): AuthResponse!
 

@@ -10,7 +10,7 @@ export default {
       { email }: MutationJoinWaitlistArgs,
       context: AppContext,
     ): Promise<MutationResponse> {
-      const { prismaClient, t, emailClient, language } = context;
+      const { prismaClient, t, emailClient, language, jwtClient } = context;
 
       const user = await prismaClient.user.findFirst({
         where: {
@@ -27,6 +27,8 @@ export default {
           },
         });
 
+        const token = jwtClient.signForAllClients({ email });
+
         emailClient.send({
           template: JOIN_WAITLIST_TEMPLATE,
           message: {
@@ -34,6 +36,7 @@ export default {
           },
           locals: {
             locale: language,
+            link: token, // TODO: universal link
           },
         });
       }
