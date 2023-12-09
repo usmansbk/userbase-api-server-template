@@ -9,7 +9,6 @@ import {
 } from "@/constants/limits";
 import { BLOCKED_IP_TEMPLATE } from "@/constants/templates";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
-import ForbiddenError from "@/utils/errors/ForbiddenError";
 import type { MutationLoginWithEmailArgs, AuthResponse } from "types/graphql";
 import type { AppContext, UserSessions } from "types";
 
@@ -33,10 +32,13 @@ export default {
       const user = await prismaClient.user.findFirst({
         where: {
           email: input.email,
+          status: {
+            in: [UserStatus.Active, UserStatus.Provisioned],
+          },
         },
       });
 
-      if (!user || user.status === UserStatus.Staged) {
+      if (!user) {
         throw new AuthenticationError(
           t("mutation.loginWithEmail.errors.message"),
         );
@@ -56,64 +58,46 @@ export default {
         );
       }
 
-      const denyList: UserStatus[] = [
-        UserStatus.LockedOut,
-        UserStatus.Suspended,
-        UserStatus.PasswordExpired,
-        UserStatus.Recovery,
-        UserStatus.Deprovisioned,
-      ];
-
       const isMatched = await user.comparePassword(input.password);
 
       if (!isMatched) {
-        if (!denyList.includes(user.status)) {
-          const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${input.email}`;
-          const attempts = await redisClient.get(attemptsKey);
+        const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${input.email}`;
+        const attempts = await redisClient.get(attemptsKey);
 
-          const count = attempts ? Number.parseInt(attempts, 10) : 1;
+        const count = attempts ? Number.parseInt(attempts, 10) : 1;
 
-          if (count === BRUTE_FORCE_THRESHOLD) {
-            if (ip) {
-              blockedIps.set(ip, dayjs().toISOString());
-            }
-            emailClient.send({
-              template: BLOCKED_IP_TEMPLATE,
-              message: {
-                to: user.email,
-              },
-              locals: {
-                locale: user.language,
-                ip,
-              },
-            });
-            await prismaClient.user.update({
-              where: {
-                id: user.id,
-              },
-              data: {
-                blockedIps: Object.fromEntries(blockedIps),
-              },
-            });
+        if (count === BRUTE_FORCE_THRESHOLD) {
+          if (ip) {
+            blockedIps.set(ip, dayjs().toISOString());
           }
-
-          await redisClient.setex(
-            attemptsKey,
-            dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
-            count + 1,
-          );
+          emailClient.send({
+            template: BLOCKED_IP_TEMPLATE,
+            message: {
+              to: user.email,
+            },
+            locals: {
+              locale: user.language,
+              ip,
+            },
+          });
+          await prismaClient.user.update({
+            where: {
+              id: user.id,
+            },
+            data: {
+              blockedIps: Object.fromEntries(blockedIps),
+            },
+          });
         }
+
+        await redisClient.setex(
+          attemptsKey,
+          dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
+          count + 1,
+        );
 
         throw new AuthenticationError(
           t("mutation.loginWithEmail.errors.message"),
-        );
-      }
-
-      if (denyList.includes(user.status)) {
-        throw new ForbiddenError(
-          t(`mutation.loginWithEmail.errors.unauthorized`, {
-            context: user.status,
-          }),
         );
       }
 

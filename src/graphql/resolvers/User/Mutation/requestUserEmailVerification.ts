@@ -1,24 +1,23 @@
+import dayjs from "@/utils/dayjs";
 import type {
+  MutationRequestUserEmailVerificationArgs,
   MutationResponse,
-  MutationRequestEmailLoginOtpArgs,
 } from "types/graphql";
 import type { AppContext } from "types";
 import { UserStatus } from "@prisma/client";
-import dayjs from "@/utils/dayjs";
+import getOTP from "@/utils/getOTP";
 import {
-  AUTH_PREFIX,
   EMAIL_PREFIX,
   OTP_PREFIX,
+  VERIFY_PREFIX,
 } from "@/constants/cachePrefixes";
-import { LOGIN_OTP_EXPIRES_IN } from "@/constants/limits";
-import { EMAIL_LOGIN_OTP_TEMPLATE } from "@/constants/templates";
-import getOTP from "@/utils/getOTP";
+import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
 
 export default {
   Mutation: {
-    async requestEmailLoginOTP(
+    async requestUserEmailVerification(
       _parent: unknown,
-      { email }: MutationRequestEmailLoginOtpArgs,
+      { email }: MutationRequestUserEmailVerificationArgs,
       context: AppContext,
     ): Promise<MutationResponse> {
       const { prismaClient, t, emailClient, redisClient } = context;
@@ -26,20 +25,23 @@ export default {
       const user = await prismaClient.user.findFirst({
         where: {
           email,
-          status: UserStatus.Active,
-          isEmailVerified: true,
+          isEmailVerified: {
+            not: true,
+          },
+          status: {
+            in: [UserStatus.LockedOut, UserStatus.Provisioned],
+          },
         },
       });
 
       if (user) {
-        const cacheKey = `${AUTH_PREFIX}:${EMAIL_PREFIX}:${OTP_PREFIX}:${email}`;
+        const cacheKey = `${VERIFY_PREFIX}:${EMAIL_PREFIX}:${OTP_PREFIX}:${email}`;
         const sentToken = await redisClient.get(cacheKey);
 
         if (!sentToken) {
           const token = getOTP();
 
           emailClient.send({
-            template: EMAIL_LOGIN_OTP_TEMPLATE,
             message: {
               to: email,
             },
@@ -51,7 +53,7 @@ export default {
 
           await redisClient.setex(
             cacheKey,
-            dayjs.duration(...LOGIN_OTP_EXPIRES_IN).asSeconds(),
+            dayjs.duration(...EMAIL_VERIFICATION_TOKEN_EXPIRES_IN).asSeconds(),
             token,
           );
         }
@@ -59,7 +61,7 @@ export default {
 
       return {
         success: true,
-        message: t("mutation.requestEmailLoginOTP.message"),
+        message: t("mutation.requestUserEmailVerification.message"),
       };
     },
   },

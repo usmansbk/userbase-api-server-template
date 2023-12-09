@@ -21,6 +21,9 @@
         "unauthorized_PasswordExpired": "Reset your password to continue."
       }
     },
+    "requestUserEmailVerification": {
+      "message": "If you've got an account, watch out for an email from us with further instructions!"
+    },
     "requestEmailLoginOTP": {
       "message": "If you possess an account, we'll dispatch an OTP code to you."
     },

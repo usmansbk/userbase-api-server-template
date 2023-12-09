@@ -21,6 +21,11 @@ export const ID_TOKEN_EXPIRES_IN: DurationType = [7, "days"];
 export const RESET_LOGIN_ATTEMPTS_IN: DurationType = [15, "minutes"];
 export const BLOCK_IP_DURATION: DurationType = [30, "days"];
 export const LOGIN_OTP_EXPIRES_IN: DurationType = [5, "minutes"];
+export const EMAIL_VERIFICATION_TOKEN_EXPIRES_IN: DurationType = [5, "minutes"];
+export const PHONE_NUMBER_VERIFICATION_TOKEN_EXPIRES_IN: DurationType = [
+  8,
+  "minutes",
+];
 
 export const MIN_PASSWORD_LENGTH = 10;
 export const MAX_PASSWORD_LENGTH = 32;
