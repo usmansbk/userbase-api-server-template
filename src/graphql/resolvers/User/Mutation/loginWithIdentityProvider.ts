@@ -19,7 +19,15 @@ export default {
       { input }: MutationLoginWithIdentityProviderArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { prismaClient, t, jwtClient, redisClient, clientId } = context;
+      const {
+        prismaClient,
+        t,
+        jwtClient,
+        redisClient,
+        clientId,
+        emailClient,
+        language,
+      } = context;
       const { provider, token } = input;
 
       let userPayload;
@@ -32,8 +40,14 @@ export default {
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const { email, firstName, lastName, locale, socialPictureUrl } =
-        userPayload;
+      const {
+        email,
+        firstName,
+        lastName,
+        locale,
+        socialPictureUrl,
+        isEmailVerified,
+      } = userPayload;
 
       let user = await prismaClient.user.findFirst({
         where: {
@@ -61,6 +75,7 @@ export default {
             lastName,
             language: locale,
             socialPictureUrl,
+            isEmailVerified,
             password: nanoid(),
             status: UserStatus.Active,
           },
@@ -77,6 +92,7 @@ export default {
             lastName,
             language: locale,
             socialPictureUrl,
+            isEmailVerified,
             status: UserStatus.Active,
           },
         });
@@ -119,8 +135,17 @@ export default {
         },
       });
 
-      if (isNewUser) {
-        // TODO: send welcome email
+      if (isNewUser && isEmailVerified) {
+        emailClient.send({
+          template: "welcome",
+          message: {
+            to: user.email,
+          },
+          locals: {
+            locale: locale ?? language,
+            name: firstName,
+          },
+        });
       }
 
       return {

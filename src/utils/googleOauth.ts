@@ -22,6 +22,7 @@ export default async function verifyGoogleIdToken(idToken: string) {
     given_name: firstName,
     email,
     picture: socialPictureUrl,
+    email_verified: emailVerified,
   } = payload;
 
   return {
@@ -30,5 +31,6 @@ export default async function verifyGoogleIdToken(idToken: string) {
     locale,
     email: email!,
     socialPictureUrl,
+    isEmailVerified: emailVerified,
   };
 }
