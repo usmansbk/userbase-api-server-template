@@ -146,7 +146,7 @@ export default {
             to: user.email,
           },
           locals: {
-            locale: locale ?? language,
+            locale: user.language ?? language,
             name: firstName,
           },
         });

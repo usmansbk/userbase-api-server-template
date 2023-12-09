@@ -7,6 +7,7 @@ import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import { UserStatus } from "@prisma/client";
+import { WELCOME_TEMPLATE } from "@/constants/templates";
 
 export default {
   Mutation: {
@@ -15,7 +16,7 @@ export default {
       { input }: MutationVerifyUserEmailArgs,
       context: AppContext,
     ): Promise<MutationResponse> {
-      const { jwtClient, prismaClient, redisClient, t } = context;
+      const { jwtClient, prismaClient, redisClient, t, emailClient } = context;
 
       try {
         const decoded = jwtClient.verifyForAllClients(input.token);
@@ -52,6 +53,17 @@ export default {
           data: {
             status: UserStatus.Active,
             isEmailVerified: true,
+          },
+        });
+
+        emailClient.send({
+          template: WELCOME_TEMPLATE,
+          message: {
+            to: user.email,
+          },
+          locals: {
+            locale: user.language,
+            name: user.firstName,
           },
         });
 
