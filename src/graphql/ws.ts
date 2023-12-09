@@ -2,6 +2,7 @@ import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
 import i18next from "i18next";
 import { configureScope } from "@sentry/node";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import redisClient, { pubsub } from "@/config/redis";
 import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
@@ -9,13 +10,12 @@ import emailClient from "@/utils/email";
 import log from "@/utils/logger";
 import storage from "@/utils/storage";
 import jwtClient from "@/utils/jwt";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
+import ForbiddenError from "@/utils/errors/ForbiddenError";
+import Sentry from "@/config/sentry";
 import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
 import type { AppContext, CurrentUser } from "types";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
-import ForbiddenError from "@/utils/errors/ForbiddenError";
-import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
-import Sentry from "@/config/sentry";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
