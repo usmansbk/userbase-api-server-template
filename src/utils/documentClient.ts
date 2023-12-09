@@ -4,7 +4,7 @@ import {
   QueryCommand,
 } from "@aws-sdk/lib-dynamodb";
 import logger from "./logger";
-import client from "@/config/dynamodb";
+import client from "@/config/aws/dynamodb";
 
 const TableName = process.env.AWS_DYNAMODB_TABLE;
 

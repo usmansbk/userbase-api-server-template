@@ -28,6 +28,7 @@ declare global {
       ANDROID_CLIENT_ID: string;
       IOS_CLIENT_ID: string;
       WEB_CLIENT_ID: string;
+      UNIVERSAL_LINK: string;
     }
   }
 }
