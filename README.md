@@ -12,7 +12,7 @@ User management system api server base template
 - [x] Role Based Access Control
 - [x] Register with email and Password
 - [x] Login with email (Brute-force protection)
-- [ ] Verify email address
+- [x] Verify email address
 - [ ] Change email address
 - [ ] Verify phone number
 - [ ] Login with verified phone number SMS OTP

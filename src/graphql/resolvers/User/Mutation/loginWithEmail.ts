@@ -1,6 +1,6 @@
 import dayjs from "@/utils/dayjs";
 import { UserStatus } from "@prisma/client";
-import { AUTH_PREFIX, LOGIN_ATTEMPT } from "@/constants/cachePrefixes";
+import { AUTH_PREFIX, LOGIN_ATTEMPT_PREFIX } from "@/constants/cachePrefixes";
 import {
   RESET_LOGIN_ATTEMPTS_IN,
   REFRESH_TOKEN_EXPIRES_IN,
@@ -68,7 +68,7 @@ export default {
 
       if (!isMatched) {
         if (!denyList.includes(user.status)) {
-          const attemptsKey = `${LOGIN_ATTEMPT}:${ip}:${input.email}`;
+          const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${input.email}`;
           const attempts = await redisClient.get(attemptsKey);
 
           const count = attempts ? Number.parseInt(attempts, 10) : 1;

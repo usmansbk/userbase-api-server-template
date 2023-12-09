@@ -3,4 +3,5 @@ export const SMS_PREFIX = "sms";
 export const AUTH_PREFIX = "auth";
 export const VERIFY_PREFIX = "verify";
 export const PHONE_PREFIX = "phone";
-export const LOGIN_ATTEMPT = "login:attempt";
+export const LOGIN_ATTEMPT_PREFIX = "login:attempt";
+export const OTP_PREFIX = "otp";
