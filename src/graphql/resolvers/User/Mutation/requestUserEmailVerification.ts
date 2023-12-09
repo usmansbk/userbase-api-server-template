@@ -8,6 +8,7 @@ import { UserStatus } from "@prisma/client";
 import getOTP from "@/utils/getOTP";
 import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import { VERIFY_EMAIL_TEMPLATE } from "@/constants/templates";
 
 export default {
   Mutation: {
@@ -24,9 +25,7 @@ export default {
           isEmailVerified: {
             not: true,
           },
-          status: {
-            in: [UserStatus.LockedOut, UserStatus.Provisioned],
-          },
+          status: UserStatus.Provisioned,
         },
       });
 
@@ -38,6 +37,7 @@ export default {
           const token = getOTP();
 
           emailClient.send({
+            template: VERIFY_EMAIL_TEMPLATE,
             message: {
               to: email,
             },

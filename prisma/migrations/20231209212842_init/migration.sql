@@ -54,8 +54,8 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phoneNumber" TEXT,
-    "isEmailVerified" BOOLEAN,
-    "isPhoneNumberVerified" BOOLEAN,
+    "isEmailVerified" BOOLEAN DEFAULT false,
+    "isPhoneNumberVerified" BOOLEAN DEFAULT false,
     "language" TEXT DEFAULT 'en',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
@@ -66,6 +66,7 @@ CREATE TABLE "User" (
     "pictureLastUpdatedAt" TIMESTAMP(3),
     "status" "UserStatus" NOT NULL DEFAULT 'Staged',
     "sessions" JSONB NOT NULL DEFAULT '{}',
+    "blockedIps" JSONB NOT NULL DEFAULT '{}',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
