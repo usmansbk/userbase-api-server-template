@@ -43,7 +43,6 @@ export default {
               expiresIn,
             },
           );
-          console.log(token);
 
           emailClient.send({
             template: VERIFY_EMAIL_TEMPLATE,

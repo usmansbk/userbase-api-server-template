@@ -23,7 +23,7 @@ export default {
           `${VERIFY_EMAIL_OTP_PREFIX}:${decoded.email}`,
         );
 
-        if (!sentToken) {
+        if (!sentToken || sentToken !== input.token) {
           throw new AuthenticationError(
             t("mutation.verifyUserEmail.errors.message"),
           );

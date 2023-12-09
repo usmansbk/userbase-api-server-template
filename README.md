@@ -15,7 +15,7 @@ User management system api server base template
 - [x] Verify email address
 - [ ] Verify phone number
 - [ ] Login with verified phone number SMS OTP
-- [ ] Login with verified email OTP
+- [x] Login with verified email OTP
 - [ ] Reset password
 - [x] Logout from all devices
 - [ ] Request delete account
