@@ -70,16 +70,19 @@ export default {
           if (ip) {
             blockedIps.set(ip, dayjs().toISOString());
           }
-          emailClient.send({
-            template: BLOCKED_IP_TEMPLATE,
-            message: {
-              to: user.email,
-            },
-            locals: {
-              locale: user.language,
-              ip,
-            },
-          });
+
+          if (user.isEmailVerified) {
+            emailClient.send({
+              template: BLOCKED_IP_TEMPLATE,
+              message: {
+                to: user.email,
+              },
+              locals: {
+                locale: user.language,
+                ip,
+              },
+            });
+          }
           await prismaClient.user.update({
             where: {
               id: user.id,
@@ -88,13 +91,13 @@ export default {
               blockedIps: Object.fromEntries(blockedIps),
             },
           });
-        }
 
-        await redisClient.setex(
-          attemptsKey,
-          dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
-          count + 1,
-        );
+          await redisClient.setex(
+            attemptsKey,
+            dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
+            count + 1,
+          );
+        }
 
         throw new AuthenticationError(
           t("mutation.loginWithEmail.errors.message"),
