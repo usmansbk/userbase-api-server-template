@@ -103,13 +103,18 @@ export default function useWebSocketServer(
           storage,
         };
       },
-      onConnect: (ctx) => {
+      onConnect: async (ctx) => {
         try {
-          const token = ctx.connectionParams?.authorization as
+          const authorization = ctx.connectionParams?.authorization as
             | string
             | undefined;
-          if (token) {
-            return !!jwtClient.verify(token);
+          if (!authorization) {
+            return false;
+          }
+
+          if (authorization?.startsWith("Bearer")) {
+            const token = authorization.split(/\s+/)[1];
+            jwtClient.verify(token);
           }
 
           return false;
