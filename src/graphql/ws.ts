@@ -15,6 +15,7 @@ import type { AppContext, CurrentUser } from "types";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import Sentry from "@/config/sentry";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
@@ -85,6 +86,7 @@ export default function useWebSocketServer(
             );
           }
           log.info({ error });
+          Sentry.captureException(error);
         }
 
         return {
