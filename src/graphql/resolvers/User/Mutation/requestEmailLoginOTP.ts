@@ -5,11 +5,7 @@ import type {
 import type { AppContext } from "types";
 import { UserStatus } from "@prisma/client";
 import dayjs from "@/utils/dayjs";
-import {
-  AUTH_PREFIX,
-  EMAIL_PREFIX,
-  OTP_PREFIX,
-} from "@/constants/cachePrefixes";
+import { EMAIL_LOGIN_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { LOGIN_OTP_EXPIRES_IN } from "@/constants/limits";
 import { EMAIL_LOGIN_OTP_TEMPLATE } from "@/constants/templates";
 import getOTP from "@/utils/getOTP";
@@ -32,7 +28,7 @@ export default {
       });
 
       if (user) {
-        const cacheKey = `${AUTH_PREFIX}:${EMAIL_PREFIX}:${OTP_PREFIX}:${email}`;
+        const cacheKey = `${EMAIL_LOGIN_OTP_PREFIX}:${email}`;
         const sentToken = await redisClient.get(cacheKey);
 
         if (!sentToken) {

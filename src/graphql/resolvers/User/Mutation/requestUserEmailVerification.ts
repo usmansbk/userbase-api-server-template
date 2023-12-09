@@ -6,11 +6,7 @@ import type {
 import type { AppContext } from "types";
 import { UserStatus } from "@prisma/client";
 import getOTP from "@/utils/getOTP";
-import {
-  EMAIL_PREFIX,
-  OTP_PREFIX,
-  VERIFY_PREFIX,
-} from "@/constants/cachePrefixes";
+import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
 
 export default {
@@ -35,7 +31,7 @@ export default {
       });
 
       if (user) {
-        const cacheKey = `${VERIFY_PREFIX}:${EMAIL_PREFIX}:${OTP_PREFIX}:${email}`;
+        const cacheKey = `${VERIFY_EMAIL_OTP_PREFIX}:${email}`;
         const sentToken = await redisClient.get(cacheKey);
 
         if (!sentToken) {
