@@ -42,16 +42,6 @@ export default {
         );
       }
 
-      const denyList: UserStatus[] = [
-        UserStatus.LockedOut,
-        UserStatus.Suspended,
-        UserStatus.PasswordExpired,
-        UserStatus.Recovery,
-        UserStatus.Deprovisioned,
-      ];
-
-      const isMatched = await user.comparePassword(input.password);
-
       const blockedIps = new Map(Object.entries(user.blockedIps!));
       const blockedIpAt = ip ? blockedIps.get(ip) : undefined;
 
@@ -64,6 +54,16 @@ export default {
           t("mutation.loginWithEmail.errors.message"),
         );
       }
+
+      const isMatched = await user.comparePassword(input.password);
+
+      const denyList: UserStatus[] = [
+        UserStatus.LockedOut,
+        UserStatus.Suspended,
+        UserStatus.PasswordExpired,
+        UserStatus.Recovery,
+        UserStatus.Deprovisioned,
+      ];
 
       if (!isMatched) {
         if (!denyList.includes(user.status)) {
