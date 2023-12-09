@@ -50,6 +50,7 @@ export default {
         dayjs().diff(blockedIpAt, "days") <= BLOCK_IP_DURATION[0];
 
       if (isBlocked) {
+        // We alert users of incorrect email/password to avoid confirming the password's accuracy to potential attackers.
         throw new AuthenticationError(
           t("mutation.loginWithEmail.errors.message"),
         );
