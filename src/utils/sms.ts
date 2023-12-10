@@ -3,18 +3,18 @@ import logger from "./logger";
 import { PublishCommand } from "@aws-sdk/client-sns";
 
 interface Message {
-  to: string;
-  text: string;
+  phoneNumber: string; // E.164 Format
+  text: string; // 140 characters
   subject?: string;
 }
 
 async function sendMessage(message: Message) {
-  const { text, subject, to } = message;
+  const { text, subject, phoneNumber } = message;
   try {
     const result = await sns.send(
       new PublishCommand({
         Message: text,
-        PhoneNumber: to,
+        PhoneNumber: phoneNumber,
         Subject: subject,
       }),
     );
