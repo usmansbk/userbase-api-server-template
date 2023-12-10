@@ -68,10 +68,10 @@ export default {
         );
       }
 
-      let isNewUser = false;
+      let isNewUser = true;
+      let isWelcomeEmailSent = false;
 
       if (!user) {
-        isNewUser = true;
         user = await prismaClient.user.create({
           data: {
             email,
@@ -81,11 +81,12 @@ export default {
             socialPictureUrl,
             isEmailVerified,
             password: nanoid(),
-            status: UserStatus.Active,
+            status: isEmailVerified
+              ? UserStatus.Active
+              : UserStatus.Provisioned,
           },
         });
       } else if (user.status === UserStatus.Staged) {
-        isNewUser = true;
         user = await prismaClient.user.update({
           where: {
             id: user.id,
@@ -97,17 +98,25 @@ export default {
             language: locale,
             socialPictureUrl,
             isEmailVerified,
-            status: UserStatus.Active,
+            status: isEmailVerified
+              ? UserStatus.Active
+              : UserStatus.Provisioned,
           },
         });
       } else {
+        isNewUser = false;
+        isWelcomeEmailSent = !!user.isEmailVerified;
         user = await prismaClient.user.update({
           where: {
             id: user.id,
           },
           data: {
+            isEmailVerified: user.isEmailVerified ?? !!isEmailVerified,
             socialPictureUrl,
-            status: UserStatus.Active,
+            status:
+              user.isEmailVerified ?? !!isEmailVerified
+                ? UserStatus.Active
+                : UserStatus.Provisioned,
           },
         });
       }
@@ -139,7 +148,7 @@ export default {
         },
       });
 
-      if (isNewUser && isEmailVerified) {
+      if (!isWelcomeEmailSent) {
         emailClient.send({
           template: WELCOME_TEMPLATE,
           message: {
