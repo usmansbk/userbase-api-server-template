@@ -20,7 +20,7 @@
     },
     "loginWithOTP": {
       "errors": {
-        "message": "Your OTP is invalid or expired."
+        "message": "Your OTP is invalid."
       }
     },
     "loginWithEmail": {
@@ -34,7 +34,7 @@
     "verifyUserEmail": {
       "message": "You've verified your email.",
       "errors": {
-        "message": "Your token is invalid or expired."
+        "message": "Your token is invalid."
       }
     },
     "requestEmailLoginOTP": {
@@ -79,7 +79,7 @@
     "resetUserPassword": {
       "message": "Password successfully updated. Please log in with your new password to continue.",
       "errors": {
-        "message": "Your token is invalid or expired.",
+        "message": "Your token is invalid.",
         "validation": {
           "message": "Failed to update password."
         }
@@ -91,6 +91,12 @@
     "requestDeleteAccount": {
       "message": "We've sent you an email with further instructions.",
       "message_Provisioned": "You've deleted your account."
+    },
+    "deleteUserAccount": {
+      "message": "Your account has been scheduled for deletion.",
+      "errors": {
+        "message": "Your token is invalid."
+      }
     }
   }
 }

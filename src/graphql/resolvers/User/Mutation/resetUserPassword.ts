@@ -3,6 +3,7 @@ import { UserStatus } from "@prisma/client";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ValidationError from "@/utils/errors/ValidationError";
+import dayjs from "@/utils/dayjs";
 import {
   PASSWORD_CHANGED_TEMPLATE,
   WELCOME_TEMPLATE,
@@ -81,6 +82,7 @@ export default {
             password,
             isEmailVerified: true,
             status: UserStatus.Active,
+            passwordLastUpdatedAt: dayjs().toDate(),
           },
         });
 

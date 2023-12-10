@@ -70,7 +70,7 @@ export default function refreshToken(
         id: azp,
         jti,
         clientId: clientId!,
-        createdAt: dayjs.utc().toISOString(),
+        createdAt: dayjs().toISOString(),
       });
 
       await prismaClient.user.update({
