@@ -44,18 +44,19 @@ export default {
             },
           );
 
+          await redisClient.setex(cacheKey, expiresIn, token);
+
           emailClient.send({
             template: VERIFY_EMAIL_TEMPLATE,
             message: {
               to: email,
             },
             locals: {
+              name: user.firstName,
               locale: user.language,
               link: token, // TODO: use universal link
             },
           });
-
-          await redisClient.setex(cacheKey, expiresIn, token);
         }
       }
 

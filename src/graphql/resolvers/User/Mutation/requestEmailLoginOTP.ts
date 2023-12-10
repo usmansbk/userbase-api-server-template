@@ -34,22 +34,23 @@ export default {
         if (user) {
           const token = getOTP();
 
+          await redisClient.setex(
+            cacheKey,
+            dayjs.duration(...LOGIN_OTP_EXPIRES_IN).asSeconds(),
+            token,
+          );
+
           emailClient.send({
             template: EMAIL_LOGIN_OTP_TEMPLATE,
             message: {
               to: email,
             },
             locals: {
+              name: user.firstName,
               locale: user.language,
               link: token, // TODO: use universal link
             },
           });
-
-          await redisClient.setex(
-            cacheKey,
-            dayjs.duration(...LOGIN_OTP_EXPIRES_IN).asSeconds(),
-            token,
-          );
         }
       }
 

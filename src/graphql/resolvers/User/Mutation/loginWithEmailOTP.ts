@@ -84,17 +84,6 @@ export default {
             blockedIps.set(ip, dayjs().toISOString());
           }
 
-          emailClient.send({
-            template: BLOCKED_IP_TEMPLATE,
-            message: {
-              to: user.email,
-            },
-            locals: {
-              locale: user.language,
-              ip,
-            },
-          });
-
           await prismaClient.user.update({
             where: {
               id: user.id,
@@ -109,6 +98,17 @@ export default {
             dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
             count + 1,
           );
+
+          emailClient.send({
+            template: BLOCKED_IP_TEMPLATE,
+            message: {
+              to: user.email,
+            },
+            locals: {
+              locale: user.language,
+              ip,
+            },
+          });
         }
 
         throw new AuthenticationError(

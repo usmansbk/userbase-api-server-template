@@ -81,6 +81,9 @@
           }
         }
       }
+    },
+    "requestResetUserPassword": {
+      "message": "If you already have an account, keep an eye on your inbox for an email with detailed instructions."
     }
   }
 }
