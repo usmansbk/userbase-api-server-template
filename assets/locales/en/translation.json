@@ -12,7 +12,7 @@
       "errors": {
         "unauthorized": "You're not allowed.",
         "unauthorized_Suspended": "Your account has been suspended.",
-        "unauthorized_LockedOut": "Verify your email address to continue.",
+        "unauthorized_LockedOut": "Reset your password to continue.",
         "unauthorized_Deprovisioned": "Your account has been deactivated.",
         "unauthorized_Recovery": "Reset your password to continue.",
         "unauthorized_PasswordExpired": "Reset your password to continue."
