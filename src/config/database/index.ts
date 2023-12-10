@@ -6,6 +6,8 @@ import type { AccountStatus } from "types/graphql";
 const prismaClient = new PrismaClient();
 const salt = bcrypt.genSaltSync(10);
 
+// TODO: file delete extension
+
 const hashPasswordExtension = Prisma.defineExtension({
   name: "hash-password-extension",
   query: {

@@ -32,7 +32,7 @@
       "message": "If you've got an account, watch out for an email from us with further instructions!"
     },
     "verifyUserEmail": {
-      "message": "You have verified your email.",
+      "message": "You've verified your email.",
       "errors": {
         "message": "Your token is invalid or expired."
       }
@@ -84,6 +84,9 @@
           "message": "Failed to update password."
         }
       }
+    },
+    "removeCurrentUserPicture": {
+      "message": "You've removed your picture."
     }
   }
 }
