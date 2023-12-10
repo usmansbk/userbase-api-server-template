@@ -70,20 +70,20 @@
     "updateCurrentUserBasicInfo": {
       "message": "User info updated.",
       "errors": {
-        "message": "Failed to update user info.",
-        "fields": {
-          "firstName": {
-            "required": "First name is required."
-          },
-          "name": {
-            "min": "Name must be at least {{count}} characters.",
-            "max": "Name must not be longer than {{count}} characters."
-          }
-        }
+        "message": "Failed to update user info."
       }
     },
     "requestResetUserPassword": {
       "message": "If you already have an account, keep an eye on your inbox for an email with detailed instructions."
+    },
+    "resetUserPassword": {
+      "message": "Password successfully updated. Please log in with your new password to continue.",
+      "errors": {
+        "message": "Your token is invalid or expired.",
+        "validation": {
+          "message": "Failed to update password."
+        }
+      }
     }
   }
 }

@@ -222,8 +222,7 @@ input UpdateBasicInfoInput {
 }
 
 input ResetPasswordInput {
-  email: EmailAddress!
-  newPassword: NonEmptyString!
+  password: NonEmptyString!
   token: NonEmptyString!
 }
 

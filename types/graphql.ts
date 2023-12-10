@@ -370,8 +370,7 @@ export type RegisterWithEmailInput = {
 };
 
 export type ResetPasswordInput = {
-  email: Scalars['EmailAddress']['input'];
-  newPassword: Scalars['NonEmptyString']['input'];
+  password: Scalars['NonEmptyString']['input'];
   token: Scalars['NonEmptyString']['input'];
 };
 

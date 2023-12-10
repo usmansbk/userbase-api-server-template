@@ -23,67 +23,49 @@ export default {
             firstName: z
               .string({
                 required_error: t(
-                  "mutation.updateCurrentUserBasicInfo.errors.fields.firstName.required",
+                  "mutation.registerWithEmail.errors.fields.firstName.required",
                 ),
               })
               .min(
                 MIN_NAME_LENGTH,
-                t(
-                  "mutation.updateCurrentUserBasicInfo.errors.fields.name.min",
-                  {
-                    count: MIN_NAME_LENGTH,
-                  },
-                ),
+                t("mutation.registerWithEmail.errors.fields.name.min", {
+                  count: MIN_NAME_LENGTH,
+                }),
               )
               .max(
                 MAX_NAME_LENGTH,
-                t(
-                  "mutation.updateCurrentUserBasicInfo.errors.fields.name.max",
-                  {
-                    count: MAX_NAME_LENGTH,
-                  },
-                ),
+                t("mutation.registerWithEmail.errors.fields.name.max", {
+                  count: MAX_NAME_LENGTH,
+                }),
               ),
             lastName: z
               .string()
               .min(
                 MIN_NAME_LENGTH,
-                t(
-                  "mutation.updateCurrentUserBasicInfo.errors.fields.name.min",
-                  {
-                    count: MIN_NAME_LENGTH,
-                  },
-                ),
+                t("mutation.registerWithEmail.errors.fields.name.min", {
+                  count: MIN_NAME_LENGTH,
+                }),
               )
               .max(
                 MAX_NAME_LENGTH,
-                t(
-                  "mutation.updateCurrentUserBasicInfo.errors.fields.name.max",
-                  {
-                    count: MAX_NAME_LENGTH,
-                  },
-                ),
+                t("mutation.registerWithEmail.errors.fields.name.max", {
+                  count: MAX_NAME_LENGTH,
+                }),
               )
               .optional(),
             surname: z
               .string()
               .min(
                 MIN_NAME_LENGTH,
-                t(
-                  "mutation.updateCurrentUserBasicInfo.errors.fields.name.min",
-                  {
-                    count: MIN_NAME_LENGTH,
-                  },
-                ),
+                t("mutation.registerWithEmail.errors.fields.name.min", {
+                  count: MIN_NAME_LENGTH,
+                }),
               )
               .max(
                 MAX_NAME_LENGTH,
-                t(
-                  "mutation.updateCurrentUserBasicInfo.errors.fields.name.max",
-                  {
-                    count: MAX_NAME_LENGTH,
-                  },
-                ),
+                t("mutation.registerWithEmail.errors.fields.name.max", {
+                  count: MAX_NAME_LENGTH,
+                }),
               )
               .optional(),
           })
