@@ -11,16 +11,18 @@ User management system api server base template
 - [x] Refresh token rotation
 - [x] Role Based Access Control
 - [x] Register with email and Password
-- [x] Login with email (Brute-force protection)
+- [x] Login with email
 - [x] Verify email address
-- [ ] Verify phone number
-- [ ] Login with verified phone number SMS OTP
+- [x] Verify phone number
+- [x] Login with verified phone number SMS OTP
 - [x] Login with verified email OTP
 - [x] Reset password
 - [x] Logout from all devices
 - [x] Delete user account
 - [x] Update user profile
 - [x] User profile picture
+- [x] Brute-Force login protection
+- [ ] Suspicious IP auth throttling
 - [ ] MFA
 - [ ] Admin Dashboard
 
@@ -53,7 +55,7 @@ cp .env.example .env
 - Create an [S3 bucket](https://aws.amazon.com/s3/) to store documents (images, files, etc) and set your `AWS_S3_BUCKET` env variable.
 - Follow [AWS Serverless Image Handler](https://aws.amazon.com/solutions/implementations/serverless-image-handler/) instructions to create a CDN and set your `CLOUDFRONT_API_ENDPOINT` env variable.
 - Create a [Dynamodb table](https://aws.amazon.com/dynamodb/) for in-app notifications and set your `AWS_DYNAMODB_DELTA_TABLE`.
-- Add your `SENDER_EMAIL` and setup your [SES](https://aws.amazon.com/ses/) account for SMS (Ensure you have this [AWS IAM Policy](https://nodemailer.com/transports/ses/#example-3))
+- Setup your [SES](https://aws.amazon.com/ses/) account for Email (Ensure you have this [AWS IAM Policy](https://nodemailer.com/transports/ses/#example-3)) and add your `SENDER_EMAIL` to the env variables.
 
 #### [Sentry](https://sentry.io/)
 
@@ -128,6 +130,31 @@ Run codegen after modifying the graphql schema to generate TypeScript definition
 
 ```sh
 yarn codegen
+```
+
+### File Upload
+
+We store information about uploaded files in the `File` table within the database. To ensure the deletion of S3 objects when an associated file row is removed, it is crucial to use the Prisma `delete` and `deleteMany` methods. This is because our Prisma client extensions handle the deletion of any associated file objects in S3.
+
+Example:
+
+```js
+// DONT: This will not delete the picture in s3
+prisma.update({
+  where: {},
+  data: {
+    picture: {
+      delete: true,
+    },
+  },
+});
+
+// DO: this will delete the file row and corresponding object in s3
+await prisma.file.delete({
+  where: {
+    id: picture.id,
+  },
+});
 ```
 
 ### Error Handling
