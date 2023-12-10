@@ -18,9 +18,9 @@ User management system api server base template
 - [x] Login with verified email OTP
 - [x] Reset password
 - [x] Logout from all devices
-- [ ] Request delete account
+- [x] Delete user account
 - [x] Update user profile
-- [x] Upload profile picture
+- [x] User profile picture
 - [ ] MFA
 - [ ] Admin Dashboard
 

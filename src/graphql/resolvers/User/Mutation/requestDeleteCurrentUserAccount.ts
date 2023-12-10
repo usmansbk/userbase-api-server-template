@@ -34,50 +34,45 @@ export default {
               id: user.id,
             },
           });
+        } else {
+          const cacheKey = `${DELETE_USER_PREFIX}:${user.email}`;
+          const sentToken = await redisClient.get(cacheKey);
 
-          return {
-            success: true,
-            message: t("mutation.requestDeleteAccount.message", {
-              context: user.status,
-            }),
-          };
-        }
+          if (!sentToken) {
+            const expiresIn = dayjs
+              .duration(...DELETE_ACCOUNT_TOKEN_EXPIRES_IN)
+              .asSeconds();
 
-        const cacheKey = `${DELETE_USER_PREFIX}:${user.email}`;
-        const sentToken = await redisClient.get(cacheKey);
+            const token = jwtClient.signForAllClients(
+              { id: user.email },
+              {
+                expiresIn,
+              },
+            );
 
-        if (!sentToken) {
-          const expiresIn = dayjs
-            .duration(...DELETE_ACCOUNT_TOKEN_EXPIRES_IN)
-            .asSeconds();
+            console.log(token);
 
-          const token = jwtClient.signForAllClients(
-            { id: user.email },
-            {
-              expiresIn,
-            },
-          );
+            await redisClient.setex(cacheKey, expiresIn, token);
 
-          console.log(token);
-
-          await redisClient.setex(cacheKey, expiresIn, token);
-
-          emailClient.send({
-            message: {
-              to: user.email,
-            },
-            locals: {
-              locale: user.language,
-              name: user.firstName,
-              link: token, // TODO: use universal link
-            },
-          });
+            emailClient.send({
+              message: {
+                to: user.email,
+              },
+              locals: {
+                locale: user.language,
+                name: user.firstName,
+                link: token, // TODO: use universal link
+              },
+            });
+          }
         }
       }
 
       return {
         success: true,
-        message: t("mutation.requestDeleteAccount.message"),
+        message: t("mutation.requestDeleteAccount.message", {
+          context: user?.status,
+        }),
       };
     },
   },
