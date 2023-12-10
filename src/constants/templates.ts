@@ -4,7 +4,6 @@ export const ACCOUNT_LOCKED_TEMPLATE = "account-locked";
 export const BLOCKED_IP_TEMPLATE = "blocked-ip";
 export const EMAIL_LOGIN_OTP_TEMPLATE = "email-login-otp";
 export const DELETE_ACCOUNT_TEMPLATE = "delete-account";
-export const DELETE_ACCOUNT_SCHEDULED_TEMPLATE = "delete-account-scheduled";
 export const FORGOT_PASSWORD_TEMPLATE = "forgot-password";
 export const PASSWORD_CHANGED_TEMPLATE = "password-changed";
 export const VERIFY_EMAIL_TEMPLATE = "verify-email";

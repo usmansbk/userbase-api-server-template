@@ -79,7 +79,6 @@ model User {
   updatedAt                     DateTime?        @updatedAt
   passwordLastUpdatedAt         DateTime?
   phoneNumberLastUpdatedAt      DateTime?
-  deletedAt                     DateTime?
   status                        UserStatus       @default(Staged)
   picture                       UserAvatar?
   rolesCreatedByUser            Role[]           @relation("CreatedRole")
