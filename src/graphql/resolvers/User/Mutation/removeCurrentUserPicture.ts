@@ -25,22 +25,23 @@ export default {
 
       if (user?.picture) {
         const { file } = user.picture;
-        await prismaClient.$transaction([
-          prismaClient.file.delete({
-            where: {
-              key: file.key,
-              bucket: file.bucket,
-            },
-          }),
-          prismaClient.user.update({
-            where: {
-              id: user.id,
-            },
-            data: {
-              socialPictureUrl: null,
-            },
-          }),
-        ]);
+        prismaClient.file.delete({
+          where: {
+            key: file.key,
+            bucket: file.bucket,
+          },
+        });
+      }
+
+      if (user?.socialPictureUrl) {
+        prismaClient.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            socialPictureUrl: null,
+          },
+        });
       }
 
       return {
