@@ -93,7 +93,7 @@
       "message_Provisioned": "You've deleted your account."
     },
     "deleteUserAccount": {
-      "message": "Your account has been scheduled for deletion.",
+      "message": "You've deleted your account.",
       "errors": {
         "message": "Your token is invalid."
       }

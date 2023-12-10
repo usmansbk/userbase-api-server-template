@@ -44,13 +44,11 @@ export default {
               .asSeconds();
 
             const token = jwtClient.signForAllClients(
-              { id: user.email },
+              { email: user.email },
               {
                 expiresIn,
               },
             );
-
-            console.log(token);
 
             await redisClient.setex(cacheKey, expiresIn, token);
 
