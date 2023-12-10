@@ -19,9 +19,6 @@ declare global {
       AWS_S3_BUCKET: string;
       AWS_DYNAMODB_TABLE: string;
       CLOUDFRONT_API_ENDPOINT: string;
-      TWILIO_ACCOUNT_SID: string;
-      TWILIO_AUTH_TOKEN: string;
-      TWILIO_VERIFICATION_SID: string;
       SENDER_EMAIL: string;
       GOOGLE_CLIENT_ID: string;
       GOOGLE_CLIENT_SECRET: string;

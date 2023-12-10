@@ -55,15 +55,12 @@ cp .env.example .env
 - Create an [S3 bucket](https://aws.amazon.com/s3/) to store documents (images, files, etc) and set your `AWS_S3_BUCKET` env variable.
 - Follow [AWS Serverless Image Handler](https://aws.amazon.com/solutions/implementations/serverless-image-handler/) instructions to create a CDN and set your `CLOUDFRONT_API_ENDPOINT` env variable.
 - Create a [Dynamodb table](https://aws.amazon.com/dynamodb/) for in-app notifications and set your `AWS_DYNAMODB_DELTA_TABLE`.
-- Setup your [SES](https://aws.amazon.com/ses/) account for Email (Ensure you have this [AWS IAM Policy](https://nodemailer.com/transports/ses/#example-3)) and add your `SENDER_EMAIL` to the env variables.
+- Setup [SES](https://aws.amazon.com/ses/) for Email (Ensure you have this [AWS IAM Policy](https://nodemailer.com/transports/ses/#example-3)) and add your `SENDER_EMAIL` to the env variables.
+- Setup [SNS](https://aws.amazon.com/sns/) for SMS.
 
 #### [Sentry](https://sentry.io/)
 
 - Create a sentry project and add the `SENTRY_DSN` to your environment file
-
-#### [Twilio](https://www.twilio.com/en-us)
-
-- Create a Twilio project and add your `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and `TWILIO_VERIFICATION_SID` to your environment file
 
 #### Google Authentication
 
@@ -108,7 +105,6 @@ yarn db:migrate
 
 ### Clients
 
-- [Admin Dashboard](http://localhost:3000/)
 - [Apollo Studio](http://localhost:4000/graphql)
 - [Prisma Studio](http://localhost:5555/)
 

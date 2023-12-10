@@ -1,13 +1,27 @@
+import sns from "@/config/aws/sns";
 import logger from "./logger";
+import { PublishCommand } from "@aws-sdk/client-sns";
 
 interface Message {
   to: string;
-  from: string;
-  body: string;
+  text: string;
+  subject?: string;
 }
 
-function sendMessage(message: Message) {
-  logger.info(message);
+async function sendMessage(message: Message) {
+  const { text, subject, to } = message;
+  try {
+    const result = await sns.send(
+      new PublishCommand({
+        Message: text,
+        PhoneNumber: to,
+        Subject: subject,
+      }),
+    );
+    logger.info(result);
+  } catch (e) {
+    logger.error(e);
+  }
 }
 
 const smsClient = {
