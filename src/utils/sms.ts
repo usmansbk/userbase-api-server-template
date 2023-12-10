@@ -10,17 +10,21 @@ interface Message {
 
 async function sendMessage(message: Message) {
   const { text, subject, phoneNumber } = message;
-  try {
-    const result = await sns.send(
-      new PublishCommand({
-        Message: text,
-        PhoneNumber: phoneNumber,
-        Subject: subject,
-      }),
-    );
-    logger.info(result);
-  } catch (e) {
-    logger.error(e);
+  if (process.env.NODE_ENV === "production") {
+    try {
+      const result = await sns.send(
+        new PublishCommand({
+          Message: text,
+          PhoneNumber: phoneNumber,
+          Subject: subject,
+        }),
+      );
+      logger.info(result);
+    } catch (e) {
+      logger.error(e);
+    }
+  } else {
+    logger.info(message);
   }
 }
 
