@@ -152,7 +152,8 @@ prisma.update({
 // DO: this will delete the file row and corresponding object in s3
 await prisma.file.delete({
   where: {
-    id: picture.id,
+    key: "...",
+    bucket: "...",
   },
 });
 ```

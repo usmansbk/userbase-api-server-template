@@ -12,7 +12,6 @@ datasource db {
 }
 
 model File {
-  id           String       @id @default(uuid())
   key          String       @unique
   bucket       String
   mimetype     String
@@ -26,6 +25,8 @@ model File {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime?    @updatedAt
   userAvatars  UserAvatar[]
+
+  @@unique([key, bucket])
 }
 
 model Role {
@@ -93,13 +94,14 @@ model User {
 }
 
 model UserAvatar {
-  id        String    @id @default(uuid())
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String    @unique
-  file      File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
-  fileId    String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  id         String    @id @default(uuid())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String    @unique
+  file       File      @relation(fields: [fileKey, fileBucket], references: [key, bucket], onDelete: Cascade)
+  fileKey    String
+  fileBucket String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
 }
 
 model UserRole {

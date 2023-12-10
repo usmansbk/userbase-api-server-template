@@ -3,7 +3,6 @@ CREATE TYPE "UserStatus" AS ENUM ('Staged', 'Provisioned', 'Active', 'Recovery',
 
 -- CreateTable
 CREATE TABLE "File" (
-    "id" TEXT NOT NULL,
     "key" TEXT NOT NULL,
     "bucket" TEXT NOT NULL,
     "mimetype" TEXT NOT NULL,
@@ -15,9 +14,7 @@ CREATE TABLE "File" (
     "metadata" JSONB,
     "location" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-
-    CONSTRAINT "File_pkey" PRIMARY KEY ("id")
+    "updatedAt" TIMESTAMP(3)
 );
 
 -- CreateTable
@@ -61,7 +58,6 @@ CREATE TABLE "User" (
     "updatedAt" TIMESTAMP(3),
     "passwordLastUpdatedAt" TIMESTAMP(3),
     "phoneNumberLastUpdatedAt" TIMESTAMP(3),
-    "deletedAt" TIMESTAMP(3),
     "status" "UserStatus" NOT NULL DEFAULT 'Staged',
     "sessions" JSONB NOT NULL DEFAULT '{}',
     "blockedIps" JSONB NOT NULL DEFAULT '{}',
@@ -73,7 +69,8 @@ CREATE TABLE "User" (
 CREATE TABLE "UserAvatar" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "fileId" TEXT NOT NULL,
+    "fileKey" TEXT NOT NULL,
+    "fileBucket" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
 
@@ -120,6 +117,9 @@ CREATE TABLE "RolePermission" (
 CREATE UNIQUE INDEX "File_key_key" ON "File"("key");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "File_key_bucket_key" ON "File"("key", "bucket");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 
 -- CreateIndex
@@ -153,7 +153,7 @@ ALTER TABLE "Permission" ADD CONSTRAINT "Permission_creatorId_fkey" FOREIGN KEY 
 ALTER TABLE "UserAvatar" ADD CONSTRAINT "UserAvatar_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserAvatar" ADD CONSTRAINT "UserAvatar_fileId_fkey" FOREIGN KEY ("fileId") REFERENCES "File"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "UserAvatar" ADD CONSTRAINT "UserAvatar_fileKey_fileBucket_fkey" FOREIGN KEY ("fileKey", "fileBucket") REFERENCES "File"("key", "bucket") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserRole" ADD CONSTRAINT "UserRole_assigneeId_fkey" FOREIGN KEY ("assigneeId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

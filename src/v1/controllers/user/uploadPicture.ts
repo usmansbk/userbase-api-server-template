@@ -91,7 +91,6 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
                 },
               },
             },
-            pictureLastUpdatedAt: new Date(),
           },
           select: {
             id: true,
