@@ -275,12 +275,15 @@ type Mutation {
   requestResetUserPassword(email: EmailAddress!): MutationResponse!
   resetUserPassword(input: ResetPasswordInput!): MutationResponse!
 
-  removeCurrentUserPicture: UserResponse! @auth
-  updateCurrentUserBasicInfo(input: UpdateBasicInfoInput!): UserResponse! @auth
+  removeCurrentUserPicture: UserResponse!
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
+  updateCurrentUserBasicInfo(input: UpdateBasicInfoInput!): UserResponse!
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
   updateCurrentUserPhoneNumber(input: UpdatePhoneNumberInput!): UserResponse!
-    @auth
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
 
   logoutFromAllDevices: MutationResponse! @auth
-  requestDeleteCurrentUserAccount: MutationResponse! @auth
+  requestDeleteCurrentUserAccount: MutationResponse!
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
   deleteUserAccount(input: DeleteAccountInput!): MutationResponse!
 }

@@ -114,18 +114,13 @@ export default {
         };
       } catch (e) {
         if (e instanceof ZodError) {
-          const fieldErrors = Object.entries(e.formErrors.fieldErrors).map(
-            ([name, messages]) => ({
-              name,
-              messages,
-            }),
-          );
-
           throw new ValidationError(
             t("mutation.resetUserPassword.errors.validation.message"),
             {
               originalError: e,
-              fieldErrors,
+              fieldErrors: [
+                { name: "password", messages: e.formErrors.formErrors },
+              ],
             },
           );
         }
