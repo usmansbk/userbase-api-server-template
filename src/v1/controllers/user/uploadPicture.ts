@@ -65,9 +65,10 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
           .picture();
 
         if (oldPicture) {
-          await prismaClient.userAvatar.delete({
+          await prismaClient.file.delete({
             where: {
-              id: oldPicture.id,
+              key: oldPicture.fileKey,
+              bucket: oldPicture.fileBucket,
             },
           });
         }
