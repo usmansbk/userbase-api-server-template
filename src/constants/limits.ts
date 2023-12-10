@@ -27,6 +27,7 @@ export const PHONE_NUMBER_VERIFICATION_TOKEN_EXPIRES_IN: DurationType = [
   "minutes",
 ];
 export const PASSWORD_RESET_TOKEN_EXPIRES_IN: DurationType = [5, "minutes"];
+export const DELETE_ACCOUNT_TOKEN_EXPIRES_IN: DurationType = [5, "minutes"];
 
 export const MIN_PASSWORD_LENGTH = 10;
 export const MAX_PASSWORD_LENGTH = 32;

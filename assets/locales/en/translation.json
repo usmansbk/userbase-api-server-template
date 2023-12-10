@@ -87,6 +87,10 @@
     },
     "removeCurrentUserPicture": {
       "message": "You've removed your picture."
+    },
+    "requestDeleteAccount": {
+      "message": "We've sent you an email with further instructions.",
+      "message_Provisioned": "You've deleted your account."
     }
   }
 }
