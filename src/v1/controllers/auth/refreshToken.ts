@@ -38,9 +38,18 @@ export default function refreshToken(
       const user = await prismaClient.user.findUnique({
         where: {
           id: sub,
+          sessions: {
+            some: {
+              id: azp,
+            },
+          },
         },
         include: {
-          sessions: true,
+          sessions: {
+            where: {
+              id: azp,
+            },
+          },
         },
       });
 
@@ -61,7 +70,7 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const session = user.sessions.find((session) => session.id === azp);
+      const [session] = user.sessions;
 
       if (!session || session.jti !== decodedRefreshToken.sub) {
         const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${clientIp}:${user.email}`;
