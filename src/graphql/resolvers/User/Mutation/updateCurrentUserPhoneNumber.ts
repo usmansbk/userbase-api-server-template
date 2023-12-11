@@ -22,10 +22,10 @@ export default {
         },
       });
 
-      if (user && user.phoneNumber !== input.phoneNumber) {
+      if (user!.phoneNumber !== input.phoneNumber) {
         user = await prismaClient.user.update({
           where: {
-            id: user.id,
+            id: user!.id,
           },
           data: {
             phoneNumber,
