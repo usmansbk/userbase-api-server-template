@@ -14,15 +14,14 @@ User management system api server base template
 - [x] Login with email
 - [x] Verify email address
 - [x] Verify phone number
-- [x] Login with verified phone number SMS OTP
-- [x] Login with verified email OTP
+- [x] 2FA Login with verified phone number SMS OTP
+- [x] 2FA Login with verified email OTP
 - [x] Reset password
 - [x] Logout from all devices
 - [x] Delete user account
 - [x] Update user profile
 - [x] User profile picture
 - [x] Brute-Force login protection
-- [ ] 2FA with Authenticator apps (Possesion Factor)
 - [ ] Admin Dashboard
 
 ## Prerequisites
