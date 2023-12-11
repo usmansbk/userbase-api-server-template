@@ -10,7 +10,7 @@ import {
   MIN_PASSWORD_LENGTH,
   REFRESH_TOKEN_EXPIRES_IN,
 } from "@/constants/limits";
-import type { AppContext, UserSessions } from "types";
+import type { AppContext } from "types";
 import type {
   MutationRegisterWithEmailArgs,
   AuthResponse,
@@ -23,8 +23,15 @@ export default {
       { input }: MutationRegisterWithEmailArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { prismaClient, t, jwtClient, redisClient, clientId, clientIp } =
-        context;
+      const {
+        prismaClient,
+        t,
+        jwtClient,
+        redisClient,
+        clientId,
+        clientIp,
+        userAgent,
+      } = context;
 
       try {
         const { email, language, phoneNumber } = input;
@@ -169,35 +176,30 @@ export default {
           });
         }
 
-        const { accessToken, refreshToken, jti, azp } = jwtClient.getAuthTokens(
-          {
-            sub: user.id,
+        const session = await prismaClient.userSession.create({
+          data: {
+            clientId,
+            clientIp,
+            userAgent,
+            User: {
+              connect: {
+                id: user.id,
+              },
+            },
           },
-        );
+        });
+
+        const { accessToken, refreshToken } = jwtClient.getAuthTokens({
+          sub: user.id,
+          azp: session.id,
+          jti: session.jti,
+        });
 
         await redisClient.setex(
-          `${AUTH_PREFIX}:${clientId}:${azp}:${user.id}`,
+          `${AUTH_PREFIX}:${clientId}:${session.id}`,
           dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-          jti,
+          session.jti,
         );
-
-        const sessions = new Map(Object.entries(user.sessions as UserSessions));
-        sessions.set(azp, {
-          id: azp,
-          jti,
-          clientId,
-          clientIp,
-          createdAt: dayjs().toISOString(),
-        });
-
-        await prismaClient.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            sessions: Object.fromEntries(sessions),
-          },
-        });
 
         return {
           success: true,

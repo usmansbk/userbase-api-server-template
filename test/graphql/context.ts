@@ -25,7 +25,6 @@ export default async function createMockContext(
     clientIp: "test",
     clientId: "test",
     userAgent: "test",
-    sessionId: "test",
     mockPrismaClient: prismaClient,
     prismaClient,
     t: jest

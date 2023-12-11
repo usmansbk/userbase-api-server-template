@@ -9,7 +9,6 @@ import {
   RESET_LOGIN_ATTEMPTS_IN,
 } from "@/constants/limits";
 import type { NextFunction, Request, Response } from "express";
-import type { UserSessions } from "types";
 import { BLOCKED_IP_TEMPLATE } from "@/constants/templates";
 
 export default function refreshToken(
@@ -45,7 +44,7 @@ export default function refreshToken(
       const { azp: oldAzp, sub } = decodedAccessToken;
       const decodedRefreshToken = jwtClient.verify(oldRefreshToken!);
       const oldJti = await redisClient.getdel(
-        `${AUTH_PREFIX}:${clientId}:${oldAzp}:${sub}`,
+        `${AUTH_PREFIX}:${clientId}:${oldAzp}`,
       );
 
       if (!oldJti || decodedRefreshToken.sub !== oldJti) {
@@ -55,6 +54,9 @@ export default function refreshToken(
       const user = await prismaClient.user.findUnique({
         where: {
           id: sub,
+        },
+        include: {
+          sessions: true,
         },
       });
 
@@ -75,9 +77,7 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const sessions = new Map(Object.entries(user.sessions as UserSessions));
-
-      const oldSession = sessions.get(oldAzp!);
+      const oldSession = user.sessions.find((session) => session.id !== oldAzp);
 
       if (!oldSession || oldSession.jti !== decodedRefreshToken.sub) {
         const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${clientIp}:${user.email}`;
@@ -120,32 +120,29 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const { accessToken, refreshToken, jti, azp } = jwtClient.getAuthTokens({
+      const session = await prismaClient.userSession.create({
+        data: {
+          clientId,
+          clientIp,
+          userAgent,
+          User: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+
+      const { accessToken, refreshToken } = jwtClient.getAuthTokens({
         sub,
+        jti: session.jti,
       });
 
       await redisClient.setex(
-        `${AUTH_PREFIX}:${clientId}:${azp}:${sub}`,
+        `${AUTH_PREFIX}:${clientId}:${session.id}`,
         dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        jti,
+        session.jti,
       );
-
-      sessions.delete(oldAzp!);
-      sessions.set(azp, {
-        id: azp,
-        jti,
-        userAgent,
-        clientId,
-        clientIp,
-        createdAt: dayjs().toISOString(),
-      });
-
-      await prismaClient.user.update({
-        where: {
-          id: user.id,
-        },
-        data: { sessions: Object.fromEntries(sessions) },
-      });
 
       res.status(200).json({
         success: true,

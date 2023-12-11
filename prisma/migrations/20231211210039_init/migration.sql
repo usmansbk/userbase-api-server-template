@@ -42,6 +42,20 @@ CREATE TABLE "Permission" (
 );
 
 -- CreateTable
+CREATE TABLE "UserSession" (
+    "id" TEXT NOT NULL,
+    "jti" TEXT NOT NULL,
+    "clientId" TEXT NOT NULL,
+    "clientIp" TEXT NOT NULL,
+    "userAgent" TEXT,
+    "geo" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT,
+
+    CONSTRAINT "UserSession_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
@@ -59,7 +73,6 @@ CREATE TABLE "User" (
     "passwordLastUpdatedAt" TIMESTAMP(3),
     "phoneNumberLastUpdatedAt" TIMESTAMP(3),
     "status" "UserStatus" NOT NULL DEFAULT 'Staged',
-    "sessions" JSONB NOT NULL DEFAULT '{}',
     "blockedIps" JSONB NOT NULL DEFAULT '{}',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -148,6 +161,9 @@ ALTER TABLE "Role" ADD CONSTRAINT "Role_creatorId_fkey" FOREIGN KEY ("creatorId"
 
 -- AddForeignKey
 ALTER TABLE "Permission" ADD CONSTRAINT "Permission_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserSession" ADD CONSTRAINT "UserSession_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserAvatar" ADD CONSTRAINT "UserAvatar_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

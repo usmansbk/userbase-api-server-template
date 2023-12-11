@@ -64,6 +64,18 @@ enum UserStatus {
   Deprovisioned
 }
 
+model UserSession {
+  id        String   @id @default(cuid())
+  jti       String   @default(cuid())
+  clientId  String
+  clientIp  String
+  userAgent String?
+  geo       String?
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+}
+
 model User {
   id                            String           @id @default(uuid())
   firstName                     String
@@ -89,8 +101,8 @@ model User {
   permissionsAssignedToUser     UserPermission[] @relation("PermissionAssignee")
   permissionsAssignedByUser     UserPermission[] @relation("PermissionAssignor")
   rolePermissionsAssignedByUser RolePermission[] @relation("RolePermissionAssignor")
-  sessions                      Json             @default("{}")
   blockedIps                    Json             @default("{}")
+  sessions                      UserSession[]
 }
 
 model UserAvatar {

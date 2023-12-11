@@ -88,6 +88,8 @@ export default {
 
         await redisClient.del(cacheKey);
 
+        // TODO: delete user current session
+
         if (!user.isEmailVerified) {
           emailClient.send({
             template: WELCOME_TEMPLATE,

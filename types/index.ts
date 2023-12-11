@@ -5,13 +5,10 @@ import type { SMSClient } from "@/utils/sms";
 import type { Storage } from "@/utils/storage";
 import type { Redis } from "ioredis";
 import type { ExtendedPrismaClient } from "@/config/database";
-import type { AccountStatus, UserSession } from "./graphql";
+import type { AccountStatus } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
 import type { EmailClient } from "@/utils/email";
-
-export interface UserSessions {
-  [key: string]: UserSession;
-}
+import { UserSession } from "@prisma/client";
 
 export interface CurrentUser {
   id: string;
@@ -19,12 +16,11 @@ export interface CurrentUser {
   language: string | null;
   roles: string[];
   permissions: string[];
-  sessions: UserSessions;
+  sessions: UserSession[];
 }
 
 export interface AppContext {
   userAgent?: string;
-  sessionId?: string;
   clientId: string;
   clientIp: string;
   log: pino.Logger<pino.LoggerOptions>;

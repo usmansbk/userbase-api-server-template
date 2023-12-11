@@ -32,7 +32,6 @@ export default function useWebSocketServer(
       schema,
       context: async (ctx): Promise<AppContext> => {
         let currentUser: CurrentUser | undefined | null;
-        let sessionId: string | undefined;
         const { t, language } = i18next;
 
         const clientIp = ip.address("public");
@@ -58,21 +57,25 @@ export default function useWebSocketServer(
             const token = authorization.split(/\s+/)[1];
             const payload = jwtClient.verify(token);
             if (payload) {
-              sessionId = payload.azp;
               currentUser = await prismaClient.user.currentUser(payload.sub!);
-            }
 
-            if (currentUser) {
-              configureScope((scope) => {
-                scope.setUser({ id: currentUser!.id });
-              });
-              if (currentUser?.language) {
-                await i18next.changeLanguage(currentUser.language);
-              }
-              if (!currentUser.sessions?.[payload.azp!]) {
-                throw new AuthenticationError(
-                  t("INVALID_AUTH_TOKEN", { ns: "error" }),
+              if (currentUser) {
+                configureScope((scope) => {
+                  scope.setUser({ id: currentUser!.id });
+                });
+                if (currentUser?.language) {
+                  await i18next.changeLanguage(currentUser.language);
+                }
+
+                const session = currentUser.sessions.find(
+                  (session) => session.id === payload.azp,
                 );
+
+                if (!session) {
+                  throw new AuthenticationError(
+                    t("INVALID_AUTH_TOKEN", { ns: "error" }),
+                  );
+                }
               }
             }
           }
@@ -101,7 +104,6 @@ export default function useWebSocketServer(
           redisClient,
           prismaClient,
           emailClient,
-          sessionId,
           clientId,
           clientIp,
           language,

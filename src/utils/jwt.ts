@@ -95,16 +95,14 @@ function decode(token: string) {
 }
 
 function getAuthTokens(payload: JwtPayload) {
-  const jti = nanoid();
-  const azp = nanoid(); // Authorized Party allows for multiple device sessions
   const accessToken = sign(
-    { ...payload, azp, jti },
+    { ...payload },
     {
       expiresIn: dayjs.duration(...ACCESS_TOKEN_EXPIRES_IN).asSeconds(),
     },
   );
   const refreshToken = sign(
-    { sub: jti },
+    { sub: payload.jti },
     {
       expiresIn: dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
       jwtid: nanoid(),
@@ -112,8 +110,6 @@ function getAuthTokens(payload: JwtPayload) {
   );
 
   return {
-    jti,
-    azp,
     accessToken,
     refreshToken,
   };

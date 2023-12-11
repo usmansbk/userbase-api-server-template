@@ -1,7 +1,7 @@
 import storage from "@/utils/storage";
 import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import type { CurrentUser, UserSessions } from "types";
+import type { CurrentUser } from "types";
 import type { AccountStatus } from "types/graphql";
 
 const prismaClient = new PrismaClient();
@@ -112,6 +112,7 @@ const currentUserExtension = Prisma.defineExtension({
                 permission: true,
               },
             },
+            sessions: true,
           },
         });
 
@@ -122,7 +123,7 @@ const currentUserExtension = Prisma.defineExtension({
         return {
           id,
           status: user.status as AccountStatus,
-          sessions: user.sessions as UserSessions,
+          sessions: user.sessions,
           language: user.lastName,
           roles: user.rolesAssignedToUser.map((userRole) => userRole.role.name),
           permissions: user.permissionsAssignedToUser

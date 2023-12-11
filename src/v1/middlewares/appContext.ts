@@ -55,23 +55,27 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
         const payload = jwtClient.verify(token);
 
         if (payload) {
-          req.context.sessionId = payload.azp;
           currentUser = await prismaClient.user.currentUser(payload.sub!);
-        }
 
-        if (currentUser) {
-          if (currentUser.language) {
-            await i18n.changeLanguage(currentUser?.language);
-          }
-          configureScope((scope) => {
-            scope.setUser({ id: currentUser!.id });
-          });
-          if (!currentUser.sessions?.[payload.azp!]) {
-            throw new AuthenticationError(
-              t("INVALID_AUTH_TOKEN", { ns: "error" }),
+          if (currentUser) {
+            if (currentUser.language) {
+              await i18n.changeLanguage(currentUser?.language);
+            }
+            configureScope((scope) => {
+              scope.setUser({ id: currentUser!.id });
+            });
+
+            const session = currentUser.sessions.find(
+              (session) => session.id === payload.azp,
             );
+
+            if (!session) {
+              throw new AuthenticationError(
+                t("INVALID_AUTH_TOKEN", { ns: "error" }),
+              );
+            }
+            req.context.currentUser = currentUser;
           }
-          req.context.currentUser = currentUser;
         }
       }
 
