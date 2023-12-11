@@ -5,6 +5,7 @@ import type { CurrentUser, UserSessions } from "types";
 import type { AccountStatus } from "types/graphql";
 
 const prismaClient = new PrismaClient();
+
 const salt = bcrypt.genSaltSync(10);
 
 const deleteS3ObjectExtension = Prisma.defineExtension({
