@@ -8,6 +8,7 @@ import type { ExtendedPrismaClient } from "@/config/database";
 import type { AccountStatus } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
 import type { EmailClient } from "@/utils/email";
+import type { DocClient } from "@/utils/docClient";
 import { UserSession } from "@prisma/client";
 
 export interface CurrentUser {
@@ -31,6 +32,7 @@ export interface AppContext {
   emailClient: EmailClient;
   smsClient: SMSClient;
   jwtClient: JWTClient;
+  docClient: DocClient;
   pubsub: RedisPubSub;
   language: string;
   storage: Storage;

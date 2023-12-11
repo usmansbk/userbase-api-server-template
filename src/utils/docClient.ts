@@ -74,8 +74,12 @@ const query = async ({
     }),
   );
 
-export default {
+const docClient = {
   putItem,
   putMany,
   query,
 };
+
+export type DocClient = typeof docClient;
+
+export default docClient;

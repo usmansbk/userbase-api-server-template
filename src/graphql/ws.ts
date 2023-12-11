@@ -8,6 +8,7 @@ import redisClient, { pubsub } from "@/config/redis";
 import prismaClient from "@/config/database";
 import smsClient from "@/utils/sms";
 import emailClient from "@/utils/email";
+import docClient from "@/utils/docClient";
 import log from "@/utils/logger";
 import storage from "@/utils/storage";
 import jwtClient from "@/utils/jwt";
@@ -104,6 +105,7 @@ export default function useWebSocketServer(
           redisClient,
           prismaClient,
           emailClient,
+          docClient,
           clientId,
           clientIp,
           language,
