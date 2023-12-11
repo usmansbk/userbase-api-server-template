@@ -22,7 +22,7 @@ User management system api server base template
 - [x] Update user profile
 - [x] User profile picture
 - [x] Brute-Force login protection
-- [ ] 2FA
+- [ ] 2FA with Authenticator apps (Possesion Factor)
 - [ ] Admin Dashboard
 
 ## Prerequisites
