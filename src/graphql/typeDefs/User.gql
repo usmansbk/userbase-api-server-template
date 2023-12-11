@@ -172,7 +172,7 @@ type AuthResponse implements Response {
   """
   Access tokens contain information about what scopes, or permissions.
   """
-  accessToken: JWT!
+  accessToken: JWT
   """
   Token used to obtain a renewed Access Token without forcing users to log in again.
   """

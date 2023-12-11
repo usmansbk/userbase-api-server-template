@@ -109,7 +109,7 @@ export enum AccountStatus {
 export type AuthResponse = Response & {
   __typename?: 'AuthResponse';
   /** Access tokens contain information about what scopes, or permissions. */
-  accessToken: Scalars['JWT']['output'];
+  accessToken?: Maybe<Scalars['JWT']['output']>;
   message?: Maybe<Scalars['String']['output']>;
   /** Token used to obtain a renewed Access Token without forcing users to log in again. */
   refreshToken?: Maybe<Scalars['JWT']['output']>;
@@ -825,7 +825,7 @@ export interface AccountNumberScalarConfig extends GraphQLScalarTypeConfig<Resol
 }
 
 export type AuthResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthResponse'] = ResolversParentTypes['AuthResponse']> = ResolversObject<{
-  accessToken?: Resolver<ResolversTypes['JWT'], ParentType, ContextType>;
+  accessToken?: Resolver<Maybe<ResolversTypes['JWT']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   refreshToken?: Resolver<Maybe<ResolversTypes['JWT']>, ParentType, ContextType>;
   success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
