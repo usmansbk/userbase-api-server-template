@@ -6,6 +6,17 @@ export default {
     isMe(user: User, _args: never, context: AppContext) {
       return user.id === context.currentUser?.id;
     },
+    async sessions(user: User, _args: never, context: AppContext) {
+      const { prismaClient } = context;
+
+      return await prismaClient.user
+        .findUnique({
+          where: {
+            id: user.id,
+          },
+        })
+        .sessions();
+    },
     async picture(user: User, _args: never, context: AppContext) {
       const { prismaClient } = context;
 

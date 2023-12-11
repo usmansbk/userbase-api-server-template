@@ -449,6 +449,7 @@ export type User = {
   rolesAssignedByUser: Array<Maybe<UserRole>>;
   rolesAssignedToUser: Array<Maybe<UserRole>>;
   rolesCreatedByUser: Array<Maybe<Role>>;
+  sessions: Array<Maybe<UserSession>>;
   socialPictureUrl?: Maybe<Scalars['URL']['output']>;
   status?: Maybe<AccountStatus>;
   surname?: Maybe<Scalars['String']['output']>;
@@ -1207,6 +1208,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   rolesAssignedByUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
   rolesAssignedToUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
   rolesCreatedByUser?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
+  sessions?: Resolver<Array<Maybe<ResolversTypes['UserSession']>>, ParentType, ContextType>;
   socialPictureUrl?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['AccountStatus']>, ParentType, ContextType>;
   surname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

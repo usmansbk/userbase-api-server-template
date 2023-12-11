@@ -95,6 +95,13 @@ type User {
   pictureLastUpdatedAt: DateTime
   roles: [String]!
   status: AccountStatus
+  sessions: [UserSession]!
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+      ]
+    )
 
   rolesCreatedByUser: [Role]!
   permissionsCreatedByUser: [Permission]!

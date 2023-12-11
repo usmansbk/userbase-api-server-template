@@ -110,7 +110,7 @@ export default {
           clientId,
           clientIp,
           userAgent,
-          User: {
+          user: {
             connect: {
               id: user.id,
             },

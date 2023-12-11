@@ -72,8 +72,8 @@ model UserSession {
   userAgent String?
   geo       String?
   createdAt DateTime @default(now())
-  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?
+  user      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId   String
 }
 
 model User {

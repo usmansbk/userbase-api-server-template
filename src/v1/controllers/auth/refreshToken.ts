@@ -16,16 +16,8 @@ export default function refreshToken(
   next: NextFunction,
 ) {
   (async () => {
-    const {
-      t,
-      clientIp,
-      clientId,
-      userAgent,
-      jwtClient,
-      redisClient,
-      emailClient,
-      prismaClient,
-    } = req.context;
+    const { t, clientIp, jwtClient, redisClient, emailClient, prismaClient } =
+      req.context;
     const { access_token: expiredAccessToken, refresh_token: oldRefreshToken } =
       req.headers;
 
@@ -69,9 +61,9 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const oldSession = user.sessions.find((session) => session.id !== azp);
+      const session = user.sessions.find((session) => session.id !== azp);
 
-      if (!oldSession || oldSession.jti !== decodedRefreshToken.sub) {
+      if (!session || session.jti !== decodedRefreshToken.sub) {
         const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${clientIp}:${user.email}`;
         const attempts = await redisClient.get(attemptsKey);
 
@@ -111,19 +103,6 @@ export default function refreshToken(
 
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
-
-      const session = await prismaClient.userSession.create({
-        data: {
-          clientId,
-          clientIp,
-          userAgent,
-          User: {
-            connect: {
-              id: user.id,
-            },
-          },
-        },
-      });
 
       const { accessToken, refreshToken } = jwtClient.getAuthTokens({
         sub,
