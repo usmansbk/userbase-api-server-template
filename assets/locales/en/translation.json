@@ -112,6 +112,11 @@
     },
     "requestSMSLoginOTP": {
       "message": "We've sent an OTP to {{phoneNumber}}."
+    },
+    "loginWithSMSOTP": {
+      "errors": {
+        "message": "Your OTP is invalid."
+      }
     }
   }
 }
