@@ -38,15 +38,12 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
 
       if (
         process.env.NODE_ENV === "production" &&
-        !(clientId && jwtClient.clientIds.includes(clientId))
+        !jwtClient.clientIds.includes(clientId)
       ) {
         throw new ForbiddenError(t("UNSUPPORTED_CLIENT", { ns: "error" }));
       }
 
-      if (clientId) {
-        req.context.clientId = clientId;
-        jwtClient.setAudience(clientId);
-      }
+      jwtClient.setAudience(clientId);
 
       let currentUser: CurrentUser | undefined | null;
 

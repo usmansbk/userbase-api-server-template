@@ -1,9 +1,8 @@
 import dayjs from "@/utils/dayjs";
 import { UserStatus } from "@prisma/client";
-import { AUTH_PREFIX, LOGIN_ATTEMPT_PREFIX } from "@/constants/cachePrefixes";
+import { LOGIN_ATTEMPT_PREFIX } from "@/constants/cachePrefixes";
 import {
   RESET_LOGIN_ATTEMPTS_IN,
-  REFRESH_TOKEN_EXPIRES_IN,
   BRUTE_FORCE_THRESHOLD,
   BLOCK_IP_DURATION,
 } from "@/constants/limits";
@@ -124,12 +123,6 @@ export default {
         azp: session.id,
         jti: session.jti,
       });
-
-      await redisClient.setex(
-        `${AUTH_PREFIX}:${clientId}:${session.id}`,
-        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        session.jti,
-      );
 
       return {
         success: true,

@@ -1,4 +1,3 @@
-import { AUTH_PREFIX } from "@/constants/cachePrefixes";
 import type { AppContext } from "types";
 import type { MutationResponse } from "types/graphql";
 
@@ -9,14 +8,7 @@ export default {
       _args: never,
       context: AppContext,
     ): Promise<MutationResponse> {
-      const { prismaClient, currentUser, redisClient, t } = context;
-
-      await Promise.all(
-        Object.values(currentUser!.sessions).map(
-          async ({ clientId, id }) =>
-            await redisClient.del(`${AUTH_PREFIX}:${clientId}:${id}}`),
-        ),
-      );
+      const { prismaClient, currentUser, t } = context;
 
       await prismaClient.userSession.deleteMany({
         where: {

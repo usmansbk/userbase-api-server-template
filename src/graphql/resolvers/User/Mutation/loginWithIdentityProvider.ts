@@ -8,9 +8,6 @@ import type {
   AuthResponse,
 } from "types/graphql";
 import type { AppContext } from "types";
-import dayjs from "@/utils/dayjs";
-import { REFRESH_TOKEN_EXPIRES_IN } from "@/constants/limits";
-import { AUTH_PREFIX } from "@/constants/cachePrefixes";
 import { WELCOME_TEMPLATE } from "@/constants/templates";
 
 export default {
@@ -27,7 +24,6 @@ export default {
         language,
         userAgent,
         jwtClient,
-        redisClient,
         emailClient,
         prismaClient,
       } = context;
@@ -141,12 +137,6 @@ export default {
         azp: session.id,
         jti: session.jti,
       });
-
-      await redisClient.setex(
-        `${AUTH_PREFIX}:${clientId}:${session.id}`,
-        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        session.jti,
-      );
 
       if (!isWelcomeEmailSent) {
         emailClient.send({

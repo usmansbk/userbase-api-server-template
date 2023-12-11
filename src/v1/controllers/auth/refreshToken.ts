@@ -1,11 +1,10 @@
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import dayjs from "@/utils/dayjs";
-import { AUTH_PREFIX, LOGIN_ATTEMPT_PREFIX } from "@/constants/cachePrefixes";
+import { LOGIN_ATTEMPT_PREFIX } from "@/constants/cachePrefixes";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import {
   BLOCK_IP_DURATION,
   BRUTE_FORCE_THRESHOLD,
-  REFRESH_TOKEN_EXPIRES_IN,
   RESET_LOGIN_ATTEMPTS_IN,
 } from "@/constants/limits";
 import type { NextFunction, Request, Response } from "express";
@@ -41,15 +40,8 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const { azp: oldAzp, sub } = decodedAccessToken;
+      const { azp, sub } = decodedAccessToken;
       const decodedRefreshToken = jwtClient.verify(oldRefreshToken!);
-      const oldJti = await redisClient.getdel(
-        `${AUTH_PREFIX}:${clientId}:${oldAzp}`,
-      );
-
-      if (!oldJti || decodedRefreshToken.sub !== oldJti) {
-        throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
-      }
 
       const user = await prismaClient.user.findUnique({
         where: {
@@ -77,7 +69,7 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const oldSession = user.sessions.find((session) => session.id !== oldAzp);
+      const oldSession = user.sessions.find((session) => session.id !== azp);
 
       if (!oldSession || oldSession.jti !== decodedRefreshToken.sub) {
         const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${clientIp}:${user.email}`;
@@ -135,14 +127,9 @@ export default function refreshToken(
 
       const { accessToken, refreshToken } = jwtClient.getAuthTokens({
         sub,
+        azp: session.id,
         jti: session.jti,
       });
-
-      await redisClient.setex(
-        `${AUTH_PREFIX}:${clientId}:${session.id}`,
-        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        session.jti,
-      );
 
       res.status(200).json({
         success: true,

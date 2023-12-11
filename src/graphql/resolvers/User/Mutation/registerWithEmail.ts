@@ -1,14 +1,11 @@
 import { ZodError, z } from "zod";
 import { UserStatus } from "@prisma/client";
 import ValidationError from "@/utils/errors/ValidationError";
-import dayjs from "@/utils/dayjs";
-import { AUTH_PREFIX } from "@/constants/cachePrefixes";
 import {
   MAX_NAME_LENGTH,
   MAX_PASSWORD_LENGTH,
   MIN_NAME_LENGTH,
   MIN_PASSWORD_LENGTH,
-  REFRESH_TOKEN_EXPIRES_IN,
 } from "@/constants/limits";
 import type { AppContext } from "types";
 import type {
@@ -23,15 +20,8 @@ export default {
       { input }: MutationRegisterWithEmailArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const {
-        prismaClient,
-        t,
-        jwtClient,
-        redisClient,
-        clientId,
-        clientIp,
-        userAgent,
-      } = context;
+      const { prismaClient, t, jwtClient, clientId, clientIp, userAgent } =
+        context;
 
       try {
         const { email, language, phoneNumber } = input;
@@ -194,12 +184,6 @@ export default {
           azp: session.id,
           jti: session.jti,
         });
-
-        await redisClient.setex(
-          `${AUTH_PREFIX}:${clientId}:${session.id}`,
-          dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-          session.jti,
-        );
 
         return {
           success: true,

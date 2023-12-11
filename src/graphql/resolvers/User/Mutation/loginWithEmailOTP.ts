@@ -4,7 +4,6 @@ import type {
 } from "types/graphql";
 import type { AppContext } from "types";
 import {
-  AUTH_PREFIX,
   EMAIL_LOGIN_OTP_PREFIX,
   LOGIN_ATTEMPT_PREFIX,
 } from "@/constants/cachePrefixes";
@@ -13,7 +12,6 @@ import { UserStatus } from "@prisma/client";
 import {
   BLOCK_IP_DURATION,
   BRUTE_FORCE_THRESHOLD,
-  REFRESH_TOKEN_EXPIRES_IN,
   RESET_LOGIN_ATTEMPTS_IN,
 } from "@/constants/limits";
 import dayjs from "@/utils/dayjs";
@@ -137,12 +135,6 @@ export default {
         azp: session.id,
         jti: session.jti,
       });
-
-      await redisClient.setex(
-        `${AUTH_PREFIX}:${clientId}:${session.id}`,
-        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        session.jti,
-      );
 
       return {
         success: true,

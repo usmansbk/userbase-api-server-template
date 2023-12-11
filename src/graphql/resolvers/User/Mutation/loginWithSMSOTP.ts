@@ -1,7 +1,6 @@
 import { UserStatus } from "@prisma/client";
 import dayjs from "@/utils/dayjs";
 import {
-  AUTH_PREFIX,
   LOGIN_ATTEMPT_PREFIX,
   PHONE_NUMBER_LOGIN_OTP_PREFIX,
 } from "@/constants/cachePrefixes";
@@ -9,7 +8,6 @@ import AuthenticationError from "@/utils/errors/AuthenticationError";
 import {
   BLOCK_IP_DURATION,
   BRUTE_FORCE_THRESHOLD,
-  REFRESH_TOKEN_EXPIRES_IN,
   RESET_LOGIN_ATTEMPTS_IN,
 } from "@/constants/limits";
 import { BLOCKED_IP_TEMPLATE } from "@/constants/templates";
@@ -135,12 +133,6 @@ export default {
         azp: session.id,
         jti: session.jti,
       });
-
-      await redisClient.setex(
-        `${AUTH_PREFIX}:${clientId}:${session.id}`,
-        dayjs.duration(...REFRESH_TOKEN_EXPIRES_IN).asSeconds(),
-        session.jti,
-      );
 
       return {
         success: true,
