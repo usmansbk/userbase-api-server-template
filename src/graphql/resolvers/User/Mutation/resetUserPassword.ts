@@ -43,7 +43,7 @@ export default {
           )
           .parse(input.password);
 
-        const verified = jwtClient.verifyForAllClients(input.token);
+        const verified = jwtClient.verifyForAllClients(input.token as string);
         const cacheKey = `${PASSWORD_RESET_PREFIX}:${verified.email}`;
         const sentToken = await redisClient.getdel(cacheKey);
 

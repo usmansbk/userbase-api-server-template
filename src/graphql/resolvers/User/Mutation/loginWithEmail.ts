@@ -44,7 +44,9 @@ export default {
         );
       }
 
-      const blockedIps = new Map(Object.entries(user.blockedIps!));
+      const blockedIps = new Map(
+        Object.entries(user.blockedIps! as Record<string, string>),
+      );
       const blockedIpAt = ip ? blockedIps.get(ip) : undefined;
 
       const isBlocked =
@@ -58,7 +60,7 @@ export default {
         );
       }
 
-      const isMatched = await user.comparePassword(input.password);
+      const isMatched = await user.comparePassword(input.password as string);
 
       if (!isMatched) {
         const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${input.email}`;

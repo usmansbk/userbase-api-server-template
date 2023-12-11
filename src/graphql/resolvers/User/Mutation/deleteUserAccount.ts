@@ -18,7 +18,7 @@ export default {
       const { prismaClient, redisClient, jwtClient, t } = context;
 
       try {
-        const verified = jwtClient.verifyForAllClients(input.token);
+        const verified = jwtClient.verifyForAllClients(input.token as string);
 
         const cacheKey = `${DELETE_USER_PREFIX}:${verified.email}`;
 
@@ -43,7 +43,7 @@ export default {
           );
         }
 
-        const isMatched = await user.comparePassword(input.password);
+        const isMatched = await user.comparePassword(input.password as string);
 
         if (!isMatched) {
           throw new AuthenticationError(

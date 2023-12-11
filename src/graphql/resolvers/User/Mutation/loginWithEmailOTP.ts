@@ -60,7 +60,9 @@ export default {
         );
       }
 
-      const blockedIps = new Map(Object.entries(user.blockedIps!));
+      const blockedIps = new Map(
+        Object.entries(user.blockedIps! as Record<string, string>),
+      );
       const blockedIpAt = ip ? blockedIps.get(ip) : undefined;
 
       const isBlocked =

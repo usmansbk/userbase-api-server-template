@@ -17,7 +17,7 @@ export default {
       const { prismaClient, t, jwtClient } = context;
 
       try {
-        const verified = jwtClient.verifyForAllClients(token);
+        const verified = jwtClient.verifyForAllClients(token as string);
 
         const user = await prismaClient.user.findFirst({
           where: {

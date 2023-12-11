@@ -34,7 +34,7 @@ export default {
       let userPayload;
 
       if (provider === "GOOGLE") {
-        userPayload = await verifyGoogleIdToken(token);
+        userPayload = await verifyGoogleIdToken(token as string);
       }
 
       if (!userPayload) {

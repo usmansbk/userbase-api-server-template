@@ -19,7 +19,7 @@ export default {
       const { jwtClient, prismaClient, redisClient, t, emailClient } = context;
 
       try {
-        const decoded = jwtClient.verifyForAllClients(input.token);
+        const decoded = jwtClient.verifyForAllClients(input.token as string);
         const sentToken = await redisClient.getdel(
           `${VERIFY_EMAIL_OTP_PREFIX}:${decoded.email}`,
         );

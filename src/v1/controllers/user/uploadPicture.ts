@@ -26,7 +26,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
     } = req;
     (async () => {
       if (err instanceof MulterError) {
-        let errorMessage: string | undefined;
+        let errorMessage: string | undefined = err.message;
 
         switch (err.code) {
           case "LIMIT_UNEXPECTED_FILE":
@@ -52,7 +52,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
             next(new QueryError(t("UPLOAD_FAILED", { ns: "error" })));
             break;
         }
-        next(new QueryError(errorMessage as string));
+        next(new QueryError(errorMessage));
       } else if (file) {
         const { key, bucket, size, mimetype, fieldname, originalname } = file;
 
