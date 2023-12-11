@@ -32,6 +32,11 @@ export default async function createMockContext(
       .mockImplementation(
         (key: string) => key,
       ) as unknown as TFunction<"translation">,
+    docClient: {
+      putItem: jest.fn(),
+      putMany: jest.fn(),
+      query: jest.fn(),
+    },
     storage: {
       deleteObject: jest.fn(),
       deleteManyObjects: jest.fn(),
