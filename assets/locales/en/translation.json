@@ -20,7 +20,7 @@
     },
     "loginWithOTP": {
       "errors": {
-        "message": "Your login OTP is invalid."
+        "message": "Your OTP is invalid."
       }
     },
     "loginWithEmail": {
