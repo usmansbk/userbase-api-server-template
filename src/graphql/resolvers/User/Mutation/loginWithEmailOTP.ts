@@ -36,9 +36,9 @@ export default {
         clientId,
       } = context;
 
-      const otp = await redisClient.getdel(
-        `${EMAIL_LOGIN_OTP_PREFIX}:${input.email}`,
-      );
+      const cacheKey = `${EMAIL_LOGIN_OTP_PREFIX}:${input.email}`;
+
+      const otp = await redisClient.get(cacheKey);
 
       if (!otp) {
         throw new AuthenticationError(
@@ -117,6 +117,8 @@ export default {
           t("mutation.loginWithOTP.errors.message"),
         );
       }
+
+      await redisClient.del(cacheKey);
 
       const { accessToken, refreshToken, jti, azp } = jwtClient.getAuthTokens({
         sub: user.id,

@@ -45,7 +45,7 @@ export default {
 
         const verified = jwtClient.verifyForAllClients(input.token as string);
         const cacheKey = `${PASSWORD_RESET_PREFIX}:${verified.email}`;
-        const sentToken = await redisClient.getdel(cacheKey);
+        const sentToken = await redisClient.get(cacheKey);
 
         if (!sentToken || sentToken !== input.token) {
           throw new AuthenticationError(
@@ -85,6 +85,8 @@ export default {
             passwordLastUpdatedAt: dayjs().toDate(),
           },
         });
+
+        await redisClient.del(cacheKey);
 
         if (!user.isEmailVerified) {
           emailClient.send({

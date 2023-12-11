@@ -18,9 +18,8 @@ export default {
 
       const { token, phoneNumber } = input;
 
-      const sentToken = await redisClient.getdel(
-        `${VERIFY_PHONE_NUMBER_PREFIX}:${phoneNumber}`,
-      );
+      const cacheKey = `${VERIFY_PHONE_NUMBER_PREFIX}:${phoneNumber}`;
+      const sentToken = await redisClient.get(cacheKey);
 
       if (!sentToken || sentToken !== token) {
         throw new AuthenticationError(
@@ -54,6 +53,8 @@ export default {
           isPhoneNumberVerified: true,
         },
       });
+
+      await redisClient.del(cacheKey);
 
       return {
         success: true,

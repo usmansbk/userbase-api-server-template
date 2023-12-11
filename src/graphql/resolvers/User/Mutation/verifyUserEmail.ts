@@ -20,9 +20,8 @@ export default {
 
       try {
         const decoded = jwtClient.verifyForAllClients(input.token as string);
-        const sentToken = await redisClient.getdel(
-          `${VERIFY_EMAIL_OTP_PREFIX}:${decoded.email}`,
-        );
+        const cacheKey = `${VERIFY_EMAIL_OTP_PREFIX}:${decoded.email}`;
+        const sentToken = await redisClient.get(cacheKey);
 
         if (!sentToken || sentToken !== input.token) {
           throw new AuthenticationError(
@@ -55,6 +54,8 @@ export default {
             isEmailVerified: true,
           },
         });
+
+        await redisClient.del(cacheKey);
 
         emailClient.send({
           template: WELCOME_TEMPLATE,
