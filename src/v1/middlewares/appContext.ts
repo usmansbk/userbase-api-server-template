@@ -56,7 +56,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
 
           if (currentUser) {
             if (currentUser.language) {
-              await i18n.changeLanguage(currentUser?.language);
+              await i18n.changeLanguage(currentUser.language);
             }
             configureScope((scope) => {
               scope.setUser({ id: currentUser!.id });
