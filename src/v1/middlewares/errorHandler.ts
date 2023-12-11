@@ -15,7 +15,7 @@ const errorHandler: ErrorRequestHandler = (error, req: Request, res, next) => {
       error,
     });
   } else if (error instanceof GraphQLError) {
-    res.json({
+    res.status(400).json({
       error,
     });
   } else {

@@ -53,6 +53,8 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
             break;
         }
         next(new QueryError(errorMessage));
+      } else if (err) {
+        next(err);
       } else if (file) {
         const { key, bucket, size, mimetype, fieldname, originalname } = file;
 
@@ -135,7 +137,11 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
           },
         });
       } else {
-        next(new QueryError(t("UPLOAD_FAILED", { ns: "error" })));
+        if (!file) {
+          next(new QueryError(t("NO_FILE_TO_UPLOAD", { ns: "error" })));
+        } else {
+          next(new QueryError(t("UPLOAD_FAILED", { ns: "error" })));
+        }
       }
     })();
   });
