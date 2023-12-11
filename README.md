@@ -128,7 +128,7 @@ yarn codegen
 
 ### File Upload
 
-We store information about uploaded files in the `File` table within the database. To ensure the deletion of S3 objects when an associated file row is removed, it is crucial to use the Prisma `delete` and `deleteMany` methods. This is because our Prisma client extensions handle the deletion of any associated file objects in S3.
+We store information about uploaded files in the `File` table within the database. To ensure the deletion of S3 objects when an associated file row is removed, it is crucial to use the Prisma `delete` method. This is because our Prisma client is hooked to delete any associated file objects in S3.
 
 Example:
 
