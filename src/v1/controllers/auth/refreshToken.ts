@@ -97,12 +97,6 @@ export default function refreshToken(
             },
           });
 
-          await redisClient.setex(
-            attemptsKey,
-            dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
-            count + 1,
-          );
-
           if (user.isEmailVerified) {
             emailClient.send({
               template: BLOCKED_IP_TEMPLATE,
@@ -115,7 +109,14 @@ export default function refreshToken(
               },
             });
           }
+        } else {
+          await redisClient.setex(
+            attemptsKey,
+            dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
+            count + 1,
+          );
         }
+
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
@@ -150,9 +151,7 @@ export default function refreshToken(
         refreshToken,
       });
     } catch (e) {
-      if (e instanceof TokenExpiredError) {
-        next(new AuthenticationError(t("EXPIRED_AUTH_TOKEN", { ns: "error" })));
-      } else if (e instanceof JsonWebTokenError) {
+      if (e instanceof JsonWebTokenError || e instanceof TokenExpiredError) {
         next(new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" })));
       } else {
         next(e);

@@ -91,12 +91,6 @@ export default {
             },
           });
 
-          await redisClient.setex(
-            attemptsKey,
-            dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
-            count + 1,
-          );
-
           if (user.isEmailVerified) {
             emailClient.send({
               template: BLOCKED_IP_TEMPLATE,
@@ -109,6 +103,12 @@ export default {
               },
             });
           }
+        } else {
+          await redisClient.setex(
+            attemptsKey,
+            dayjs.duration(...RESET_LOGIN_ATTEMPTS_IN).asSeconds(),
+            count + 1,
+          );
         }
 
         throw new AuthenticationError(
