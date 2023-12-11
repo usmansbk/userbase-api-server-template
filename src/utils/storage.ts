@@ -1,6 +1,39 @@
-import { GetObjectCommand } from "@aws-sdk/client-s3";
+import {
+  GetObjectCommand,
+  DeleteObjectCommand,
+  DeleteObjectsCommand,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import s3 from "@/config/aws/s3";
+import logger from "./logger";
+
+export const deleteObject = async (Key: string, Bucket: string) => {
+  try {
+    await s3.send(
+      new DeleteObjectCommand({
+        Bucket,
+        Key,
+      }),
+    );
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
+export const deleteManyObjects = async (keys: string[], Bucket: string) => {
+  try {
+    await s3.send(
+      new DeleteObjectsCommand({
+        Bucket,
+        Delete: {
+          Objects: keys.map((Key) => ({ Key })),
+        },
+      }),
+    );
+  } catch (error) {
+    logger.error(error);
+  }
+};
 
 export const getSignedDownloadUrl = async (
   bucket: string,
@@ -18,6 +51,8 @@ export const getSignedDownloadUrl = async (
 };
 
 const storage = {
+  deleteObject,
+  deleteManyObjects,
   getSignedDownloadUrl,
 };
 
