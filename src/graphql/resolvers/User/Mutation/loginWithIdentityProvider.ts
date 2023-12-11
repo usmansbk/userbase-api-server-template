@@ -23,6 +23,7 @@ export default {
       const {
         t,
         clientId,
+        clientIp,
         language,
         userAgent,
         jwtClient,
@@ -137,7 +138,8 @@ export default {
         id: azp,
         jti,
         userAgent,
-        clientId: clientId!,
+        clientId,
+        clientIp,
         createdAt: dayjs().toISOString(),
       });
 

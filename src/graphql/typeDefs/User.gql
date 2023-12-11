@@ -11,6 +11,7 @@ type UserSession {
   id: ID!
   jti: ID!
   clientId: ID!
+  clientIp: IP!
   createdAt: DateTime!
   userAgent: String
 }
@@ -287,4 +288,7 @@ type Mutation {
   requestDeleteCurrentUserAccount: MutationResponse!
     @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
   deleteUserAccount(input: DeleteAccountInput!): MutationResponse!
+
+  enableCurrentUserAuthenticator2FA: UserResponse!
+    @auth(rules: [{ allow: status, status: [Active] }])
 }

@@ -2,6 +2,7 @@ import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
 import smsClient from "@/utils/sms";
+import ip from "ip";
 import jwtClient from "@/utils/jwt";
 import storage from "@/utils/storage";
 import prismaClient from "@/config/database";
@@ -13,13 +14,14 @@ import type { CurrentUser } from "types";
 
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
-    const { t, language, i18n, headers, log, ip, useragent } = req;
+    const { t, language, i18n, headers, log, useragent } = req;
 
+    const clientId = req.headers.client_id;
     req.context = {
       t,
-      ip,
       log,
       pubsub,
+      clientIp: ip.address("public"),
       language,
       redisClient,
       prismaClient,
@@ -28,10 +30,11 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       smsClient,
       jwtClient,
       storage,
+      clientId,
     };
 
     try {
-      const { authorization, client_id: clientId } = headers;
+      const { authorization } = headers;
 
       if (
         process.env.NODE_ENV === "production" &&

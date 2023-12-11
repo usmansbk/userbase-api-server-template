@@ -23,10 +23,10 @@ export interface CurrentUser {
 }
 
 export interface AppContext {
-  ip?: string;
   userAgent?: string;
   sessionId?: string;
-  clientId?: string;
+  clientId: string;
+  clientIp: string;
   log: pino.Logger<pino.LoggerOptions>;
   currentUser?: CurrentUser | null;
   t: TFunction<"translation" | "error", undefined>;

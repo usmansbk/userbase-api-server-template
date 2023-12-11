@@ -22,6 +22,7 @@ export default async function createMockContext(
     redisClient,
     currentUser,
     language: "en",
+    clientIp: "test",
     clientId: "test",
     userAgent: "test",
     sessionId: "test",

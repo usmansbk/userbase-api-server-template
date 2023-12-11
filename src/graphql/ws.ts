@@ -1,5 +1,6 @@
 import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
+import ip from "ip";
 import { configureScope } from "@sentry/node";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import i18next from "@/config/i18n";
@@ -34,6 +35,7 @@ export default function useWebSocketServer(
         let sessionId: string | undefined;
         const { t, language } = i18next;
 
+        const clientIp = ip.address("public");
         const clientId = ctx.connectionParams?.client_id as string;
 
         if (
@@ -101,6 +103,7 @@ export default function useWebSocketServer(
           emailClient,
           sessionId,
           clientId,
+          clientIp,
           language,
           storage,
         };

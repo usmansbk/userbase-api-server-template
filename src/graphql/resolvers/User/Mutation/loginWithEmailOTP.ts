@@ -27,13 +27,13 @@ export default {
       context: AppContext,
     ): Promise<AuthResponse> {
       const {
+        t,
         prismaClient,
         redisClient,
-        t,
-        ip,
         emailClient,
         jwtClient,
         clientId,
+        clientIp,
         userAgent,
       } = context;
 
@@ -64,7 +64,7 @@ export default {
       const blockedIps = new Map(
         Object.entries(user.blockedIps! as Record<string, string>),
       );
-      const blockedIpAt = ip ? blockedIps.get(ip) : undefined;
+      const blockedIpAt = blockedIps.get(clientIp);
 
       const isBlocked =
         blockedIpAt &&
@@ -77,15 +77,13 @@ export default {
       }
 
       if (otp !== input.otp) {
-        const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${input.email}`;
+        const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${clientIp}:${input.email}`;
         const attempts = await redisClient.get(attemptsKey);
 
         const count = attempts ? Number.parseInt(attempts, 10) : 1;
 
         if (count === BRUTE_FORCE_THRESHOLD) {
-          if (ip) {
-            blockedIps.set(ip, dayjs().toISOString());
-          }
+          blockedIps.set(clientIp, dayjs().toISOString());
 
           await prismaClient.user.update({
             where: {
@@ -103,7 +101,7 @@ export default {
             },
             locals: {
               locale: user.language,
-              ip,
+              clientIp,
             },
           });
         } else {
@@ -136,7 +134,8 @@ export default {
         id: azp,
         jti,
         userAgent,
-        clientId: clientId!,
+        clientIp,
+        clientId,
         createdAt: dayjs().toISOString(),
       });
 

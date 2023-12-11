@@ -20,7 +20,7 @@ export default function refreshToken(
   (async () => {
     const {
       t,
-      ip,
+      clientIp,
       clientId,
       userAgent,
       jwtClient,
@@ -65,7 +65,7 @@ export default function refreshToken(
       const blockedIps = new Map(
         Object.entries(user.blockedIps! as Record<string, string>),
       );
-      const blockedIpAt = ip ? blockedIps.get(ip) : undefined;
+      const blockedIpAt = blockedIps.get(clientIp);
 
       const isBlocked =
         blockedIpAt &&
@@ -80,15 +80,14 @@ export default function refreshToken(
       const oldSession = sessions.get(oldAzp!);
 
       if (!oldSession || oldSession.jti !== decodedRefreshToken.sub) {
-        const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${user.email}`;
+        const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${clientIp}:${user.email}`;
         const attempts = await redisClient.get(attemptsKey);
 
         const count = attempts ? Number.parseInt(attempts, 10) : 1;
 
         if (count === BRUTE_FORCE_THRESHOLD) {
-          if (ip) {
-            blockedIps.set(ip, dayjs().toISOString());
-          }
+          blockedIps.set(clientIp, dayjs().toISOString());
+
           await prismaClient.user.update({
             where: {
               id: user.id,
@@ -106,7 +105,7 @@ export default function refreshToken(
               },
               locals: {
                 locale: user.language,
-                ip,
+                clientIp,
               },
             });
           }
@@ -136,7 +135,8 @@ export default function refreshToken(
         id: azp,
         jti,
         userAgent,
-        clientId: clientId!,
+        clientId,
+        clientIp,
         createdAt: dayjs().toISOString(),
       });
 

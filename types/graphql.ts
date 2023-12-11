@@ -207,6 +207,7 @@ export enum ImageResizeFit {
 export type Mutation = {
   __typename?: 'Mutation';
   deleteUserAccount: MutationResponse;
+  enableCurrentUserAuthenticator2FA: UserResponse;
   joinWaitlist: MutationResponse;
   leaveWaitlist: MutationResponse;
   loginWithEmail: AuthResponse;
@@ -504,6 +505,7 @@ export type UserRole = {
 export type UserSession = {
   __typename?: 'UserSession';
   clientId: Scalars['ID']['output'];
+  clientIp: Scalars['IP']['output'];
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   jti: Scalars['ID']['output'];
@@ -995,6 +997,7 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   deleteUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserAccountArgs, 'input'>>;
+  enableCurrentUserAuthenticator2FA?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType>;
   joinWaitlist?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationJoinWaitlistArgs, 'email'>>;
   leaveWaitlist?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationLeaveWaitlistArgs, 'token'>>;
   loginWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailArgs, 'input'>>;
@@ -1250,6 +1253,7 @@ export type UserRoleResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type UserSessionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserSession'] = ResolversParentTypes['UserSession']> = ResolversObject<{
   clientId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  clientIp?: Resolver<ResolversTypes['IP'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   jti?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;

@@ -23,7 +23,8 @@ export default {
       { input }: MutationRegisterWithEmailArgs,
       context: AppContext,
     ): Promise<AuthResponse> {
-      const { prismaClient, t, jwtClient, redisClient, clientId } = context;
+      const { prismaClient, t, jwtClient, redisClient, clientId, clientIp } =
+        context;
 
       try {
         const { email, language, phoneNumber } = input;
@@ -184,7 +185,8 @@ export default {
         sessions.set(azp, {
           id: azp,
           jti,
-          clientId: clientId!,
+          clientId,
+          clientIp,
           createdAt: dayjs().toISOString(),
         });
 
