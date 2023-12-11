@@ -97,6 +97,7 @@ export default {
               locals: {
                 locale: user.language,
                 clientIp,
+                userAgent,
               },
             });
           }
