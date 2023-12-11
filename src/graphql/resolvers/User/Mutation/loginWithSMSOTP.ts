@@ -39,7 +39,7 @@ export default {
 
       if (!sentOtp) {
         throw new AuthenticationError(
-          t("mutation.loginWithSMSOTP.errors.message"),
+          t("mutation.loginWithOTP.errors.message"),
         );
       }
 
@@ -53,7 +53,7 @@ export default {
 
       if (!user) {
         throw new AuthenticationError(
-          t("mutation.loginWithSMSOTP.errors.message"),
+          t("mutation.loginWithOTP.errors.message"),
         );
       }
 
@@ -68,7 +68,7 @@ export default {
 
       if (isBlocked) {
         throw new AuthenticationError(
-          t("mutation.loginWithSMSOTP.errors.message"),
+          t("mutation.loginWithOTP.errors.message"),
         );
       }
 
@@ -112,7 +112,7 @@ export default {
         }
 
         throw new AuthenticationError(
-          t("mutation.loginWithSMSOTP.errors.message"),
+          t("mutation.loginWithOTP.errors.message"),
         );
       }
 

@@ -20,7 +20,7 @@
     },
     "loginWithOTP": {
       "errors": {
-        "message": "Your OTP is invalid."
+        "message": "Your login OTP is invalid."
       }
     },
     "loginWithEmail": {
@@ -34,7 +34,7 @@
     "verifyUserEmail": {
       "message": "You've verified your email.",
       "errors": {
-        "message": "Your token is invalid."
+        "message": "Your email verification token is invalid."
       }
     },
     "requestEmailLoginOTP": {
@@ -79,7 +79,7 @@
     "resetUserPassword": {
       "message": "Password successfully updated. Please log in with your new password to continue.",
       "errors": {
-        "message": "Your token is invalid.",
+        "message": "Your password reset token is invalid.",
         "validation": {
           "message": "Failed to update password."
         }
@@ -95,7 +95,7 @@
     "deleteUserAccount": {
       "message": "You've deleted your account.",
       "errors": {
-        "message": "Your token is invalid."
+        "message": "Your account deletion token is invalid."
       }
     },
     "requestUserPhoneNumberVerification": {
@@ -104,7 +104,7 @@
     "verifyUserPhoneNumber": {
       "message": "You've verified {{phoneNumber}}.",
       "errors": {
-        "message": "Your token is invalid."
+        "message": "Your verification code is invalid."
       }
     },
     "updateCurrentUserPhoneNumber": {
@@ -112,11 +112,6 @@
     },
     "requestSMSLoginOTP": {
       "message": "We've sent an OTP to {{phoneNumber}}."
-    },
-    "loginWithSMSOTP": {
-      "errors": {
-        "message": "Your OTP is invalid."
-      }
     }
   }
 }
