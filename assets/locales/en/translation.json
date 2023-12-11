@@ -100,6 +100,12 @@
     },
     "requestUserPhoneNumberVerification": {
       "message": "Verification code has been sent to {{phoneNumber}}."
+    },
+    "verifyUserPhoneNumber": {
+      "message": "You've verified {{phoneNumber}}.",
+      "errors": {
+        "message": "Your token is invalid."
+      }
     }
   }
 }
