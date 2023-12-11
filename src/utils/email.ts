@@ -27,7 +27,7 @@ const email = new Email({
       },
   subjectPrefix: isProd ? false : `[${process.env.NODE_ENV.toUpperCase()}] `,
   views: {
-    root: path.resolve("assets/emails"),
+    root: path.resolve("assets/emails/templates"),
   },
 });
 
