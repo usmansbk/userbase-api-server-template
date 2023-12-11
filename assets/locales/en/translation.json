@@ -111,7 +111,7 @@
       "message": "You've updated your phone number."
     },
     "requestSMSLoginOTP": {
-      "message": "We've sent an OTP to {{number}}."
+      "message": "We've sent an OTP to {{phoneNumber}}."
     }
   }
 }

@@ -47,7 +47,7 @@ export default {
 
       return {
         success: true,
-        message: t("mutation.requestSMSLoginOTP.message"),
+        message: t("mutation.requestSMSLoginOTP.message", { phoneNumber }),
       };
     },
   },
