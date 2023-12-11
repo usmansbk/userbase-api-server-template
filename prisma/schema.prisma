@@ -90,8 +90,8 @@ model User {
   language                      String?          @default("en")
   createdAt                     DateTime         @default(now())
   updatedAt                     DateTime?        @updatedAt
-  passwordLastUpdatedAt         DateTime?
-  phoneNumberLastUpdatedAt      DateTime?
+  passwordUpdatedAt             DateTime?
+  blockedIps                    Json             @default("{}")
   status                        UserStatus       @default(Staged)
   picture                       UserAvatar?
   rolesCreatedByUser            Role[]           @relation("CreatedRole")
@@ -101,7 +101,6 @@ model User {
   permissionsAssignedToUser     UserPermission[] @relation("PermissionAssignee")
   permissionsAssignedByUser     UserPermission[] @relation("PermissionAssignor")
   rolePermissionsAssignedByUser RolePermission[] @relation("RolePermissionAssignor")
-  blockedIps                    Json             @default("{}")
   sessions                      UserSession[]
 }
 

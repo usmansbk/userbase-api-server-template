@@ -82,7 +82,7 @@ export default {
             password,
             isEmailVerified: true,
             status: UserStatus.Active,
-            passwordLastUpdatedAt: dayjs().toDate(),
+            passwordUpdatedAt: dayjs().toDate(),
           },
         });
 

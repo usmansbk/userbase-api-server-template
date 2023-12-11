@@ -70,10 +70,9 @@ CREATE TABLE "User" (
     "language" TEXT DEFAULT 'en',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
-    "passwordLastUpdatedAt" TIMESTAMP(3),
-    "phoneNumberLastUpdatedAt" TIMESTAMP(3),
-    "status" "UserStatus" NOT NULL DEFAULT 'Staged',
+    "passwordUpdatedAt" TIMESTAMP(3),
     "blockedIps" JSONB NOT NULL DEFAULT '{}',
+    "status" "UserStatus" NOT NULL DEFAULT 'Staged',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

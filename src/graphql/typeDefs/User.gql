@@ -88,11 +88,7 @@ type User {
   picture: UserAvatar
   createdAt: DateTime!
   updatedAt: DateTime
-  lastLoggedInAt: DateTime
-  passwordLastUpdatedAt: DateTime
-  phoneNumberLastUpdatedAt: DateTime
-  emailLastUpdatedAt: DateTime
-  pictureLastUpdatedAt: DateTime
+  passwordUpdatedAt: DateTime
   roles: [String]!
   status: AccountStatus
   sessions: [UserSession]!
