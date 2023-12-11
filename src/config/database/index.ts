@@ -1,3 +1,4 @@
+import storage from "@/utils/storage";
 import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import type { CurrentUser, UserSessions } from "types";
@@ -6,7 +7,21 @@ import type { AccountStatus } from "types/graphql";
 const prismaClient = new PrismaClient();
 const salt = bcrypt.genSaltSync(10);
 
-// TODO: file delete extension
+const deleteS3ObjectExtension = Prisma.defineExtension({
+  name: "delete-s3-object-extention",
+  query: {
+    file: {
+      async delete({ args, query }) {
+        const { where } = args;
+        if (typeof where.key === "string" && typeof where.bucket === "string") {
+          storage.deleteObject(where.key, where.bucket);
+        }
+
+        return await query(args);
+      },
+    },
+  },
+});
 
 const hashPasswordExtension = Prisma.defineExtension({
   name: "hash-password-extension",
@@ -127,7 +142,8 @@ const currentUserExtension = Prisma.defineExtension({
 const client = prismaClient
   .$extends(currentUserExtension)
   .$extends(comparePasswordExtension)
-  .$extends(hashPasswordExtension);
+  .$extends(hashPasswordExtension)
+  .$extends(deleteS3ObjectExtension);
 
 export type ExtendedPrismaClient = typeof client;
 
