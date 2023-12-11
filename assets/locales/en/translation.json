@@ -106,6 +106,9 @@
       "errors": {
         "message": "Your token is invalid."
       }
+    },
+    "updateCurrentUserPhoneNumber": {
+      "message": "You've updated your phone number."
     }
   }
 }
