@@ -8,6 +8,7 @@ import { UserStatus } from "@prisma/client";
 import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { VERIFY_EMAIL_TEMPLATE } from "@/constants/templates";
+import universalLinks from "@/constants/universalLinks";
 
 export default {
   Mutation: {
@@ -54,7 +55,7 @@ export default {
             locals: {
               name: user.firstName,
               locale: user.language,
-              link: token, // TODO: use universal link
+              link: universalLinks.verifyEmail.replace(":token", token),
             },
           });
         }

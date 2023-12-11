@@ -79,7 +79,7 @@ export default function refreshToken(
       const oldSession = sessions.get(oldAzp!);
 
       if (!oldSession || oldSession.jti !== decodedRefreshToken.sub) {
-        const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${decodedRefreshToken.sub}`;
+        const attemptsKey = `${LOGIN_ATTEMPT_PREFIX}:${ip}:${user.email}`;
         const attempts = await redisClient.get(attemptsKey);
 
         const count = attempts ? Number.parseInt(attempts, 10) : 1;

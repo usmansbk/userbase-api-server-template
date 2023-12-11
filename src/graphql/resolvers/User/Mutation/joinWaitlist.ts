@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import type { MutationResponse, MutationJoinWaitlistArgs } from "types/graphql";
 import type { AppContext } from "types";
 import { JOIN_WAITLIST_TEMPLATE } from "@/constants/templates";
+import universalLinks from "@/constants/universalLinks";
 
 export default {
   Mutation: {
@@ -36,7 +37,7 @@ export default {
           },
           locals: {
             locale: language,
-            link: token, // TODO: universal link
+            link: universalLinks.leaveWaitlist.replace(":token", token),
           },
         });
       }

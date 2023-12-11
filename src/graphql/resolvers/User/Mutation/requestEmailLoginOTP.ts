@@ -20,9 +20,9 @@ export default {
       const { prismaClient, t, emailClient, redisClient } = context;
 
       const cacheKey = `${EMAIL_LOGIN_OTP_PREFIX}:${email}`;
-      const sentToken = await redisClient.get(cacheKey);
+      const sentOTP = await redisClient.get(cacheKey);
 
-      if (!sentToken) {
+      if (!sentOTP) {
         const user = await prismaClient.user.findFirst({
           where: {
             email,
@@ -32,12 +32,12 @@ export default {
         });
 
         if (user) {
-          const token = getOTP();
+          const otp = getOTP();
 
           await redisClient.setex(
             cacheKey,
             dayjs.duration(...LOGIN_OTP_EXPIRES_IN).asSeconds(),
-            token,
+            otp,
           );
 
           emailClient.send({
@@ -48,7 +48,7 @@ export default {
             locals: {
               name: user.firstName,
               locale: user.language,
-              link: token, // TODO: use universal link
+              otp,
             },
           });
         }

@@ -41,7 +41,7 @@ const hashPasswordExtension = Prisma.defineExtension({
         if (Array.isArray(args.data)) {
           await Promise.all(
             args.data.map(async (data) => {
-              data.password = await bcrypt.hash(data.password, salt);
+              data.password = await bcrypt.hash(data.password as string, salt);
             }),
           );
         } else if (typeof args.data.password === "string") {

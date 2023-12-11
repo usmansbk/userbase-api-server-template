@@ -8,6 +8,7 @@ import { PASSWORD_RESET_PREFIX } from "@/constants/cachePrefixes";
 import { UserStatus } from "@prisma/client";
 import { PASSWORD_RESET_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { FORGOT_PASSWORD_TEMPLATE } from "@/constants/templates";
+import universalLinks from "@/constants/universalLinks";
 
 export default {
   Mutation: {
@@ -59,7 +60,7 @@ export default {
             locals: {
               locale: user.language,
               name: user.firstName,
-              link: token, // TODO: use universal link
+              link: universalLinks.resetPassword.replace(":token", token),
             },
           });
         }

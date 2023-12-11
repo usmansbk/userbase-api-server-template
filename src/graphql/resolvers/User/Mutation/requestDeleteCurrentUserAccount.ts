@@ -4,6 +4,7 @@ import dayjs from "@/utils/dayjs";
 import { DELETE_USER_PREFIX } from "@/constants/cachePrefixes";
 import { DELETE_ACCOUNT_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { UserStatus } from "@prisma/client";
+import universalLinks from "@/constants/universalLinks";
 
 export default {
   Mutation: {
@@ -59,7 +60,7 @@ export default {
               locals: {
                 locale: user.language,
                 name: user.firstName,
-                link: token, // TODO: use universal link
+                link: universalLinks.deleteAccount.replace(":token", token),
               },
             });
           }
