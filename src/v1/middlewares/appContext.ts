@@ -78,10 +78,8 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
 
       next();
     } catch (e) {
-      if (e instanceof TokenExpiredError) {
+      if (e instanceof TokenExpiredError || e instanceof JsonWebTokenError) {
         next(new AuthenticationError(t("EXPIRED_AUTH_TOKEN", { ns: "error" })));
-      } else if (e instanceof JsonWebTokenError) {
-        next(new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" })));
       } else {
         next(e);
       }
