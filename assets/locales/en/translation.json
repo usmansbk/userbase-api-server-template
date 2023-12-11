@@ -99,7 +99,7 @@
       }
     },
     "requestUserPhoneNumberVerification": {
-      "message": "Verification code has been sent to {{phoneNumber}}."
+      "message": "Your verification code has been sent to {{phoneNumber}}."
     },
     "verifyUserPhoneNumber": {
       "message": "You've verified {{phoneNumber}}.",
