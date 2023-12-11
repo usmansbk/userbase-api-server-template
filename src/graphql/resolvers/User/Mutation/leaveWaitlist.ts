@@ -4,7 +4,7 @@ import type {
 } from "types/graphql";
 import { UserStatus } from "@prisma/client";
 import type { AppContext } from "types";
-import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import { JsonWebTokenError } from "jsonwebtoken";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default {
@@ -39,7 +39,7 @@ export default {
           message: t("mutation.leaveWaitlist.message"),
         };
       } catch (e) {
-        if (e instanceof JsonWebTokenError || e instanceof TokenExpiredError) {
+        if (e instanceof JsonWebTokenError) {
           throw new AuthenticationError(t("mutation.leaveWaitlist.message"));
         }
         throw e;
