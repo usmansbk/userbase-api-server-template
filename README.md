@@ -22,7 +22,6 @@ User management system api server base template
 - [x] Update user profile
 - [x] User profile picture
 - [x] Brute-Force login protection
-- [ ] Suspicious IP auth throttling
 - [ ] MFA
 - [ ] Admin Dashboard
 
