@@ -33,6 +33,9 @@ const email = new Email({
 
 async function send(options: EmailOptions) {
   try {
+    if (process.env.NODE === "development") {
+      logger.info(options);
+    }
     const result = await email.send(options);
     logger.info(result);
   } catch (e) {
