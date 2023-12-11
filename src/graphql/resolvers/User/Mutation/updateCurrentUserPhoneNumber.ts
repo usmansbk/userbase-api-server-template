@@ -1,3 +1,4 @@
+import dayjs from "@/utils/dayjs";
 import type {
   MutationUpdateCurrentUserPhoneNumberArgs,
   User,
@@ -29,6 +30,7 @@ export default {
           data: {
             phoneNumber,
             isPhoneNumberVerified: false,
+            phoneNumberLastUpdatedAt: dayjs().toDate(),
           },
         });
       }
