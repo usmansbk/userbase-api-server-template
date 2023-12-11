@@ -1,6 +1,6 @@
 import { mockDeep, type DeepMockProxy } from "jest-mock-extended";
 import redisClient, { pubsub } from "@/config/redis";
-import logger from "@/utils/logger";
+import log from "@/utils/logger";
 import jwtClient from "@/utils/jwt";
 import type { ExtendedPrismaClient } from "@/config/database";
 import type { AppContext, CurrentUser } from "types";
@@ -10,28 +10,31 @@ interface MockContext extends AppContext {
   mockPrismaClient: DeepMockProxy<ExtendedPrismaClient>;
 }
 
+const prismaClient = mockDeep<ExtendedPrismaClient>();
+
 export default async function createMockContext(
   currentUser?: CurrentUser,
 ): Promise<MockContext> {
-  const prismaClient = mockDeep<ExtendedPrismaClient>();
-
   return {
-    clientId: "test-client",
-    sessionId: "test-session",
+    log,
+    pubsub,
     jwtClient,
+    redisClient,
+    currentUser,
     language: "en",
-    log: logger,
+    clientId: "test",
+    userAgent: "test",
+    sessionId: "test",
+    mockPrismaClient: prismaClient,
+    prismaClient,
     t: jest
       .fn()
       .mockImplementation(
         (key: string) => key,
       ) as unknown as TFunction<"translation">,
-    pubsub,
-    currentUser,
-    redisClient,
-    mockPrismaClient: prismaClient,
-    prismaClient,
     storage: {
+      deleteObject: jest.fn(),
+      deleteManyObjects: jest.fn(),
       getSignedDownloadUrl: jest.fn().mockResolvedValue("https://test.com"),
     },
     smsClient: {
