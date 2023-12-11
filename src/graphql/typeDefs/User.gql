@@ -12,6 +12,7 @@ type UserSession {
   jti: ID!
   clientId: ID!
   createdAt: DateTime!
+  userAgent: String
 }
 
 enum AccountStatus {

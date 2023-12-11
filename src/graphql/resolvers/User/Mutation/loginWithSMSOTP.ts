@@ -25,12 +25,13 @@ export default {
     ): Promise<AuthResponse> {
       const {
         t,
+        ip,
         redisClient,
         prismaClient,
         emailClient,
         jwtClient,
-        ip,
         clientId,
+        userAgent,
       } = context;
       const { phoneNumber, otp } = input;
 
@@ -132,6 +133,7 @@ export default {
       sessions.set(azp, {
         id: azp,
         jti,
+        userAgent,
         clientId: clientId!,
         createdAt: dayjs().toISOString(),
       });

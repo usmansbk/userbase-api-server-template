@@ -23,6 +23,7 @@ export default {
         t,
         ip,
         clientId,
+        userAgent,
         jwtClient,
         redisClient,
         emailClient,
@@ -120,6 +121,7 @@ export default {
       sessions.set(azp, {
         id: azp,
         jti,
+        userAgent,
         clientId: clientId!,
         createdAt: dayjs().toISOString(),
       });

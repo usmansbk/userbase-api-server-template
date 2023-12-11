@@ -19,13 +19,14 @@ export default function refreshToken(
 ) {
   (async () => {
     const {
-      prismaClient,
-      redisClient,
       t,
-      jwtClient,
-      emailClient,
-      clientId,
       ip,
+      clientId,
+      userAgent,
+      jwtClient,
+      redisClient,
+      emailClient,
+      prismaClient,
     } = req.context;
     const { access_token: expiredAccessToken, refresh_token: oldRefreshToken } =
       req.headers;
@@ -134,6 +135,7 @@ export default function refreshToken(
       sessions.set(azp, {
         id: azp,
         jti,
+        userAgent,
         clientId: clientId!,
         createdAt: dayjs().toISOString(),
       });

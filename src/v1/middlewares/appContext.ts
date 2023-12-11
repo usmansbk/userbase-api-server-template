@@ -13,7 +13,7 @@ import type { CurrentUser } from "types";
 
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
-    const { t, language, i18n, headers, log, ip } = req;
+    const { t, language, i18n, headers, log, ip, useragent } = req;
 
     req.context = {
       t,
@@ -24,7 +24,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       redisClient,
       prismaClient,
       emailClient,
-      userAgent: headers["user-agent"],
+      userAgent: useragent?.source,
       smsClient,
       jwtClient,
       storage,

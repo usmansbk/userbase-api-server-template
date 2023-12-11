@@ -507,6 +507,7 @@ export type UserSession = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   jti: Scalars['ID']['output'];
+  userAgent?: Maybe<Scalars['String']['output']>;
 };
 
 export type VerifyEmailInput = {
@@ -1252,6 +1253,7 @@ export type UserSessionResolvers<ContextType = any, ParentType extends Resolvers
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   jti?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  userAgent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

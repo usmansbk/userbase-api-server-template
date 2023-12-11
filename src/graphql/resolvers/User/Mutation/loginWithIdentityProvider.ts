@@ -21,13 +21,14 @@ export default {
       context: AppContext,
     ): Promise<AuthResponse> {
       const {
-        prismaClient,
         t,
+        clientId,
+        language,
+        userAgent,
         jwtClient,
         redisClient,
-        clientId,
         emailClient,
-        language,
+        prismaClient,
       } = context;
       const { provider, token } = input;
 
@@ -135,6 +136,7 @@ export default {
       sessions.set(azp, {
         id: azp,
         jti,
+        userAgent,
         clientId: clientId!,
         createdAt: dayjs().toISOString(),
       });

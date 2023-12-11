@@ -34,6 +34,7 @@ export default {
         emailClient,
         jwtClient,
         clientId,
+        userAgent,
       } = context;
 
       const cacheKey = `${EMAIL_LOGIN_OTP_PREFIX}:${input.email}`;
@@ -134,6 +135,7 @@ export default {
       sessions.set(azp, {
         id: azp,
         jti,
+        userAgent,
         clientId: clientId!,
         createdAt: dayjs().toISOString(),
       });
