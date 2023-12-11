@@ -8,7 +8,8 @@ export default function refreshToken(
   next: NextFunction,
 ) {
   (async () => {
-    const { t, jwtClient, prismaClient } = req.context;
+    const { t, jwtClient, prismaClient, clientId, userAgent, clientIp } =
+      req.context;
     const { access_token: expiredAccessToken, refresh_token: oldRefreshToken } =
       req.headers;
 
@@ -49,7 +50,26 @@ export default function refreshToken(
         throw new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }));
       }
 
-      const [session] = user.sessions;
+      const [oldSession] = user.sessions;
+
+      await prismaClient.userSession.delete({
+        where: {
+          id: oldSession.id,
+        },
+      });
+
+      const session = await prismaClient.userSession.create({
+        data: {
+          clientId,
+          clientIp,
+          userAgent,
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
 
       const { accessToken, refreshToken } = jwtClient.getAuthTokens({
         sub,
