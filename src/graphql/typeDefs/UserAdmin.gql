@@ -1,0 +1,83 @@
+type Query {
+  user(id: ID!): User!
+  role(id: ID!): Role!
+  permission(id: ID!): Permission!
+  session(id: ID!): UserSession!
+  userRole(id: ID!): UserRole!
+  userPermission(id: ID!): UserPermission!
+  rolePermission(id: ID!): RolePermission!
+
+  users(limit: Int, cursor: ID): UsersList!
+  roles(limit: Int, cursor: ID): RolesList!
+  permissions(limit: Int, cursor: ID): PermissionsList!
+  sessions(limit: Int, cursor: ID): SessionsList!
+  files(limit: Int, cursor: ID): FilesList!
+}
+
+type Mutation {
+  createManyUsers: [User]!
+  updateManyUsers: [User]!
+  deleteManyUsers: [User]!
+
+  deleteManyUsersPictures: User!
+
+  sendVerificationEmailToManyUsers: MutationResponse!
+  sendPhoneNumberVerificationSMSToManyUsers: MutationResponse!
+  sendPasswordResetEmailToManyUsers: MutationResponse!
+  sendEmailLoginOTPToUser: MutationResponse!
+  sendSMSLoginOTPToUser: MutationResponse!
+
+  createManyRoles: [Role]!
+  updateManyRoles: [Role]!
+  deleteManyRoles: [Role]!
+
+  attachManyRolesToUser: [UserRole]!
+  attachRoleToManyUsers: [UserRole]!
+
+  detachManyRolesFromUser: [UserRole]!
+  detachRoleFromManyUsers: [UserRole]!
+
+  createManyPermissions: [Permission]!
+  updateManyPermissions: [Permission]!
+  deleteManyPermissions: [Permission]!
+
+  attachManyPermissionsToRole: [RolePermission]!
+  attachPermissionToManyRoles: [RolePermission]!
+
+  detachManyPermissionsFromRole: [RolePermission]!
+  detachPermissionFromManyRoles: [RolePermission]!
+
+  attachManyPermissionsToUser: [UserPermission]!
+  attachPermissionToManyUsers: [UserPermission]!
+
+  detachManyPermissionsFromUser: [UserPermission]!
+  detachPermissionFromManyUsers: [UserPermission]!
+
+  deleteManySessions: [UserSession]!
+  deleteManyFiles: [File]!
+}
+
+type UsersList {
+  cursor: ID
+  items: [User]!
+}
+
+type RolesList {
+  cursor: ID
+  items: [Role]!
+}
+
+type PermissionsList {
+  cursor: ID
+  items: [Permission]!
+}
+
+type SessionsList {
+  cursor: ID
+  items: [UserSession]!
+}
+
+type FilesList {
+  cursor: ID
+  items: [File]!
+}
