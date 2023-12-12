@@ -53,10 +53,10 @@ type Mutation {
   sendPasswordResetEmailToManyUsers: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
-  sendEmailLoginOTPToUser: MutationResponse!
+  sendEmailLoginOTPToManyUsers: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
-  sendSMSLoginOTPToUser: MutationResponse!
+  sendSMSLoginOTPToManyUsers: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   createManyRoles: [Role]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])

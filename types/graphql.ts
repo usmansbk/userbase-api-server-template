@@ -250,10 +250,10 @@ export type Mutation = {
   requestUserEmailVerification: MutationResponse;
   requestUserPhoneNumberVerification: MutationResponse;
   resetUserPassword: MutationResponse;
-  sendEmailLoginOTPToUser: MutationResponse;
+  sendEmailLoginOTPToManyUsers: MutationResponse;
   sendPasswordResetEmailToManyUsers: MutationResponse;
   sendPhoneNumberVerificationSMSToManyUsers: MutationResponse;
-  sendSMSLoginOTPToUser: MutationResponse;
+  sendSMSLoginOTPToManyUsers: MutationResponse;
   sendVerificationEmailToManyUsers: MutationResponse;
   updateCurrentUserBasicInfo: UserResponse;
   updateCurrentUserPhoneNumber: UserResponse;
@@ -1182,10 +1182,10 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   requestUserEmailVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserEmailVerificationArgs, 'email'>>;
   requestUserPhoneNumberVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserPhoneNumberVerificationArgs, 'phoneNumber'>>;
   resetUserPassword?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationResetUserPasswordArgs, 'input'>>;
-  sendEmailLoginOTPToUser?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
+  sendEmailLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   sendPasswordResetEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   sendPhoneNumberVerificationSMSToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
-  sendSMSLoginOTPToUser?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
+  sendSMSLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   sendVerificationEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
