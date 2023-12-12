@@ -207,7 +207,6 @@ export enum ImageResizeFit {
 export type Mutation = {
   __typename?: 'Mutation';
   deleteUserAccount: MutationResponse;
-  enableCurrentUserAuthenticator2FA: UserResponse;
   joinWaitlist: MutationResponse;
   leaveWaitlist: MutationResponse;
   loginWithEmail: AuthResponse;
@@ -994,7 +993,6 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   deleteUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserAccountArgs, 'input'>>;
-  enableCurrentUserAuthenticator2FA?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType>;
   joinWaitlist?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationJoinWaitlistArgs, 'email'>>;
   leaveWaitlist?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationLeaveWaitlistArgs, 'token'>>;
   loginWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailArgs, 'input'>>;
