@@ -1,21 +1,3 @@
-type UserAvatar implements Picture {
-  id: ID!
-  file: File!
-  url(edits: ImageEditInput): URL!
-  thumbnail(edits: ImageEditInput): URL!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type UserSession {
-  id: ID!
-  jti: ID!
-  clientId: ID!
-  clientIp: IP!
-  createdAt: DateTime!
-  userAgent: String
-}
-
 enum AccountStatus {
   """
   Accounts have a staged status when they are first created, before the activation flow is initiated, or if there is a pending admin action.
@@ -71,6 +53,7 @@ type User {
       rules: [
         { allow: owner, ownerField: "id" }
         { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ViewUserEmail"] }
       ]
     )
   language: Locale!
@@ -79,6 +62,7 @@ type User {
       rules: [
         { allow: owner, ownerField: "id" }
         { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ViewUserPhoneNumber"] }
       ]
     )
   isEmailVerified: Boolean!
@@ -96,16 +80,54 @@ type User {
       rules: [
         { allow: owner, ownerField: "id" }
         { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ViewUserSession"] }
       ]
     )
 
-  rolesCreatedByUser: [Role]!
+  rolesCreatedByUser: [Role]! @auth(rules: [{ allow: roles, roles: ["admin"] }])
+
   permissionsCreatedByUser: [Permission]!
+    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+
   rolesAssignedToUser: [UserRole]!
+    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+
   rolesAssignedByUser: [UserRole]!
+    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+
   permissionsAssignedToUser: [UserPermission]!
+    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+
   permissionsAssignedByUser: [UserPermission]!
+    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+
   rolePermissionsAssignedByUser: [RolePermission]!
+    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+}
+
+type UserAvatar implements Picture {
+  id: ID!
+  file: File!
+  url(edits: ImageEditInput): URL!
+  thumbnail(edits: ImageEditInput): URL!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type UserSession
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ViewUserSession"] }
+    ]
+  ) {
+  id: ID!
+  jti: ID!
+  clientId: ID!
+  clientIp: IP!
+  createdAt: DateTime!
+  userAgent: String
 }
 
 """
@@ -113,7 +135,13 @@ Essentially, a role is a collection of permissions that you can apply to users.
 Using roles makes it easier to add, remove, and adjust permissions than assigning permissions to users individually.
 As your user base increases in scale and complexity, roles become particularly useful.
 """
-type Role @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
+type Role
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ViewRole"] }
+    ]
+  ) {
   id: ID!
   name: String!
   creator: User
@@ -124,7 +152,13 @@ type Role @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
   rolePermissions: [RolePermission]!
 }
 
-type Permission @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
+type Permission
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ViewPermission"] }
+    ]
+  ) {
   id: ID!
   name: String!
   creator: User
@@ -135,7 +169,13 @@ type Permission @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
   rolePermissions: [RolePermission]!
 }
 
-type UserRole @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
+type UserRole
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ViewUserRole"] }
+    ]
+  ) {
   id: ID!
   role: Role!
   assignee: User!
@@ -144,7 +184,13 @@ type UserRole @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
   updatedAt: DateTime
 }
 
-type UserPermission @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
+type UserPermission
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ViewUserPermission"] }
+    ]
+  ) {
   id: ID!
   permission: Permission!
   assignee: User!
@@ -153,7 +199,13 @@ type UserPermission @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
   updatedAt: DateTime
 }
 
-type RolePermission @auth(rules: [{ allow: roles, roles: ["Admin"] }]) {
+type RolePermission
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ViewRolePermission"] }
+    ]
+  ) {
   id: ID!
   role: Role!
   permission: Permission!
