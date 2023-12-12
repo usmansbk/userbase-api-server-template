@@ -255,6 +255,7 @@ export type Mutation = {
   sendPhoneNumberVerificationSMSToManyUsers: MutationResponse;
   sendSMSLoginOTPToManyUsers: MutationResponse;
   sendVerificationEmailToManyUsers: MutationResponse;
+  unblockUserIP: Array<Maybe<File>>;
   updateCurrentUserBasicInfo: UserResponse;
   updateCurrentUserPhoneNumber: UserResponse;
   updateManyPermissions: Array<Maybe<Permission>>;
@@ -1187,6 +1188,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendPhoneNumberVerificationSMSToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   sendSMSLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   sendVerificationEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
+  unblockUserIP?: Resolver<Array<Maybe<ResolversTypes['File']>>, ParentType, ContextType>;
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
   updateManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;

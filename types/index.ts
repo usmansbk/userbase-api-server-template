@@ -21,12 +21,10 @@ export interface CurrentUser {
 }
 
 export interface SocketContext {
-  log: pino.Logger<pino.LoggerOptions>;
   currentUser?: CurrentUser | null;
   t: TFunction<"translation" | "error", undefined>;
   prismaClient: ExtendedPrismaClient;
   pubsub: RedisPubSub;
-  language: string;
   storage: Storage;
 }
 

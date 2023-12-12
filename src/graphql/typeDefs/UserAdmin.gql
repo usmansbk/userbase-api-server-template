@@ -114,6 +114,8 @@ type Mutation {
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   deleteManyFiles: [File]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
+  unblockUserIP: [File]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 }
 
 type UsersList {
