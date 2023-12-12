@@ -1,32 +1,44 @@
 type Query {
   user(id: ID!): User! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   role(id: ID!): Role! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   permission(id: ID!): Permission!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   session(id: ID!): UserSession!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   userRole(id: ID!): UserRole!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   userPermission(id: ID!): UserPermission!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   rolePermission(id: ID!): RolePermission!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   users(limit: Int, cursor: ID): UsersList!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   roles(limit: Int, cursor: ID): RolesList!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   permissions(limit: Int, cursor: ID): PermissionsList!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   sessions(limit: Int, cursor: ID): SessionsList!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   files(limit: Int, cursor: ID): FilesList!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 }
 
 type Mutation {
   createManyUsers: [User]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   updateManyUsers: [User]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   deleteManyUsers: [User]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   deleteManyUserPictures: User!
@@ -34,58 +46,73 @@ type Mutation {
 
   sendVerificationEmailToManyUsers: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   sendPhoneNumberVerificationSMSToManyUsers: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   sendPasswordResetEmailToManyUsers: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   sendEmailLoginOTPToUser: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   sendSMSLoginOTPToUser: MutationResponse!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   createManyRoles: [Role]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   updateManyRoles: [Role]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   deleteManyRoles: [Role]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   attachManyRolesToUser: [UserRole]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   attachRoleToManyUsers: [UserRole]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   detachManyRolesFromUser: [UserRole]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   detachRoleFromManyUsers: [UserRole]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   createManyPermissions: [Permission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   updateManyPermissions: [Permission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   deleteManyPermissions: [Permission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   attachManyPermissionsToRole: [RolePermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   attachPermissionToManyRoles: [RolePermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   detachManyPermissionsFromRole: [RolePermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   detachPermissionFromManyRoles: [RolePermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   attachManyPermissionsToUser: [UserPermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   attachPermissionToManyUsers: [UserPermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   detachManyPermissionsFromUser: [UserPermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   detachPermissionFromManyUsers: [UserPermission]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   deleteManySessions: [UserSession]!
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   deleteManyFiles: [File]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 }
 
