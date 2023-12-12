@@ -2,7 +2,6 @@ import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { configureScope } from "@sentry/node";
 import redisClient, { pubsub } from "@/config/redis";
 import smsClient from "@/utils/sms";
-import ip from "ip";
 import jwtClient from "@/utils/jwt";
 import storage from "@/utils/storage";
 import prismaClient from "@/config/database";
@@ -15,19 +14,20 @@ import type { CurrentUser } from "types";
 
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
-    const { t, language, i18n, headers, log, useragent } = req;
+    const { t, language, i18n, headers, log, useragent, clientIp } = req;
 
     const clientId = req.headers.client_id;
+
     req.context = {
       t,
       log,
       pubsub,
-      clientIp: ip.address("public"),
       language,
       redisClient,
       prismaClient,
       emailClient,
       docClient,
+      clientIp: clientIp!,
       userAgent: useragent?.source,
       smsClient,
       jwtClient,
@@ -79,11 +79,21 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
       }
 
       next();
-    } catch (e) {
-      if (e instanceof TokenExpiredError || e instanceof JsonWebTokenError) {
-        next(new AuthenticationError(t("EXPIRED_AUTH_TOKEN", { ns: "error" })));
+    } catch (error) {
+      if (error instanceof TokenExpiredError) {
+        next(
+          new AuthenticationError(t("EXPIRED_AUTH_TOKEN", { ns: "error" }), {
+            originalError: error,
+          }),
+        );
+      } else if (error instanceof JsonWebTokenError) {
+        next(
+          new AuthenticationError(t("INVALID_AUTH_TOKEN", { ns: "error" }), {
+            originalError: error,
+          }),
+        );
       } else {
-        next(e);
+        next(error);
       }
     }
   })();

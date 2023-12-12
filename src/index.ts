@@ -4,6 +4,7 @@ import PinoHttp from "pino-http";
 import { json } from "body-parser";
 import cors from "cors";
 import userAgent from "express-useragent";
+import requestip from "request-ip";
 import { expressMiddleware } from "@apollo/server/express4";
 import { initializeI18n } from "./config/i18n";
 import logger from "./utils/logger";
@@ -30,6 +31,7 @@ async function main() {
     }),
   );
   app.use(userAgent.express());
+  app.use(requestip.mw());
 
   // https://express-rate-limit.mintlify.app/guides/troubleshooting-proxy-issues
   app.set("trust proxy", 1);

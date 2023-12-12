@@ -9,7 +9,7 @@ import type { AccountStatus } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
 import type { EmailClient } from "@/utils/email";
 import type { DocClient } from "@/utils/docClient";
-import { UserSession } from "@prisma/client";
+import type { UserSession } from "@prisma/client";
 
 export interface CurrentUser {
   id: string;
@@ -18,6 +18,16 @@ export interface CurrentUser {
   roles: string[];
   permissions: string[];
   sessions: UserSession[];
+}
+
+export interface SocketContext {
+  log: pino.Logger<pino.LoggerOptions>;
+  currentUser?: CurrentUser | null;
+  t: TFunction<"translation" | "error", undefined>;
+  prismaClient: ExtendedPrismaClient;
+  pubsub: RedisPubSub;
+  language: string;
+  storage: Storage;
 }
 
 export interface AppContext {

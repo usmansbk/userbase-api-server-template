@@ -1,23 +1,19 @@
 import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
-import ip from "ip";
 import { configureScope } from "@sentry/node";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import i18next from "@/config/i18n";
-import redisClient, { pubsub } from "@/config/redis";
-import prismaClient from "@/config/database";
-import smsClient from "@/utils/sms";
-import emailClient from "@/utils/email";
-import docClient from "@/utils/docClient";
-import log from "@/utils/logger";
+import { pubsub } from "@/config/redis";
 import storage from "@/utils/storage";
+import prismaClient from "@/config/database";
+import log from "@/utils/logger";
 import jwtClient from "@/utils/jwt";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import Sentry from "@/config/sentry";
 import type { IncomingMessage, ServerResponse, Server } from "http";
 import type { GraphQLSchema } from "graphql";
-import type { AppContext, CurrentUser } from "types";
+import type { CurrentUser, SocketContext } from "types";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,
@@ -31,23 +27,20 @@ export default function useWebSocketServer(
   return useServer(
     {
       schema,
-      context: async (ctx): Promise<AppContext> => {
+      context: async (ctx): Promise<SocketContext> => {
         let currentUser: CurrentUser | undefined | null;
         const { t, language } = i18next;
 
-        const clientIp = ip.address("public");
         const clientId = ctx.connectionParams?.client_id as string;
 
         if (
           process.env.NODE_ENV === "production" &&
-          !(clientId && jwtClient.clientIds.includes(clientId))
+          !jwtClient.clientIds.includes(clientId)
         ) {
           throw new ForbiddenError(t("UNSUPPORTED_CLIENT", { ns: "error" }));
         }
 
-        if (clientId) {
-          jwtClient.setAudience(clientId);
-        }
+        jwtClient.setAudience(clientId);
 
         try {
           const authorization = ctx.connectionParams?.authorization as
@@ -99,17 +92,10 @@ export default function useWebSocketServer(
           t,
           log,
           pubsub,
-          smsClient,
-          jwtClient,
-          currentUser,
-          redisClient,
-          prismaClient,
-          emailClient,
-          docClient,
-          clientId,
-          clientIp,
-          language,
           storage,
+          language,
+          currentUser,
+          prismaClient,
         };
       },
       onConnect: async (ctx) => {
