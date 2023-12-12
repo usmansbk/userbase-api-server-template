@@ -399,6 +399,7 @@ export type PictureUrlArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  file: File;
   files: FilesList;
   me: User;
   permission: Permission;
@@ -409,9 +410,15 @@ export type Query = {
   session: UserSession;
   sessions: SessionsList;
   user: User;
+  userAvatar: UserAvatar;
   userPermission: UserPermission;
   userRole: UserRole;
   users: UsersList;
+};
+
+
+export type QueryFileArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -460,6 +467,11 @@ export type QuerySessionsArgs = {
 
 
 export type QueryUserArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryUserAvatarArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1285,6 +1297,7 @@ export interface PostalCodeScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  file?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<QueryFileArgs, 'id'>>;
   files?: Resolver<ResolversTypes['FilesList'], ParentType, ContextType, Partial<QueryFilesArgs>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   permission?: Resolver<ResolversTypes['Permission'], ParentType, ContextType, RequireFields<QueryPermissionArgs, 'id'>>;
@@ -1295,6 +1308,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   session?: Resolver<ResolversTypes['UserSession'], ParentType, ContextType, RequireFields<QuerySessionArgs, 'id'>>;
   sessions?: Resolver<ResolversTypes['SessionsList'], ParentType, ContextType, Partial<QuerySessionsArgs>>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  userAvatar?: Resolver<ResolversTypes['UserAvatar'], ParentType, ContextType, RequireFields<QueryUserAvatarArgs, 'id'>>;
   userPermission?: Resolver<ResolversTypes['UserPermission'], ParentType, ContextType, RequireFields<QueryUserPermissionArgs, 'id'>>;
   userRole?: Resolver<ResolversTypes['UserRole'], ParentType, ContextType, RequireFields<QueryUserRoleArgs, 'id'>>;
   users?: Resolver<ResolversTypes['UsersList'], ParentType, ContextType, Partial<QueryUsersArgs>>;

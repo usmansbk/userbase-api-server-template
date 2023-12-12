@@ -31,6 +31,14 @@ type Query {
       ]
     )
 
+  userAvatar(id: ID!): UserAvatar!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ViewUserAvatar"] }
+      ]
+    )
+
   userRole(id: ID!): UserRole!
     @auth(
       rules: [
@@ -52,6 +60,14 @@ type Query {
       rules: [
         { allow: roles, roles: ["Admin"] }
         { allow: permissions, permissions: ["ViewRolePermission"] }
+      ]
+    )
+
+  file(id: ID!): File!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ViewFile"] }
       ]
     )
 
