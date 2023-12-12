@@ -19,7 +19,7 @@ type Mutation {
   updateManyUsers: [User]!
   deleteManyUsers: [User]!
 
-  deleteManyUsersPictures: User!
+  deleteManyUserPictures: User!
 
   sendVerificationEmailToManyUsers: MutationResponse!
   sendPhoneNumberVerificationSMSToManyUsers: MutationResponse!

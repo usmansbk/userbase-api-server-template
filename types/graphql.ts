@@ -225,8 +225,8 @@ export type Mutation = {
   deleteManyPermissions: Array<Maybe<Permission>>;
   deleteManyRoles: Array<Maybe<Role>>;
   deleteManySessions: Array<Maybe<UserSession>>;
+  deleteManyUserPictures: User;
   deleteManyUsers: Array<Maybe<User>>;
-  deleteManyUsersPictures: User;
   deleteUserAccount: MutationResponse;
   detachManyPermissionsFromRole: Array<Maybe<RolePermission>>;
   detachManyPermissionsFromUser: Array<Maybe<UserPermission>>;
@@ -1157,8 +1157,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
   deleteManyRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
   deleteManySessions?: Resolver<Array<Maybe<ResolversTypes['UserSession']>>, ParentType, ContextType>;
+  deleteManyUserPictures?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   deleteManyUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
-  deleteManyUsersPictures?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   deleteUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserAccountArgs, 'input'>>;
   detachManyPermissionsFromRole?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
   detachManyPermissionsFromUser?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
