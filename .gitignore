@@ -3,6 +3,8 @@ node_modules
 build
 coverage
 
+yarn-error.log
+
 # Creds
 google_client_secret.json
 certs
