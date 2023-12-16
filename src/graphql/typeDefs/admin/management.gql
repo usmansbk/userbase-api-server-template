@@ -145,7 +145,7 @@ type Query {
 }
 
 type Mutation {
-  createManyUsers(input: [CreateUserInput!]!): [User]!
+  createManyUsers(inputs: [CreateUserInput!]!): [User]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -153,7 +153,7 @@ type Mutation {
       ]
     )
 
-  updateManyUsers(input: [UpdateUserInput!]!): [User]!
+  updateManyUsers(inputs: [UpdateUserInput!]!): [User]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -161,7 +161,7 @@ type Mutation {
       ]
     )
 
-  deleteManyUsers(input: [DeleteUserInput!]!): [User]!
+  deleteManyUsers(inputs: [DeleteUserInput!]!): [User]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -169,7 +169,7 @@ type Mutation {
       ]
     )
 
-  deleteManyUserPictures(input: [DeleteUserPictureInput!]!): [User]!
+  deleteManyUserPictures(inputs: [DeleteUserPictureInput!]!): [User]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -178,7 +178,7 @@ type Mutation {
     )
 
   sendVerificationEmailToManyUsers(
-    input: [SendVerificationEmailInput!]!
+    inputs: [SendVerificationEmailInput!]!
   ): MutationResponse!
     @auth(
       rules: [
@@ -188,7 +188,7 @@ type Mutation {
     )
 
   sendPhoneNumberVerificationSMSToManyUsers(
-    input: [SendPhoneNumberVerificationSMSInput!]!
+    inputs: [SendPhoneNumberVerificationSMSInput!]!
   ): MutationResponse!
     @auth(
       rules: [
@@ -198,7 +198,7 @@ type Mutation {
     )
 
   sendPasswordResetEmailToManyUsers(
-    input: [SendPasswordResetEmailInput!]!
+    inputs: [SendPasswordResetEmailInput!]!
   ): MutationResponse!
     @auth(
       rules: [
@@ -208,7 +208,7 @@ type Mutation {
     )
 
   sendEmailLoginOTPToManyUsers(
-    input: [SendEmailLoginOTPInput!]!
+    inputs: [SendEmailLoginOTPInput!]!
   ): MutationResponse!
     @auth(
       rules: [
@@ -218,7 +218,7 @@ type Mutation {
     )
 
   sendSMSLoginOTPToManyUsers(
-    input: [SendSMSLoginOTPInput!]!
+    inputs: [SendSMSLoginOTPInput!]!
   ): MutationResponse!
     @auth(
       rules: [
@@ -227,7 +227,7 @@ type Mutation {
       ]
     )
 
-  createManyRoles(input: [CreateRoleInput!]!): [Role]!
+  createManyRoles(inputs: [CreateRoleInput!]!): [Role]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -235,7 +235,7 @@ type Mutation {
       ]
     )
 
-  updateManyRoles(input: [UpdateRoleInput!]!): [Role]!
+  updateManyRoles(inputs: [UpdateRoleInput!]!): [Role]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -243,7 +243,7 @@ type Mutation {
       ]
     )
 
-  deleteManyRoles(input: [DeleteRoleInput!]!): [Role]!
+  deleteManyRoles(inputs: [DeleteRoleInput!]!): [Role]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -251,7 +251,7 @@ type Mutation {
       ]
     )
 
-  createManyUserRoles(input: [CreateUserRoleInput!]!): [UserRole]!
+  createManyUserRoles(inputs: [CreateUserRoleInput!]!): [UserRole]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -259,7 +259,7 @@ type Mutation {
       ]
     )
 
-  deleteManyUserRoles(input: [DeleteUserRoleInput!]!): [UserRole]!
+  deleteManyUserRoles(inputs: [DeleteUserRoleInput!]!): [UserRole]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -267,7 +267,7 @@ type Mutation {
       ]
     )
 
-  createManyPermissions(input: [CreatePermissionInput!]!): [Permission]!
+  createManyPermissions(inputs: [CreatePermissionInput!]!): [Permission]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -275,7 +275,7 @@ type Mutation {
       ]
     )
 
-  updateManyPermissions(input: [UpdatePermissionInput!]!): [Permission]!
+  updateManyPermissions(inputs: [UpdatePermissionInput!]!): [Permission]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -283,7 +283,7 @@ type Mutation {
       ]
     )
 
-  deleteManyPermissions(input: [DeletePermissionInput!]!): [Permission]!
+  deleteManyPermissions(inputs: [DeletePermissionInput!]!): [Permission]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -292,7 +292,7 @@ type Mutation {
     )
 
   createManyRolePermissions(
-    input: [CreateRolePermissionInput!]!
+    inputs: [CreateRolePermissionInput!]!
   ): [RolePermission]!
     @auth(
       rules: [
@@ -302,7 +302,7 @@ type Mutation {
     )
 
   deleteManyRolePermissions(
-    input: [DeleteRolePermissionInput!]!
+    inputs: [DeleteRolePermissionInput!]!
   ): [RolePermission]!
     @auth(
       rules: [
@@ -312,7 +312,7 @@ type Mutation {
     )
 
   createManyUserPermissions(
-    input: [CreateUserPermissionInput!]!
+    inputs: [CreateUserPermissionInput!]!
   ): [UserPermission]!
     @auth(
       rules: [
@@ -322,7 +322,7 @@ type Mutation {
     )
 
   deleteManyUserPermissions(
-    input: [DeleteUserPermissionInput!]!
+    inputs: [DeleteUserPermissionInput!]!
   ): [UserPermission]!
     @auth(
       rules: [
@@ -331,7 +331,7 @@ type Mutation {
       ]
     )
 
-  deleteManyUserSessions(input: [DeleteUserSessionInput!]!): [UserSession]!
+  deleteManyUserSessions(inputs: [DeleteUserSessionInput!]!): [UserSession]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -339,7 +339,7 @@ type Mutation {
       ]
     )
 
-  deleteManyFiles(input: [DeleteFileInput!]!): [File]!
+  deleteManyFiles(inputs: [DeleteFileInput!]!): [File]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -347,7 +347,7 @@ type Mutation {
       ]
     )
 
-  unblockUserIPs(input: [UnblockUserIPInput!]!): User!
+  unblockUserIPs(inputs: [UnblockUserIPInput!]!): User!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
