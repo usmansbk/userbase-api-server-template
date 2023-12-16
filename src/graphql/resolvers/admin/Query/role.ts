@@ -2,6 +2,7 @@ import type { QueryRoleArgs, QueryRolesArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { Role } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
+import { DEFAULT_LIST_SIZE } from "@/constants/limits";
 
 export default {
   Query: {
@@ -32,7 +33,7 @@ export default {
       const { prismaClient } = context;
 
       const items = await prismaClient.role.findMany({
-        take: limit ?? 25,
+        take: limit ?? DEFAULT_LIST_SIZE,
       });
 
       return {

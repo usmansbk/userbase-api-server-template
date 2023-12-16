@@ -36,3 +36,6 @@ export const MIN_NAME_LENGTH = 2;
 export const MAX_NAME_LENGTH = 30;
 
 export const OTP_LENGTH = 6;
+
+// List
+export const DEFAULT_LIST_SIZE = 25;
