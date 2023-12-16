@@ -28,12 +28,16 @@ export default {
       _parent: unknown,
       { limit }: QueryPermissionsArgs,
       context: AppContext,
-    ): Promise<Permission[]> {
+    ) {
       const { prismaClient } = context;
 
-      return await prismaClient.permission.findMany({
+      const items = await prismaClient.permission.findMany({
         take: limit ?? 25,
       });
+
+      return {
+        items,
+      };
     },
   },
 };

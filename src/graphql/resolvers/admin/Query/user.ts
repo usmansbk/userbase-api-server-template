@@ -28,12 +28,16 @@ export default {
       _parent: unknown,
       { limit }: QueryUsersArgs,
       context: AppContext,
-    ): Promise<User[]> {
+    ) {
       const { prismaClient } = context;
 
-      return await prismaClient.user.findMany({
+      const items = await prismaClient.user.findMany({
         take: limit ?? 25,
       });
+
+      return {
+        items,
+      };
     },
   },
 };

@@ -110,6 +110,38 @@ type Query {
         { allow: permissions, permissions: ["ReadFile"] }
       ]
     )
+
+  userAvatars(limit: Int): UserAvatarsList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUserAvatar"] }
+      ]
+    )
+
+  userRoles(limit: Int): UserRolesList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadRole"] }
+      ]
+    )
+
+  userPermissions(limit: Int): UserPermissionsList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
+      ]
+    )
+
+  rolePermissions(limit: Int): RolePermissionsList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
+      ]
+    )
 }
 
 type Mutation {
@@ -363,26 +395,37 @@ type Mutation {
 }
 
 type UsersList {
-  cursor: ID
   items: [User]!
 }
 
 type RolesList {
-  cursor: ID
   items: [Role]!
 }
 
 type PermissionsList {
-  cursor: ID
   items: [Permission]!
 }
 
 type SessionsList {
-  cursor: ID
   items: [UserSession]!
 }
 
 type FilesList {
-  cursor: ID
   items: [File]!
+}
+
+type UserAvatarsList {
+  items: [UserAvatar]!
+}
+
+type UserRolesList {
+  items: [UserRole]!
+}
+
+type UserPermissionsList {
+  items: [UserPermission]!
+}
+
+type RolePermissionsList {
+  items: [RolePermission]!
 }

@@ -1,4 +1,7 @@
-import type { QueryUserPermissionArgs } from "types/graphql";
+import type {
+  QueryUserPermissionArgs,
+  QueryUserPermissionsArgs,
+} from "types/graphql";
 import type { AppContext } from "types";
 import type { UserPermission } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
@@ -23,6 +26,21 @@ export default {
       }
 
       return userPermission;
+    },
+    async userPermissions(
+      _parent: unknown,
+      { limit }: QueryUserPermissionsArgs,
+      context: AppContext,
+    ) {
+      const { prismaClient } = context;
+
+      const items = await prismaClient.userPermission.findMany({
+        take: limit ?? 25,
+      });
+
+      return {
+        items,
+      };
     },
   },
 };

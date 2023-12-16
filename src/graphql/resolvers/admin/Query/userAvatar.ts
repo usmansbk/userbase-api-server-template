@@ -1,4 +1,4 @@
-import type { QueryUserAvatarArgs } from "types/graphql";
+import type { QueryUserAvatarArgs, QueryUserAvatarsArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { UserAvatar } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
@@ -23,6 +23,21 @@ export default {
       }
 
       return avatar;
+    },
+    async userAvatars(
+      _parent: unknown,
+      { limit }: QueryUserAvatarsArgs,
+      context: AppContext,
+    ) {
+      const { prismaClient } = context;
+
+      const items = await prismaClient.userAvatar.findMany({
+        take: limit ?? 25,
+      });
+
+      return {
+        items,
+      };
     },
   },
 };

@@ -29,12 +29,16 @@ export default {
       _parent: unknown,
       { limit }: QueryFilesArgs,
       context: AppContext,
-    ): Promise<File[]> {
+    ) {
       const { prismaClient } = context;
 
-      return await prismaClient.file.findMany({
+      const items = await prismaClient.file.findMany({
         take: limit ?? 25,
       });
+
+      return {
+        items,
+      };
     },
   },
 };

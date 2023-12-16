@@ -28,12 +28,16 @@ export default {
       _parent: unknown,
       { limit }: QueryRolesArgs,
       context: AppContext,
-    ): Promise<Role[]> {
+    ) {
       const { prismaClient } = context;
 
-      return await prismaClient.role.findMany({
+      const items = await prismaClient.role.findMany({
         take: limit ?? 25,
       });
+
+      return {
+        items,
+      };
     },
   },
 };

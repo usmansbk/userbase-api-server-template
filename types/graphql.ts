@@ -165,7 +165,6 @@ export type File = {
 
 export type FilesList = {
   __typename?: 'FilesList';
-  cursor?: Maybe<Scalars['ID']['output']>;
   items: Array<Maybe<File>>;
 };
 
@@ -376,7 +375,6 @@ export type Permission = {
 
 export type PermissionsList = {
   __typename?: 'PermissionsList';
-  cursor?: Maybe<Scalars['ID']['output']>;
   items: Array<Maybe<Permission>>;
 };
 
@@ -406,13 +404,17 @@ export type Query = {
   permissions: PermissionsList;
   role: Role;
   rolePermission: RolePermission;
+  rolePermissions: RolePermissionsList;
   roles: RolesList;
   session: UserSession;
   sessions: SessionsList;
   user: User;
   userAvatar: UserAvatar;
+  userAvatars: UserAvatarsList;
   userPermission: UserPermission;
+  userPermissions: UserPermissionsList;
   userRole: UserRole;
+  userRoles: UserRolesList;
   users: UsersList;
 };
 
@@ -448,6 +450,11 @@ export type QueryRolePermissionArgs = {
 };
 
 
+export type QueryRolePermissionsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryRolesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -473,13 +480,28 @@ export type QueryUserAvatarArgs = {
 };
 
 
+export type QueryUserAvatarsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryUserPermissionArgs = {
   id: Scalars['ID']['input'];
 };
 
 
+export type QueryUserPermissionsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryUserRoleArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryUserRolesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -534,9 +556,13 @@ export type RolePermission = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type RolePermissionsList = {
+  __typename?: 'RolePermissionsList';
+  items: Array<Maybe<RolePermission>>;
+};
+
 export type RolesList = {
   __typename?: 'RolesList';
-  cursor?: Maybe<Scalars['ID']['output']>;
   items: Array<Maybe<Role>>;
 };
 
@@ -547,7 +573,6 @@ export type SmsotpLoginInput = {
 
 export type SessionsList = {
   __typename?: 'SessionsList';
-  cursor?: Maybe<Scalars['ID']['output']>;
   items: Array<Maybe<UserSession>>;
 };
 
@@ -611,6 +636,11 @@ export type UserAvatarUrlArgs = {
   edits?: InputMaybe<ImageEditInput>;
 };
 
+export type UserAvatarsList = {
+  __typename?: 'UserAvatarsList';
+  items: Array<Maybe<UserAvatar>>;
+};
+
 export type UserPermission = {
   __typename?: 'UserPermission';
   assignee: User;
@@ -619,6 +649,11 @@ export type UserPermission = {
   id: Scalars['ID']['output'];
   permission: Permission;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type UserPermissionsList = {
+  __typename?: 'UserPermissionsList';
+  items: Array<Maybe<UserPermission>>;
 };
 
 export type UserResponse = Response & {
@@ -638,6 +673,11 @@ export type UserRole = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type UserRolesList = {
+  __typename?: 'UserRolesList';
+  items: Array<Maybe<UserRole>>;
+};
+
 export type UserSession = {
   __typename?: 'UserSession';
   clientId: Scalars['ID']['output'];
@@ -650,7 +690,6 @@ export type UserSession = {
 
 export type UsersList = {
   __typename?: 'UsersList';
-  cursor?: Maybe<Scalars['ID']['output']>;
   items: Array<Maybe<User>>;
 };
 
@@ -827,6 +866,7 @@ export type ResolversTypes = ResolversObject<{
   Response: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Response']>;
   Role: ResolverTypeWrapper<Role>;
   RolePermission: ResolverTypeWrapper<RolePermission>;
+  RolePermissionsList: ResolverTypeWrapper<RolePermissionsList>;
   RolesList: ResolverTypeWrapper<RolesList>;
   RoutingNumber: ResolverTypeWrapper<Scalars['RoutingNumber']['output']>;
   SMSOTPLoginInput: SmsotpLoginInput;
@@ -846,9 +886,12 @@ export type ResolversTypes = ResolversObject<{
   UpdatePhoneNumberInput: UpdatePhoneNumberInput;
   User: ResolverTypeWrapper<User>;
   UserAvatar: ResolverTypeWrapper<UserAvatar>;
+  UserAvatarsList: ResolverTypeWrapper<UserAvatarsList>;
   UserPermission: ResolverTypeWrapper<UserPermission>;
+  UserPermissionsList: ResolverTypeWrapper<UserPermissionsList>;
   UserResponse: ResolverTypeWrapper<UserResponse>;
   UserRole: ResolverTypeWrapper<UserRole>;
+  UserRolesList: ResolverTypeWrapper<UserRolesList>;
   UserSession: ResolverTypeWrapper<UserSession>;
   UsersList: ResolverTypeWrapper<UsersList>;
   UtcOffset: ResolverTypeWrapper<Scalars['UtcOffset']['output']>;
@@ -938,6 +981,7 @@ export type ResolversParentTypes = ResolversObject<{
   Response: ResolversInterfaceTypes<ResolversParentTypes>['Response'];
   Role: Role;
   RolePermission: RolePermission;
+  RolePermissionsList: RolePermissionsList;
   RolesList: RolesList;
   RoutingNumber: Scalars['RoutingNumber']['output'];
   SMSOTPLoginInput: SmsotpLoginInput;
@@ -957,9 +1001,12 @@ export type ResolversParentTypes = ResolversObject<{
   UpdatePhoneNumberInput: UpdatePhoneNumberInput;
   User: User;
   UserAvatar: UserAvatar;
+  UserAvatarsList: UserAvatarsList;
   UserPermission: UserPermission;
+  UserPermissionsList: UserPermissionsList;
   UserResponse: UserResponse;
   UserRole: UserRole;
+  UserRolesList: UserRolesList;
   UserSession: UserSession;
   UsersList: UsersList;
   UtcOffset: Scalars['UtcOffset']['output'];
@@ -1048,7 +1095,6 @@ export type FileResolvers<ContextType = any, ParentType extends ResolversParentT
 }>;
 
 export type FilesListResolvers<ContextType = any, ParentType extends ResolversParentTypes['FilesList'] = ResolversParentTypes['FilesList']> = ResolversObject<{
-  cursor?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   items?: Resolver<Array<Maybe<ResolversTypes['File']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -1259,7 +1305,6 @@ export type PermissionResolvers<ContextType = any, ParentType extends ResolversP
 }>;
 
 export type PermissionsListResolvers<ContextType = any, ParentType extends ResolversParentTypes['PermissionsList'] = ResolversParentTypes['PermissionsList']> = ResolversObject<{
-  cursor?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   items?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -1300,13 +1345,17 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   permissions?: Resolver<ResolversTypes['PermissionsList'], ParentType, ContextType, Partial<QueryPermissionsArgs>>;
   role?: Resolver<ResolversTypes['Role'], ParentType, ContextType, RequireFields<QueryRoleArgs, 'id'>>;
   rolePermission?: Resolver<ResolversTypes['RolePermission'], ParentType, ContextType, RequireFields<QueryRolePermissionArgs, 'id'>>;
+  rolePermissions?: Resolver<ResolversTypes['RolePermissionsList'], ParentType, ContextType, Partial<QueryRolePermissionsArgs>>;
   roles?: Resolver<ResolversTypes['RolesList'], ParentType, ContextType, Partial<QueryRolesArgs>>;
   session?: Resolver<ResolversTypes['UserSession'], ParentType, ContextType, RequireFields<QuerySessionArgs, 'id'>>;
   sessions?: Resolver<ResolversTypes['SessionsList'], ParentType, ContextType, Partial<QuerySessionsArgs>>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   userAvatar?: Resolver<ResolversTypes['UserAvatar'], ParentType, ContextType, RequireFields<QueryUserAvatarArgs, 'id'>>;
+  userAvatars?: Resolver<ResolversTypes['UserAvatarsList'], ParentType, ContextType, Partial<QueryUserAvatarsArgs>>;
   userPermission?: Resolver<ResolversTypes['UserPermission'], ParentType, ContextType, RequireFields<QueryUserPermissionArgs, 'id'>>;
+  userPermissions?: Resolver<ResolversTypes['UserPermissionsList'], ParentType, ContextType, Partial<QueryUserPermissionsArgs>>;
   userRole?: Resolver<ResolversTypes['UserRole'], ParentType, ContextType, RequireFields<QueryUserRoleArgs, 'id'>>;
+  userRoles?: Resolver<ResolversTypes['UserRolesList'], ParentType, ContextType, Partial<QueryUserRolesArgs>>;
   users?: Resolver<ResolversTypes['UsersList'], ParentType, ContextType, Partial<QueryUsersArgs>>;
 }>;
 
@@ -1346,8 +1395,12 @@ export type RolePermissionResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type RolePermissionsListResolvers<ContextType = any, ParentType extends ResolversParentTypes['RolePermissionsList'] = ResolversParentTypes['RolePermissionsList']> = ResolversObject<{
+  items?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type RolesListResolvers<ContextType = any, ParentType extends ResolversParentTypes['RolesList'] = ResolversParentTypes['RolesList']> = ResolversObject<{
-  cursor?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   items?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -1365,7 +1418,6 @@ export interface SemVerScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 }
 
 export type SessionsListResolvers<ContextType = any, ParentType extends ResolversParentTypes['SessionsList'] = ResolversParentTypes['SessionsList']> = ResolversObject<{
-  cursor?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   items?: Resolver<Array<Maybe<ResolversTypes['UserSession']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -1441,6 +1493,11 @@ export type UserAvatarResolvers<ContextType = any, ParentType extends ResolversP
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserAvatarsListResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAvatarsList'] = ResolversParentTypes['UserAvatarsList']> = ResolversObject<{
+  items?: Resolver<Array<Maybe<ResolversTypes['UserAvatar']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserPermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserPermission'] = ResolversParentTypes['UserPermission']> = ResolversObject<{
   assignee?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   assignor?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
@@ -1448,6 +1505,11 @@ export type UserPermissionResolvers<ContextType = any, ParentType extends Resolv
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   permission?: Resolver<ResolversTypes['Permission'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserPermissionsListResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserPermissionsList'] = ResolversParentTypes['UserPermissionsList']> = ResolversObject<{
+  items?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1468,6 +1530,11 @@ export type UserRoleResolvers<ContextType = any, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type UserRolesListResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserRolesList'] = ResolversParentTypes['UserRolesList']> = ResolversObject<{
+  items?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserSessionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserSession'] = ResolversParentTypes['UserSession']> = ResolversObject<{
   clientId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   clientIp?: Resolver<ResolversTypes['IP'], ParentType, ContextType>;
@@ -1479,7 +1546,6 @@ export type UserSessionResolvers<ContextType = any, ParentType extends Resolvers
 }>;
 
 export type UsersListResolvers<ContextType = any, ParentType extends ResolversParentTypes['UsersList'] = ResolversParentTypes['UsersList']> = ResolversObject<{
-  cursor?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   items?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -1558,6 +1624,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Response?: ResponseResolvers<ContextType>;
   Role?: RoleResolvers<ContextType>;
   RolePermission?: RolePermissionResolvers<ContextType>;
+  RolePermissionsList?: RolePermissionsListResolvers<ContextType>;
   RolesList?: RolesListResolvers<ContextType>;
   RoutingNumber?: GraphQLScalarType;
   SafeInt?: GraphQLScalarType;
@@ -1573,9 +1640,12 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   UnsignedInt?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserAvatar?: UserAvatarResolvers<ContextType>;
+  UserAvatarsList?: UserAvatarsListResolvers<ContextType>;
   UserPermission?: UserPermissionResolvers<ContextType>;
+  UserPermissionsList?: UserPermissionsListResolvers<ContextType>;
   UserResponse?: UserResponseResolvers<ContextType>;
   UserRole?: UserRoleResolvers<ContextType>;
+  UserRolesList?: UserRolesListResolvers<ContextType>;
   UserSession?: UserSessionResolvers<ContextType>;
   UsersList?: UsersListResolvers<ContextType>;
   UtcOffset?: GraphQLScalarType;

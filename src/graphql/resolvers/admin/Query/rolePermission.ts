@@ -1,4 +1,7 @@
-import type { QueryRolePermissionArgs } from "types/graphql";
+import type {
+  QueryRolePermissionArgs,
+  QueryRolePermissionsArgs,
+} from "types/graphql";
 import type { AppContext } from "types";
 import type { RolePermission } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
@@ -23,6 +26,21 @@ export default {
       }
 
       return rolePermission;
+    },
+    async rolePermissions(
+      _parent: unknown,
+      { limit }: QueryRolePermissionsArgs,
+      context: AppContext,
+    ) {
+      const { prismaClient } = context;
+
+      const items = await prismaClient.rolePermission.findMany({
+        take: limit ?? 25,
+      });
+
+      return {
+        items,
+      };
     },
   },
 };
