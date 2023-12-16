@@ -44,6 +44,11 @@
       "errors": {
         "notFound": "File not found."
       }
+    },
+    "application": {
+      "errors": {
+        "notFound": "Application not found."
+      }
     }
   },
   "mutation": {

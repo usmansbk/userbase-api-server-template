@@ -136,7 +136,9 @@ CREATE TABLE "Application" (
     "description" TEXT,
     "type" "ApplicationType",
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3)
+    "updatedAt" TIMESTAMP(3),
+
+    CONSTRAINT "Application_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
