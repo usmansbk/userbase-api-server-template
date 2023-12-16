@@ -1,4 +1,10 @@
-type Application {
+type Application
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ReadApplication"] }
+    ]
+  ) {
   id: ID!
   clientId: ID!
   name: String!
