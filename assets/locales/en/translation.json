@@ -19,6 +19,11 @@
       "errors": {
         "notFound": "Session not found."
       }
+    },
+    "userAvatar": {
+      "errors": {
+        "notFound": "Avatar not found."
+      }
     }
   },
   "mutation": {
