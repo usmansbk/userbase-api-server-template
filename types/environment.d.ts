@@ -22,9 +22,6 @@ declare global {
       SENDER_EMAIL: string;
       GOOGLE_CLIENT_ID: string;
       GOOGLE_CLIENT_SECRET: string;
-      ANDROID_CLIENT_ID: string;
-      IOS_CLIENT_ID: string;
-      WEB_CLIENT_ID: string;
       UNIVERSAL_LINK: string;
     }
   }

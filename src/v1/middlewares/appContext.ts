@@ -19,6 +19,8 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
     const clients = await prismaClient.application.findMany();
     const clientId = req.headers.client_id;
 
+    jwtClient.setClients(clients.map((client) => client.id));
+
     req.context = {
       t,
       log,

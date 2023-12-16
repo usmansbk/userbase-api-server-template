@@ -14,11 +14,7 @@ import {
 const testSecret = "secret";
 let audience: string;
 
-const clientIds = [
-  process.env.ANDROID_CLIENT_ID,
-  process.env.IOS_CLIENT_ID,
-  process.env.WEB_CLIENT_ID,
-];
+let clientIds: string[] = [];
 
 /**
  *
@@ -119,6 +115,10 @@ function setAudience(aud: string) {
   audience = aud;
 }
 
+function setClients(ids: string[]) {
+  clientIds = ids;
+}
+
 const jwtClient = {
   sign,
   verify,
@@ -128,6 +128,7 @@ const jwtClient = {
   verifyForAllClients,
   setAudience,
   clientIds,
+  setClients,
 };
 
 export type JWTClient = typeof jwtClient;
