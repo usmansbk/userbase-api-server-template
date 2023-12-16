@@ -105,11 +105,9 @@ type User {
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 }
 
-type UserAvatar implements Picture {
+type UserAvatar {
   id: ID!
-  file: File!
-  url(edits: ImageEditInput): URL!
-  thumbnail(edits: ImageEditInput): URL!
+  picture: Picture!
   createdAt: DateTime!
   updatedAt: DateTime
 }

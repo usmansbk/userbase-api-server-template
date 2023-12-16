@@ -30,11 +30,11 @@ input ImageEditInput {
   normalise: Boolean
 }
 
-interface Picture {
+type Picture {
   id: ID!
-  file: File!
   url(edits: ImageEditInput): URL!
   thumbnail(edits: ImageEditInput): URL!
+  downloadUrl: URL!
 }
 
 interface Response {

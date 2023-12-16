@@ -563,7 +563,8 @@ export type PermissionsList = {
 };
 
 export type Picture = {
-  file: File;
+  __typename?: 'Picture';
+  downloadUrl: Scalars['URL']['output'];
   id: Scalars['ID']['output'];
   thumbnail: Scalars['URL']['output'];
   url: Scalars['URL']['output'];
@@ -848,24 +849,12 @@ export type User = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type UserAvatar = Picture & {
+export type UserAvatar = {
   __typename?: 'UserAvatar';
   createdAt: Scalars['DateTime']['output'];
-  file: File;
   id: Scalars['ID']['output'];
-  thumbnail: Scalars['URL']['output'];
+  picture: Picture;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  url: Scalars['URL']['output'];
-};
-
-
-export type UserAvatarThumbnailArgs = {
-  edits?: InputMaybe<ImageEditInput>;
-};
-
-
-export type UserAvatarUrlArgs = {
-  edits?: InputMaybe<ImageEditInput>;
 };
 
 export type UserAvatarsList = {
@@ -1010,7 +999,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = ResolversObject<{
-  Picture: ( UserAvatar );
   Response: ( AuthResponse ) | ( MutationResponse ) | ( UserResponse );
 }>;
 
@@ -1100,7 +1088,7 @@ export type ResolversTypes = ResolversObject<{
   Permission: ResolverTypeWrapper<Permission>;
   PermissionsList: ResolverTypeWrapper<PermissionsList>;
   PhoneNumber: ResolverTypeWrapper<Scalars['PhoneNumber']['output']>;
-  Picture: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Picture']>;
+  Picture: ResolverTypeWrapper<Picture>;
   Port: ResolverTypeWrapper<Scalars['Port']['output']>;
   PositiveFloat: ResolverTypeWrapper<Scalars['PositiveFloat']['output']>;
   PositiveInt: ResolverTypeWrapper<Scalars['PositiveInt']['output']>;
@@ -1239,7 +1227,7 @@ export type ResolversParentTypes = ResolversObject<{
   Permission: Permission;
   PermissionsList: PermissionsList;
   PhoneNumber: Scalars['PhoneNumber']['output'];
-  Picture: ResolversInterfaceTypes<ResolversParentTypes>['Picture'];
+  Picture: Picture;
   Port: Scalars['Port']['output'];
   PositiveFloat: Scalars['PositiveFloat']['output'];
   PositiveInt: Scalars['PositiveInt']['output'];
@@ -1587,11 +1575,11 @@ export interface PhoneNumberScalarConfig extends GraphQLScalarTypeConfig<Resolve
 }
 
 export type PictureResolvers<ContextType = any, ParentType extends ResolversParentTypes['Picture'] = ResolversParentTypes['Picture']> = ResolversObject<{
-  __resolveType: TypeResolveFn<'UserAvatar', ParentType, ContextType>;
-  file?: Resolver<ResolversTypes['File'], ParentType, ContextType>;
+  downloadUrl?: Resolver<ResolversTypes['URL'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   thumbnail?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<PictureThumbnailArgs>>;
   url?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<PictureUrlArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export interface PortScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Port'], any> {
@@ -1758,11 +1746,9 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type UserAvatarResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserAvatar'] = ResolversParentTypes['UserAvatar']> = ResolversObject<{
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  file?: Resolver<ResolversTypes['File'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  thumbnail?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<UserAvatarThumbnailArgs>>;
+  picture?: Resolver<ResolversTypes['Picture'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  url?: Resolver<ResolversTypes['URL'], ParentType, ContextType, Partial<UserAvatarUrlArgs>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
