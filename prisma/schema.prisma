@@ -169,7 +169,7 @@ model Application {
   id          String           @default(uuid())
   clientId    String           @default(cuid())
   name        String           @unique
-  description String
+  description String?
   type        ApplicationType?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime?        @updatedAt

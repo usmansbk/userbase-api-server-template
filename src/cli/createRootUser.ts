@@ -9,6 +9,24 @@ import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from "@/constants/limits";
 
 export default async function createRootUser() {
   try {
+    let defaultApplication = await prismaClient.application.findFirst({
+      where: {
+        name: "Default App",
+      },
+    });
+
+    if (!defaultApplication) {
+      console.log("Creating default app");
+
+      defaultApplication = await prismaClient.application.create({
+        data: {
+          name: "Default App",
+        },
+      });
+    }
+
+    console.log("Default App client: ", defaultApplication.clientId);
+
     let superUserRole = await prismaClient.role.findFirst({
       where: {
         name: "Root",
