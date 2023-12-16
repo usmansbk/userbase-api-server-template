@@ -2,17 +2,22 @@
   "query": {
     "user": {
       "errors": {
-        "notFound": "User does not exist."
+        "notFound": "User not found."
       }
     },
     "role": {
       "errors": {
-        "notFound": "Role does not exist."
+        "notFound": "Role not found."
       }
     },
-    "permissions": {
+    "permission": {
       "errors": {
-        "notFound": "Permission does not exist."
+        "notFound": "Permission not found."
+      }
+    },
+    "session": {
+      "errors": {
+        "notFound": "Session not found."
       }
     }
   },
