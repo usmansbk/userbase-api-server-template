@@ -108,6 +108,7 @@ export enum AccountStatus {
 
 export type Application = {
   __typename?: 'Application';
+  clientId: Scalars['ID']['output'];
   createdAt: Scalars['DateTime']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -210,15 +211,15 @@ export type DeleteRolePermissionInput = {
   id: Scalars['ID']['input'];
 };
 
+export type DeleteUserAvatarInput = {
+  id: Scalars['ID']['input'];
+};
+
 export type DeleteUserInput = {
   id: Scalars['ID']['input'];
 };
 
 export type DeleteUserPermissionInput = {
-  id: Scalars['ID']['input'];
-};
-
-export type DeleteUserPictureInput = {
   id: Scalars['ID']['input'];
 };
 
@@ -313,8 +314,8 @@ export type Mutation = {
   deleteRolePermissions: Array<Maybe<RolePermission>>;
   deleteRoles: Array<Maybe<Role>>;
   deleteUserAccount: MutationResponse;
+  deleteUserAvatars: Array<Maybe<User>>;
   deleteUserPermissions: Array<Maybe<UserPermission>>;
-  deleteUserPictures: Array<Maybe<User>>;
   deleteUserRoles: Array<Maybe<UserRole>>;
   deleteUserSessions: Array<Maybe<UserSession>>;
   deleteUsers: Array<Maybe<User>>;
@@ -339,7 +340,7 @@ export type Mutation = {
   sendPhoneNumberVerificationSMSToUsers: MutationResponse;
   sendSMSLoginOTPToUsers: MutationResponse;
   sendVerificationEmailToUsers: MutationResponse;
-  unblockUserIPs: User;
+  unblockUserIPs: UserResponse;
   updateApplication: Application;
   updateCurrentUserBasicInfo: UserResponse;
   updateCurrentUserPhoneNumber: UserResponse;
@@ -416,13 +417,13 @@ export type MutationDeleteUserAccountArgs = {
 };
 
 
-export type MutationDeleteUserPermissionsArgs = {
-  inputs: Array<DeleteUserPermissionInput>;
+export type MutationDeleteUserAvatarsArgs = {
+  inputs: Array<DeleteUserAvatarInput>;
 };
 
 
-export type MutationDeleteUserPicturesArgs = {
-  inputs: Array<DeleteUserPictureInput>;
+export type MutationDeleteUserPermissionsArgs = {
+  inputs: Array<DeleteUserPermissionInput>;
 };
 
 
@@ -1082,9 +1083,9 @@ export type ResolversTypes = ResolversObject<{
   DeletePermissionInput: DeletePermissionInput;
   DeleteRoleInput: DeleteRoleInput;
   DeleteRolePermissionInput: DeleteRolePermissionInput;
+  DeleteUserAvatarInput: DeleteUserAvatarInput;
   DeleteUserInput: DeleteUserInput;
   DeleteUserPermissionInput: DeleteUserPermissionInput;
-  DeleteUserPictureInput: DeleteUserPictureInput;
   DeleteUserRoleInput: DeleteUserRoleInput;
   DeleteUserSessionInput: DeleteUserSessionInput;
   DeweyDecimal: ResolverTypeWrapper<Scalars['DeweyDecimal']['output']>;
@@ -1227,9 +1228,9 @@ export type ResolversParentTypes = ResolversObject<{
   DeletePermissionInput: DeletePermissionInput;
   DeleteRoleInput: DeleteRoleInput;
   DeleteRolePermissionInput: DeleteRolePermissionInput;
+  DeleteUserAvatarInput: DeleteUserAvatarInput;
   DeleteUserInput: DeleteUserInput;
   DeleteUserPermissionInput: DeleteUserPermissionInput;
-  DeleteUserPictureInput: DeleteUserPictureInput;
   DeleteUserRoleInput: DeleteUserRoleInput;
   DeleteUserSessionInput: DeleteUserSessionInput;
   DeweyDecimal: Scalars['DeweyDecimal']['output'];
@@ -1352,6 +1353,7 @@ export interface AccountNumberScalarConfig extends GraphQLScalarTypeConfig<Resol
 }
 
 export type ApplicationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Application'] = ResolversParentTypes['Application']> = ResolversObject<{
+  clientId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -1547,8 +1549,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteRolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType, RequireFields<MutationDeleteRolePermissionsArgs, 'inputs'>>;
   deleteRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType, RequireFields<MutationDeleteRolesArgs, 'inputs'>>;
   deleteUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserAccountArgs, 'input'>>;
+  deleteUserAvatars?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationDeleteUserAvatarsArgs, 'inputs'>>;
   deleteUserPermissions?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType, RequireFields<MutationDeleteUserPermissionsArgs, 'inputs'>>;
-  deleteUserPictures?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationDeleteUserPicturesArgs, 'inputs'>>;
   deleteUserRoles?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType, RequireFields<MutationDeleteUserRolesArgs, 'inputs'>>;
   deleteUserSessions?: Resolver<Array<Maybe<ResolversTypes['UserSession']>>, ParentType, ContextType, RequireFields<MutationDeleteUserSessionsArgs, 'inputs'>>;
   deleteUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationDeleteUsersArgs, 'inputs'>>;
@@ -1573,7 +1575,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendPhoneNumberVerificationSMSToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendPhoneNumberVerificationSmsToUsersArgs, 'inputs'>>;
   sendSMSLoginOTPToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendSmsLoginOtpToUsersArgs, 'inputs'>>;
   sendVerificationEmailToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendVerificationEmailToUsersArgs, 'inputs'>>;
-  unblockUserIPs?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<MutationUnblockUserIPsArgs>>;
+  unblockUserIPs?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, Partial<MutationUnblockUserIPsArgs>>;
   updateApplication?: Resolver<ResolversTypes['Application'], ParentType, ContextType, RequireFields<MutationUpdateApplicationArgs, 'input'>>;
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
