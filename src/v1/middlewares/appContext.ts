@@ -16,12 +16,14 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {
     const { t, language, i18n, headers, log, useragent, clientIp } = req;
 
+    const clients = await prismaClient.application.findMany();
     const clientId = req.headers.client_id;
 
     req.context = {
       t,
       log,
       pubsub,
+      clients,
       language,
       redisClient,
       prismaClient,

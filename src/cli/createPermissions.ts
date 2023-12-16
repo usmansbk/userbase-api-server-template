@@ -29,6 +29,10 @@ const permissions: string[] = [
   "DeleteFile",
   "ReadUserEmail",
   "ReadUserPhoneNumber",
+  "CreateApplication",
+  "ReadApplication",
+  "UpdateApplication",
+  "DeleteApplication",
 ];
 
 export default async function createPermissions() {

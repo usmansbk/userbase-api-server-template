@@ -106,6 +106,15 @@ export enum AccountStatus {
   Suspended = 'Suspended'
 }
 
+export type Application = {
+  __typename?: 'Application';
+  createdAt: Scalars['DateTime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
 export type AuthResponse = Response & {
   __typename?: 'AuthResponse';
   /** Access tokens contain information about what scopes, or permissions. */
@@ -135,6 +144,11 @@ export enum AuthStrategy {
   /** Restrict user according to account status */
   Status = 'status'
 }
+
+export type CreateApplicationInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name: Scalars['NonEmptyString']['input'];
+};
 
 export type CreatePermissionInput = {
   description?: InputMaybe<Scalars['NonEmptyString']['input']>;
@@ -174,6 +188,10 @@ export type CreateUserRoleInput = {
 export type DeleteAccountInput = {
   password: Scalars['NonEmptyString']['input'];
   token: Scalars['NonEmptyString']['input'];
+};
+
+export type DeleteApplicationInput = {
+  id: Scalars['ID']['input'];
 };
 
 export type DeleteFileInput = {
@@ -282,12 +300,14 @@ export enum ImageResizeFit {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createApplication: Application;
   createPermissions: Array<Maybe<Permission>>;
   createRolePermissions: Array<Maybe<RolePermission>>;
   createRoles: Array<Maybe<Role>>;
   createUserPermissions: Array<Maybe<UserPermission>>;
   createUserRoles: Array<Maybe<UserRole>>;
   createUsers: Array<Maybe<User>>;
+  deleteApplication: Application;
   deleteFiles: Array<Maybe<File>>;
   deletePermissions: Array<Maybe<Permission>>;
   deleteRolePermissions: Array<Maybe<RolePermission>>;
@@ -320,6 +340,7 @@ export type Mutation = {
   sendSMSLoginOTPToUsers: MutationResponse;
   sendVerificationEmailToUsers: MutationResponse;
   unblockUserIPs: User;
+  updateApplication: Application;
   updateCurrentUserBasicInfo: UserResponse;
   updateCurrentUserPhoneNumber: UserResponse;
   updatePermissions: Array<Maybe<Permission>>;
@@ -327,6 +348,11 @@ export type Mutation = {
   updateUsers: Array<Maybe<User>>;
   verifyUserEmail: MutationResponse;
   verifyUserPhoneNumber: MutationResponse;
+};
+
+
+export type MutationCreateApplicationArgs = {
+  input: CreateApplicationInput;
 };
 
 
@@ -357,6 +383,11 @@ export type MutationCreateUserRolesArgs = {
 
 export type MutationCreateUsersArgs = {
   inputs: Array<CreateUserInput>;
+};
+
+
+export type MutationDeleteApplicationArgs = {
+  input: DeleteApplicationInput;
 };
 
 
@@ -505,6 +536,11 @@ export type MutationUnblockUserIPsArgs = {
 };
 
 
+export type MutationUpdateApplicationArgs = {
+  input: UpdateApplicationInput;
+};
+
+
 export type MutationUpdateCurrentUserBasicInfoArgs = {
   input: UpdateBasicInfoInput;
 };
@@ -582,6 +618,8 @@ export type PictureUrlArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  application: Application;
+  applications: Array<Maybe<Application>>;
   file: File;
   files: FilesList;
   me: User;
@@ -601,6 +639,11 @@ export type Query = {
   userRole: UserRole;
   userRoles: UserRolesList;
   users: UsersList;
+};
+
+
+export type QueryApplicationArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -784,6 +827,12 @@ export type SessionsList = {
 export type UnblockUserIPsInput = {
   id: Scalars['ID']['input'];
   ip: Array<Scalars['IP']['input']>;
+};
+
+export type UpdateApplicationInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  id: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
 export type UpdateBasicInfoInput = {
@@ -1006,6 +1055,7 @@ export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = R
 export type ResolversTypes = ResolversObject<{
   AccountNumber: ResolverTypeWrapper<Scalars['AccountNumber']['output']>;
   AccountStatus: AccountStatus;
+  Application: ResolverTypeWrapper<Application>;
   AuthResponse: ResolverTypeWrapper<AuthResponse>;
   AuthRule: AuthRule;
   AuthStrategy: AuthStrategy;
@@ -1013,6 +1063,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Byte: ResolverTypeWrapper<Scalars['Byte']['output']>;
   CountryCode: ResolverTypeWrapper<Scalars['CountryCode']['output']>;
+  CreateApplicationInput: CreateApplicationInput;
   CreatePermissionInput: CreatePermissionInput;
   CreateRoleInput: CreateRoleInput;
   CreateRolePermissionInput: CreateRolePermissionInput;
@@ -1026,6 +1077,7 @@ export type ResolversTypes = ResolversObject<{
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   DateTimeISO: ResolverTypeWrapper<Scalars['DateTimeISO']['output']>;
   DeleteAccountInput: DeleteAccountInput;
+  DeleteApplicationInput: DeleteApplicationInput;
   DeleteFileInput: DeleteFileInput;
   DeletePermissionInput: DeletePermissionInput;
   DeleteRoleInput: DeleteRoleInput;
@@ -1123,6 +1175,7 @@ export type ResolversTypes = ResolversObject<{
   UnblockUserIPsInput: UnblockUserIPsInput;
   UnsignedFloat: ResolverTypeWrapper<Scalars['UnsignedFloat']['output']>;
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']['output']>;
+  UpdateApplicationInput: UpdateApplicationInput;
   UpdateBasicInfoInput: UpdateBasicInfoInput;
   UpdatePermissionInput: UpdatePermissionInput;
   UpdatePhoneNumberInput: UpdatePhoneNumberInput;
@@ -1148,12 +1201,14 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   AccountNumber: Scalars['AccountNumber']['output'];
+  Application: Application;
   AuthResponse: AuthResponse;
   AuthRule: AuthRule;
   BigInt: Scalars['BigInt']['output'];
   Boolean: Scalars['Boolean']['output'];
   Byte: Scalars['Byte']['output'];
   CountryCode: Scalars['CountryCode']['output'];
+  CreateApplicationInput: CreateApplicationInput;
   CreatePermissionInput: CreatePermissionInput;
   CreateRoleInput: CreateRoleInput;
   CreateRolePermissionInput: CreateRolePermissionInput;
@@ -1167,6 +1222,7 @@ export type ResolversParentTypes = ResolversObject<{
   DateTime: Scalars['DateTime']['output'];
   DateTimeISO: Scalars['DateTimeISO']['output'];
   DeleteAccountInput: DeleteAccountInput;
+  DeleteApplicationInput: DeleteApplicationInput;
   DeleteFileInput: DeleteFileInput;
   DeletePermissionInput: DeletePermissionInput;
   DeleteRoleInput: DeleteRoleInput;
@@ -1262,6 +1318,7 @@ export type ResolversParentTypes = ResolversObject<{
   UnblockUserIPsInput: UnblockUserIPsInput;
   UnsignedFloat: Scalars['UnsignedFloat']['output'];
   UnsignedInt: Scalars['UnsignedInt']['output'];
+  UpdateApplicationInput: UpdateApplicationInput;
   UpdateBasicInfoInput: UpdateBasicInfoInput;
   UpdatePermissionInput: UpdatePermissionInput;
   UpdatePhoneNumberInput: UpdatePhoneNumberInput;
@@ -1293,6 +1350,15 @@ export type AuthDirectiveResolver<Result, Parent, ContextType = any, Args = Auth
 export interface AccountNumberScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['AccountNumber'], any> {
   name: 'AccountNumber';
 }
+
+export type ApplicationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Application'] = ResolversParentTypes['Application']> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
 
 export type AuthResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthResponse'] = ResolversParentTypes['AuthResponse']> = ResolversObject<{
   accessToken?: Resolver<Maybe<ResolversTypes['JWT']>, ParentType, ContextType>;
@@ -1468,12 +1534,14 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  createApplication?: Resolver<ResolversTypes['Application'], ParentType, ContextType, RequireFields<MutationCreateApplicationArgs, 'input'>>;
   createPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationCreatePermissionsArgs, 'inputs'>>;
   createRolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType, RequireFields<MutationCreateRolePermissionsArgs, 'inputs'>>;
   createRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType, RequireFields<MutationCreateRolesArgs, 'inputs'>>;
   createUserPermissions?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType, RequireFields<MutationCreateUserPermissionsArgs, 'inputs'>>;
   createUserRoles?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType, RequireFields<MutationCreateUserRolesArgs, 'inputs'>>;
   createUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'inputs'>>;
+  deleteApplication?: Resolver<ResolversTypes['Application'], ParentType, ContextType, RequireFields<MutationDeleteApplicationArgs, 'input'>>;
   deleteFiles?: Resolver<Array<Maybe<ResolversTypes['File']>>, ParentType, ContextType, RequireFields<MutationDeleteFilesArgs, 'inputs'>>;
   deletePermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationDeletePermissionsArgs, 'inputs'>>;
   deleteRolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType, RequireFields<MutationDeleteRolePermissionsArgs, 'inputs'>>;
@@ -1506,6 +1574,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendSMSLoginOTPToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendSmsLoginOtpToUsersArgs, 'inputs'>>;
   sendVerificationEmailToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendVerificationEmailToUsersArgs, 'inputs'>>;
   unblockUserIPs?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<MutationUnblockUserIPsArgs>>;
+  updateApplication?: Resolver<ResolversTypes['Application'], ParentType, ContextType, RequireFields<MutationUpdateApplicationArgs, 'input'>>;
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
   updatePermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationUpdatePermissionsArgs, 'inputs'>>;
@@ -1599,6 +1668,8 @@ export interface PostalCodeScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  application?: Resolver<ResolversTypes['Application'], ParentType, ContextType, RequireFields<QueryApplicationArgs, 'id'>>;
+  applications?: Resolver<Array<Maybe<ResolversTypes['Application']>>, ParentType, ContextType>;
   file?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<QueryFileArgs, 'bucket' | 'key'>>;
   files?: Resolver<ResolversTypes['FilesList'], ParentType, ContextType, Partial<QueryFilesArgs>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -1819,6 +1890,7 @@ export interface VoidScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   AccountNumber?: GraphQLScalarType;
+  Application?: ApplicationResolvers<ContextType>;
   AuthResponse?: AuthResponseResolvers<ContextType>;
   BigInt?: GraphQLScalarType;
   Byte?: GraphQLScalarType;

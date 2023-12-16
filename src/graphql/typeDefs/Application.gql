@@ -1,0 +1,63 @@
+type Application {
+  id: ID!
+  name: String!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  application(id: ID!): Application!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadApplication"] }
+      ]
+    )
+  applications: [Application]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadApplication"] }
+      ]
+    )
+}
+
+type Mutation {
+  createApplication(input: CreateApplicationInput!): Application!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["CreateApplication"] }
+      ]
+    )
+  updateApplication(input: UpdateApplicationInput!): Application!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["UpdateApplication"] }
+      ]
+    )
+  deleteApplication(input: DeleteApplicationInput!): Application!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["DeleteApplication"] }
+      ]
+    )
+}
+
+input CreateApplicationInput {
+  name: NonEmptyString!
+  description: NonEmptyString
+}
+
+input UpdateApplicationInput {
+  id: ID!
+  name: NonEmptyString
+  description: NonEmptyString
+}
+
+input DeleteApplicationInput {
+  id: ID!
+}

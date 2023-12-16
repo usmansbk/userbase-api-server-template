@@ -9,7 +9,7 @@ import type { AccountStatus } from "./graphql";
 import type { JWTClient } from "@/utils/jwt";
 import type { EmailClient } from "@/utils/email";
 import type { DocClient } from "@/utils/docClient";
-import type { UserSession } from "@prisma/client";
+import type { Application, UserSession } from "@prisma/client";
 
 export interface CurrentUser {
   id: string;
@@ -30,9 +30,10 @@ export interface SocketContext {
 
 export interface AppContext {
   userAgent?: string;
+  clients: Application[];
   clientId: string;
   clientIp: string;
-  log: pino.Logger<pino.LoggerOptions>;
+  log: pino.Logger<never>;
   currentUser?: CurrentUser | null;
   t: TFunction<"translation" | "error", undefined>;
   prismaClient: ExtendedPrismaClient;
