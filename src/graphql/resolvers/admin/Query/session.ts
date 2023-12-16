@@ -1,4 +1,4 @@
-import type { QuerySessionArgs } from "types/graphql";
+import type { QuerySessionArgs, QuerySessionsArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { UserSession } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
@@ -23,6 +23,17 @@ export default {
       }
 
       return session;
+    },
+    async sessions(
+      _parent: unknown,
+      { limit }: QuerySessionsArgs,
+      context: AppContext,
+    ): Promise<UserSession[]> {
+      const { prismaClient } = context;
+
+      return await prismaClient.userSession.findMany({
+        take: limit ?? 25,
+      });
     },
   },
 };

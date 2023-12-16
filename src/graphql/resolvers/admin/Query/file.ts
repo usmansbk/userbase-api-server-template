@@ -1,4 +1,4 @@
-import type { QueryFileArgs } from "types/graphql";
+import type { QueryFileArgs, QueryFilesArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { File } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
@@ -24,6 +24,17 @@ export default {
       }
 
       return file;
+    },
+    async files(
+      _parent: unknown,
+      { limit }: QueryFilesArgs,
+      context: AppContext,
+    ): Promise<File[]> {
+      const { prismaClient } = context;
+
+      return await prismaClient.file.findMany({
+        take: limit ?? 25,
+      });
     },
   },
 };
