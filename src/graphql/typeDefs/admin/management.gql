@@ -71,7 +71,7 @@ type Query {
       ]
     )
 
-  users(limit: Int, cursor: ID): UsersList!
+  users(limit: Int): UsersList!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -79,7 +79,7 @@ type Query {
       ]
     )
 
-  roles(limit: Int, cursor: ID): RolesList!
+  roles(limit: Int): RolesList!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -87,7 +87,7 @@ type Query {
       ]
     )
 
-  permissions(limit: Int, cursor: ID): PermissionsList!
+  permissions(limit: Int): PermissionsList!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -95,7 +95,7 @@ type Query {
       ]
     )
 
-  sessions(limit: Int, cursor: ID): SessionsList!
+  sessions(limit: Int): SessionsList!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -103,7 +103,7 @@ type Query {
       ]
     )
 
-  files(limit: Int, cursor: ID): FilesList!
+  files(limit: Int): FilesList!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }

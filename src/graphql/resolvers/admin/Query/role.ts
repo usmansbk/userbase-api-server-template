@@ -1,4 +1,4 @@
-import type { QueryRoleArgs } from "types/graphql";
+import type { QueryRoleArgs, QueryRolesArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { Role } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
@@ -23,6 +23,17 @@ export default {
       }
 
       return role;
+    },
+    async roles(
+      _parent: unknown,
+      { limit }: QueryRolesArgs,
+      context: AppContext,
+    ): Promise<Role[]> {
+      const { prismaClient } = context;
+
+      return await prismaClient.role.findMany({
+        take: limit ?? 25,
+      });
     },
   },
 };

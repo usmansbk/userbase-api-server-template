@@ -1,4 +1,4 @@
-import type { QueryUserArgs } from "types/graphql";
+import type { QueryUserArgs, QueryUsersArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { User } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
@@ -23,6 +23,17 @@ export default {
       }
 
       return user;
+    },
+    async users(
+      _parent: unknown,
+      { limit }: QueryUsersArgs,
+      context: AppContext,
+    ): Promise<User[]> {
+      const { prismaClient } = context;
+
+      return await prismaClient.user.findMany({
+        take: limit ?? 25,
+      });
     },
   },
 };

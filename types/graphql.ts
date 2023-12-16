@@ -424,7 +424,6 @@ export type QueryFileArgs = {
 
 
 export type QueryFilesArgs = {
-  cursor?: InputMaybe<Scalars['ID']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -435,7 +434,6 @@ export type QueryPermissionArgs = {
 
 
 export type QueryPermissionsArgs = {
-  cursor?: InputMaybe<Scalars['ID']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -451,7 +449,6 @@ export type QueryRolePermissionArgs = {
 
 
 export type QueryRolesArgs = {
-  cursor?: InputMaybe<Scalars['ID']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -462,7 +459,6 @@ export type QuerySessionArgs = {
 
 
 export type QuerySessionsArgs = {
-  cursor?: InputMaybe<Scalars['ID']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -488,7 +484,6 @@ export type QueryUserRoleArgs = {
 
 
 export type QueryUsersArgs = {
-  cursor?: InputMaybe<Scalars['ID']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
