@@ -15,7 +15,7 @@ export default {
           id: currentUser!.id,
         },
         include: {
-          picture: {
+          avatar: {
             include: {
               file: true,
             },
@@ -23,8 +23,8 @@ export default {
         },
       });
 
-      if (user?.picture) {
-        const { file } = user.picture;
+      if (user?.avatar) {
+        const { file } = user.avatar;
         prismaClient.file.delete({
           where: {
             key: file.key,
