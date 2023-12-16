@@ -347,7 +347,7 @@ type Mutation {
       ]
     )
 
-  unblockUserIPs(inputs: [UnblockUserIPInput!]!): User!
+  unblockUserIPs(input: UnblockUserIPsInput): User!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -506,6 +506,7 @@ input DeleteFileInput {
   id: ID!
 }
 
-input UnblockUserIPInput {
-  ip: IP!
+input UnblockUserIPsInput {
+  id: ID!
+  ip: [IP!]!
 }

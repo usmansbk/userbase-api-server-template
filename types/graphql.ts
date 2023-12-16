@@ -501,7 +501,7 @@ export type MutationSendVerificationEmailToManyUsersArgs = {
 
 
 export type MutationUnblockUserIPsArgs = {
-  inputs: Array<UnblockUserIpInput>;
+  input?: InputMaybe<UnblockUserIPsInput>;
 };
 
 
@@ -780,8 +780,9 @@ export type SessionsList = {
   items: Array<Maybe<UserSession>>;
 };
 
-export type UnblockUserIpInput = {
-  ip: Scalars['IP']['input'];
+export type UnblockUserIPsInput = {
+  id: Scalars['ID']['input'];
+  ip: Array<Scalars['IP']['input']>;
 };
 
 export type UpdateBasicInfoInput = {
@@ -1131,7 +1132,7 @@ export type ResolversTypes = ResolversObject<{
   URL: ResolverTypeWrapper<Scalars['URL']['output']>;
   USCurrency: ResolverTypeWrapper<Scalars['USCurrency']['output']>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
-  UnblockUserIPInput: UnblockUserIpInput;
+  UnblockUserIPsInput: UnblockUserIPsInput;
   UnsignedFloat: ResolverTypeWrapper<Scalars['UnsignedFloat']['output']>;
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']['output']>;
   UpdateBasicInfoInput: UpdateBasicInfoInput;
@@ -1270,7 +1271,7 @@ export type ResolversParentTypes = ResolversObject<{
   URL: Scalars['URL']['output'];
   USCurrency: Scalars['USCurrency']['output'];
   UUID: Scalars['UUID']['output'];
-  UnblockUserIPInput: UnblockUserIpInput;
+  UnblockUserIPsInput: UnblockUserIPsInput;
   UnsignedFloat: Scalars['UnsignedFloat']['output'];
   UnsignedInt: Scalars['UnsignedInt']['output'];
   UpdateBasicInfoInput: UpdateBasicInfoInput;
@@ -1516,7 +1517,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendPhoneNumberVerificationSMSToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendPhoneNumberVerificationSmsToManyUsersArgs, 'inputs'>>;
   sendSMSLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendSmsLoginOtpToManyUsersArgs, 'inputs'>>;
   sendVerificationEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendVerificationEmailToManyUsersArgs, 'inputs'>>;
-  unblockUserIPs?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUnblockUserIPsArgs, 'inputs'>>;
+  unblockUserIPs?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<MutationUnblockUserIPsArgs>>;
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
   updateManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationUpdateManyPermissionsArgs, 'inputs'>>;
