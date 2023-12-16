@@ -28,9 +28,9 @@ export default function useWebSocketServer(
       schema,
       onConnect: async (ctx) => {
         try {
-          const clients = await prismaClient.application.findMany();
+          const apps = await prismaClient.application.findMany();
 
-          jwtClient.setClients(clients.map((client) => client.id));
+          jwtClient.setClients(apps.map((app) => app.clientId));
 
           const clientId = ctx.connectionParams?.client_id as string;
 

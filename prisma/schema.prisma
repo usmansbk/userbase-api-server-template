@@ -166,7 +166,8 @@ enum ApplicationType {
 }
 
 model Application {
-  id          String           @default(cuid())
+  id          String           @default(uuid())
+  clientId    String           @default(cuid())
   name        String           @unique
   description String
   type        ApplicationType?

@@ -1,5 +1,6 @@
 type Application {
   id: ID!
+  clientId: ID!
   name: String!
   description: String
   createdAt: DateTime!
