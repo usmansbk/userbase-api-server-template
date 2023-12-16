@@ -1,0 +1,67 @@
+type UserPermission
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ReadPermission"] }
+    ]
+  ) {
+  id: ID!
+  permission: Permission!
+  assignee: User!
+  assignor: User
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  userPermission(id: ID!): UserPermission!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
+      ]
+    )
+
+  userPermissions(limit: Int): UserPermissionsList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
+      ]
+    )
+}
+
+type Mutation {
+  createUserPermissions(
+    inputs: [CreateUserPermissionInput!]!
+  ): [UserPermission]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
+      ]
+    )
+
+  deleteUserPermissions(
+    inputs: [DeleteUserPermissionInput!]!
+  ): [UserPermission]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
+      ]
+    )
+}
+
+type UserPermissionsList {
+  items: [UserPermission]!
+}
+
+input CreateUserPermissionInput {
+  userId: ID!
+  permissionId: ID!
+}
+
+input DeleteUserPermissionInput {
+  id: ID!
+}

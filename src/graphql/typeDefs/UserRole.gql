@@ -1,0 +1,63 @@
+type UserRole
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ReadRole"] }
+    ]
+  ) {
+  id: ID!
+  role: Role!
+  assignee: User!
+  assignor: User
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  userRole(id: ID!): UserRole!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadRole"] }
+      ]
+    )
+
+  userRoles(limit: Int): UserRolesList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadRole"] }
+      ]
+    )
+}
+
+type Mutation {
+  createUserRoles(inputs: [CreateUserRoleInput!]!): [UserRole]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["AssignRole"] }
+      ]
+    )
+
+  deleteUserRoles(inputs: [DeleteUserRoleInput!]!): [UserRole]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["AssignRole"] }
+      ]
+    )
+}
+
+type UserRolesList {
+  items: [UserRole]!
+}
+
+input CreateUserRoleInput {
+  userId: ID!
+  roleId: ID!
+}
+
+input DeleteUserRoleInput {
+  id: ID!
+}

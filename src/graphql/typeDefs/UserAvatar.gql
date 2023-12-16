@@ -1,0 +1,42 @@
+type UserAvatar {
+  id: ID!
+  picture: Picture!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  userAvatar(id: ID!): UserAvatar!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUserAvatar"] }
+      ]
+    )
+
+  userAvatars(limit: Int): UserAvatarsList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUserAvatar"] }
+      ]
+    )
+}
+
+type Mutation {
+  deleteUserAvatars(inputs: [DeleteUserAvatarInput!]!): [User]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["DeleteUserAvatar"] }
+      ]
+    )
+}
+
+input DeleteUserAvatarInput {
+  id: ID!
+}
+
+type UserAvatarsList {
+  items: [UserAvatar]!
+}

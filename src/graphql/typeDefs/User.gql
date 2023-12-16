@@ -105,115 +105,147 @@ type User {
     @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 }
 
-type UserAvatar {
-  id: ID!
-  picture: Picture!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type UserSession
-  @auth(
-    rules: [
-      { allow: owner }
-      { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadSession"] }
-    ]
-  ) {
-  id: ID!
-  jti: ID!
-  clientId: ID!
-  clientIp: IP!
-  createdAt: DateTime!
-  userAgent: String
-}
-
-"""
-Essentially, a role is a collection of permissions that you can apply to users.
-Using roles makes it easier to add, remove, and adjust permissions than assigning permissions to users individually.
-As your user base increases in scale and complexity, roles become particularly useful.
-"""
-type Role
-  @auth(
-    rules: [
-      { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadRole"] }
-    ]
-  ) {
-  id: ID!
-  name: String!
-  creator: User
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime
-  userRoles: [UserRole]!
-  rolePermissions: [RolePermission]!
-}
-
-type Permission
-  @auth(
-    rules: [
-      { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadPermission"] }
-    ]
-  ) {
-  id: ID!
-  name: String!
-  creator: User
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime
-  userPermissions: [UserPermission]!
-  rolePermissions: [RolePermission]!
-}
-
-type UserRole
-  @auth(
-    rules: [
-      { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadRole"] }
-    ]
-  ) {
-  id: ID!
-  role: Role!
-  assignee: User!
-  assignor: User
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type UserPermission
-  @auth(
-    rules: [
-      { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadPermission"] }
-    ]
-  ) {
-  id: ID!
-  permission: Permission!
-  assignee: User!
-  assignor: User
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type RolePermission
-  @auth(
-    rules: [
-      { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadPermission"] }
-    ]
-  ) {
-  id: ID!
-  role: Role!
-  permission: Permission!
-  assignor: User
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
 type Query {
   me: User! @auth
+
+  user(id: ID!): User!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUser"] }
+      ]
+    )
+
+  users(limit: Int): UsersList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUser"] }
+      ]
+    )
+}
+
+type Mutation {
+  joinWaitlist(email: EmailAddress!): MutationResponse!
+  leaveWaitlist(token: NonEmptyString!): MutationResponse!
+
+  loginWithIdentityProvider(input: IdentityProviderLoginInput!): AuthResponse!
+
+  registerWithEmail(input: RegisterWithEmailInput!): AuthResponse!
+  loginWithEmail(input: EmailLoginInput!): AuthResponse!
+
+  requestEmailLoginOTP(email: EmailAddress!): MutationResponse!
+  loginWithEmailOTP(input: EmailOTPLoginInput!): AuthResponse!
+
+  requestSMSLoginOTP(phoneNumber: PhoneNumber!): MutationResponse!
+  loginWithSMSOTP(input: SMSOTPLoginInput!): AuthResponse!
+
+  requestUserPhoneNumberVerification(
+    phoneNumber: PhoneNumber!
+  ): MutationResponse!
+  verifyUserPhoneNumber(input: VerifyPhoneNumberInput!): MutationResponse!
+
+  requestUserEmailVerification(email: EmailAddress!): MutationResponse!
+  verifyUserEmail(input: VerifyEmailInput!): MutationResponse!
+
+  requestResetUserPassword(email: EmailAddress!): MutationResponse!
+  resetUserPassword(input: ResetPasswordInput!): MutationResponse!
+
+  removeCurrentUserPicture: UserResponse!
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
+  updateCurrentUserBasicInfo(input: UpdateBasicInfoInput!): UserResponse!
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
+  updateCurrentUserPhoneNumber(input: UpdatePhoneNumberInput!): UserResponse!
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
+
+  logoutFromAllDevices: MutationResponse! @auth
+  requestDeleteCurrentUserAccount: MutationResponse!
+    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
+  deleteUserAccount(input: DeleteAccountInput!): MutationResponse!
+
+  createUsers(inputs: [CreateUserInput!]!): [User]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["CreateUser"] }
+      ]
+    )
+
+  updateUsers(inputs: [UpdateUserInput!]!): [User]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["UpdateUser"] }
+      ]
+    )
+
+  deleteUsers(inputs: [DeleteUserInput!]!): [User]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["DeleteUser"] }
+      ]
+    )
+
+  sendVerificationEmailToUsers(
+    inputs: [SendVerificationEmailInput!]!
+  ): MutationResponse!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["SendVerificationEmail"] }
+      ]
+    )
+
+  sendPhoneNumberVerificationSMSToUsers(
+    inputs: [SendPhoneNumberVerificationSMSInput!]!
+  ): MutationResponse!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["SendPhoneNumberVerificationSMS"] }
+      ]
+    )
+
+  sendPasswordResetEmailToUsers(
+    inputs: [SendPasswordResetEmailInput!]!
+  ): MutationResponse!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["SendPasswordResetEmail"] }
+      ]
+    )
+
+  sendEmailLoginOTPToUsers(
+    inputs: [SendEmailLoginOTPInput!]!
+  ): MutationResponse!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["SendEmailLoginOTP"] }
+      ]
+    )
+
+  sendSMSLoginOTPToUsers(inputs: [SendSMSLoginOTPInput!]!): MutationResponse!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["SendSMSLoginOTP"] }
+      ]
+    )
+
+  unblockUserIPs(input: UnblockUserIPsInput): User!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["UnblockUserIP"] }
+      ]
+    )
+}
+
+type UsersList {
+  items: [User]!
 }
 
 type AuthResponse implements Response {
@@ -304,41 +336,52 @@ input VerifyEmailInput {
   token: NonEmptyString!
 }
 
-type Mutation {
-  joinWaitlist(email: EmailAddress!): MutationResponse!
-  leaveWaitlist(token: NonEmptyString!): MutationResponse!
+input CreateUserInput {
+  firstName: NonEmptyString!
+  lastName: NonEmptyString
+  surname: NonEmptyString
+  email: EmailAddress!
+  password: NonEmptyString
+  language: Locale
+  phoneNumber: PhoneNumber
+}
 
-  loginWithIdentityProvider(input: IdentityProviderLoginInput!): AuthResponse!
+input UpdateUserInput {
+  id: ID!
+  firstName: NonEmptyString
+  lastName: NonEmptyString
+  surname: NonEmptyString
+  email: EmailAddress
+  password: NonEmptyString
+  language: Locale
+  phoneNumber: PhoneNumber
+}
 
-  registerWithEmail(input: RegisterWithEmailInput!): AuthResponse!
-  loginWithEmail(input: EmailLoginInput!): AuthResponse!
+input DeleteUserInput {
+  id: ID!
+}
 
-  requestEmailLoginOTP(email: EmailAddress!): MutationResponse!
-  loginWithEmailOTP(input: EmailOTPLoginInput!): AuthResponse!
+input SendVerificationEmailInput {
+  email: EmailAddress!
+}
 
-  requestSMSLoginOTP(phoneNumber: PhoneNumber!): MutationResponse!
-  loginWithSMSOTP(input: SMSOTPLoginInput!): AuthResponse!
+input SendPhoneNumberVerificationSMSInput {
+  phoneNumber: PhoneNumber!
+}
 
-  requestUserPhoneNumberVerification(
-    phoneNumber: PhoneNumber!
-  ): MutationResponse!
-  verifyUserPhoneNumber(input: VerifyPhoneNumberInput!): MutationResponse!
+input SendPasswordResetEmailInput {
+  email: EmailAddress!
+}
 
-  requestUserEmailVerification(email: EmailAddress!): MutationResponse!
-  verifyUserEmail(input: VerifyEmailInput!): MutationResponse!
+input SendEmailLoginOTPInput {
+  email: EmailAddress!
+}
 
-  requestResetUserPassword(email: EmailAddress!): MutationResponse!
-  resetUserPassword(input: ResetPasswordInput!): MutationResponse!
+input SendSMSLoginOTPInput {
+  phoneNumber: PhoneNumber!
+}
 
-  removeCurrentUserPicture: UserResponse!
-    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
-  updateCurrentUserBasicInfo(input: UpdateBasicInfoInput!): UserResponse!
-    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
-  updateCurrentUserPhoneNumber(input: UpdatePhoneNumberInput!): UserResponse!
-    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
-
-  logoutFromAllDevices: MutationResponse! @auth
-  requestDeleteCurrentUserAccount: MutationResponse!
-    @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
-  deleteUserAccount(input: DeleteAccountInput!): MutationResponse!
+input UnblockUserIPsInput {
+  id: ID!
+  ip: [IP!]!
 }

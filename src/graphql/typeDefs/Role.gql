@@ -1,0 +1,84 @@
+"""
+Essentially, a role is a collection of permissions that you can apply to users.
+Using roles makes it easier to add, remove, and adjust permissions than assigning permissions to users individually.
+As your user base increases in scale and complexity, roles become particularly useful.
+"""
+type Role
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ReadRole"] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  creator: User
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+  userRoles: [UserRole]!
+  rolePermissions: [RolePermission]!
+}
+
+type Query {
+  role(id: ID!): Role!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadRole"] }
+      ]
+    )
+
+  roles(limit: Int): RolesList!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadRole"] }
+      ]
+    )
+}
+
+type Mutation {
+  createRoles(inputs: [CreateRoleInput!]!): [Role]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["CreateRole"] }
+      ]
+    )
+
+  updateRoles(inputs: [UpdateRoleInput!]!): [Role]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["UpdateRole"] }
+      ]
+    )
+
+  deleteRoles(inputs: [DeleteRoleInput!]!): [Role]!
+    @auth(
+      rules: [
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["DeleteRole"] }
+      ]
+    )
+}
+
+type RolesList {
+  items: [Role]!
+}
+
+input CreateRoleInput {
+  name: NonEmptyString!
+  description: NonEmptyString
+}
+
+input UpdateRoleInput {
+  id: ID!
+  name: NonEmptyString
+  description: NonEmptyString
+}
+
+input DeleteRoleInput {
+  id: ID!
+}
