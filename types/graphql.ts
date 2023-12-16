@@ -418,7 +418,8 @@ export type Query = {
 
 
 export type QueryFileArgs = {
-  id: Scalars['ID']['input'];
+  bucket: Scalars['ID']['input'];
+  key: Scalars['ID']['input'];
 };
 
 
@@ -1297,7 +1298,7 @@ export interface PostalCodeScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  file?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<QueryFileArgs, 'id'>>;
+  file?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<QueryFileArgs, 'bucket' | 'key'>>;
   files?: Resolver<ResolversTypes['FilesList'], ParentType, ContextType, Partial<QueryFilesArgs>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   permission?: Resolver<ResolversTypes['Permission'], ParentType, ContextType, RequireFields<QueryPermissionArgs, 'id'>>;

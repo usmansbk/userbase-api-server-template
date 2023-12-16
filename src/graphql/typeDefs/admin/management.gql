@@ -63,7 +63,7 @@ type Query {
       ]
     )
 
-  file(id: ID!): File!
+  file(key: ID!, bucket: ID!): File!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
