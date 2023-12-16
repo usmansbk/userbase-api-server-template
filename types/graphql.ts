@@ -136,9 +136,80 @@ export enum AuthStrategy {
   Status = 'status'
 }
 
+export type CreatePermissionInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name: Scalars['NonEmptyString']['input'];
+};
+
+export type CreateRoleInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name: Scalars['NonEmptyString']['input'];
+};
+
+export type CreateRolePermissionInput = {
+  permissionId: Scalars['ID']['input'];
+  roleId: Scalars['ID']['input'];
+};
+
+export type CreateUserInput = {
+  email: Scalars['EmailAddress']['input'];
+  firstName: Scalars['NonEmptyString']['input'];
+  language?: InputMaybe<Scalars['Locale']['input']>;
+  lastName?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  password?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  phoneNumber?: InputMaybe<Scalars['PhoneNumber']['input']>;
+  surname?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type CreateUserPermissionInput = {
+  permissionId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+export type CreateUserRoleInput = {
+  roleId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+};
+
 export type DeleteAccountInput = {
   password: Scalars['NonEmptyString']['input'];
   token: Scalars['NonEmptyString']['input'];
+};
+
+export type DeleteFileInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeletePermissionInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteRoleInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteRolePermissionInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteUserInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteUserPermissionInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteUserPictureInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteUserRoleInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteUserSessionInput = {
+  id: Scalars['ID']['input'];
 };
 
 export type EmailLoginInput = {
@@ -211,29 +282,22 @@ export enum ImageResizeFit {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  attachManyPermissionsToRole: Array<Maybe<RolePermission>>;
-  attachManyPermissionsToUser: Array<Maybe<UserPermission>>;
-  attachManyRolesToUser: Array<Maybe<UserRole>>;
-  attachPermissionToManyRoles: Array<Maybe<RolePermission>>;
-  attachPermissionToManyUsers: Array<Maybe<UserPermission>>;
-  attachRoleToManyUsers: Array<Maybe<UserRole>>;
   createManyPermissions: Array<Maybe<Permission>>;
+  createManyRolePermissions: Array<Maybe<RolePermission>>;
   createManyRoles: Array<Maybe<Role>>;
+  createManyUserPermissions: Array<Maybe<UserPermission>>;
+  createManyUserRoles: Array<Maybe<UserRole>>;
   createManyUsers: Array<Maybe<User>>;
   deleteManyFiles: Array<Maybe<File>>;
   deleteManyPermissions: Array<Maybe<Permission>>;
+  deleteManyRolePermissions: Array<Maybe<RolePermission>>;
   deleteManyRoles: Array<Maybe<Role>>;
-  deleteManySessions: Array<Maybe<UserSession>>;
-  deleteManyUserPictures: User;
+  deleteManyUserPermissions: Array<Maybe<UserPermission>>;
+  deleteManyUserPictures: Array<Maybe<User>>;
+  deleteManyUserRoles: Array<Maybe<UserRole>>;
+  deleteManyUserSessions: Array<Maybe<UserSession>>;
   deleteManyUsers: Array<Maybe<User>>;
   deleteUserAccount: MutationResponse;
-  deleteUserSessions: User;
-  detachManyPermissionsFromRole: Array<Maybe<RolePermission>>;
-  detachManyPermissionsFromUser: Array<Maybe<UserPermission>>;
-  detachManyRolesFromUser: Array<Maybe<UserRole>>;
-  detachPermissionFromManyRoles: Array<Maybe<RolePermission>>;
-  detachPermissionFromManyUsers: Array<Maybe<UserPermission>>;
-  detachRoleFromManyUsers: Array<Maybe<UserRole>>;
   joinWaitlist: MutationResponse;
   leaveWaitlist: MutationResponse;
   loginWithEmail: AuthResponse;
@@ -255,7 +319,7 @@ export type Mutation = {
   sendPhoneNumberVerificationSMSToManyUsers: MutationResponse;
   sendSMSLoginOTPToManyUsers: MutationResponse;
   sendVerificationEmailToManyUsers: MutationResponse;
-  unblockUserIP: Array<Maybe<File>>;
+  unblockUserIPs: User;
   updateCurrentUserBasicInfo: UserResponse;
   updateCurrentUserPhoneNumber: UserResponse;
   updateManyPermissions: Array<Maybe<Permission>>;
@@ -263,6 +327,81 @@ export type Mutation = {
   updateManyUsers: Array<Maybe<User>>;
   verifyUserEmail: MutationResponse;
   verifyUserPhoneNumber: MutationResponse;
+};
+
+
+export type MutationCreateManyPermissionsArgs = {
+  input: Array<CreatePermissionInput>;
+};
+
+
+export type MutationCreateManyRolePermissionsArgs = {
+  input: Array<CreateRolePermissionInput>;
+};
+
+
+export type MutationCreateManyRolesArgs = {
+  input: Array<CreateRoleInput>;
+};
+
+
+export type MutationCreateManyUserPermissionsArgs = {
+  input: Array<CreateUserPermissionInput>;
+};
+
+
+export type MutationCreateManyUserRolesArgs = {
+  input: Array<CreateUserRoleInput>;
+};
+
+
+export type MutationCreateManyUsersArgs = {
+  input: Array<CreateUserInput>;
+};
+
+
+export type MutationDeleteManyFilesArgs = {
+  input: Array<DeleteFileInput>;
+};
+
+
+export type MutationDeleteManyPermissionsArgs = {
+  input: Array<DeletePermissionInput>;
+};
+
+
+export type MutationDeleteManyRolePermissionsArgs = {
+  input: Array<DeleteRolePermissionInput>;
+};
+
+
+export type MutationDeleteManyRolesArgs = {
+  input: Array<DeleteRoleInput>;
+};
+
+
+export type MutationDeleteManyUserPermissionsArgs = {
+  input: Array<DeleteUserPermissionInput>;
+};
+
+
+export type MutationDeleteManyUserPicturesArgs = {
+  input: Array<DeleteUserPictureInput>;
+};
+
+
+export type MutationDeleteManyUserRolesArgs = {
+  input: Array<DeleteUserRoleInput>;
+};
+
+
+export type MutationDeleteManyUserSessionsArgs = {
+  input: Array<DeleteUserSessionInput>;
+};
+
+
+export type MutationDeleteManyUsersArgs = {
+  input: Array<DeleteUserInput>;
 };
 
 
@@ -336,6 +475,36 @@ export type MutationResetUserPasswordArgs = {
 };
 
 
+export type MutationSendEmailLoginOtpToManyUsersArgs = {
+  input: Array<SendEmailLoginOtpInput>;
+};
+
+
+export type MutationSendPasswordResetEmailToManyUsersArgs = {
+  input: Array<SendPasswordResetEmailInput>;
+};
+
+
+export type MutationSendPhoneNumberVerificationSmsToManyUsersArgs = {
+  input: Array<SendPhoneNumberVerificationSmsInput>;
+};
+
+
+export type MutationSendSmsLoginOtpToManyUsersArgs = {
+  input: Array<SendSmsLoginOtpInput>;
+};
+
+
+export type MutationSendVerificationEmailToManyUsersArgs = {
+  input: Array<SendVerificationEmailInput>;
+};
+
+
+export type MutationUnblockUserIPsArgs = {
+  input: Array<UnblockUserIpInput>;
+};
+
+
 export type MutationUpdateCurrentUserBasicInfoArgs = {
   input: UpdateBasicInfoInput;
 };
@@ -343,6 +512,21 @@ export type MutationUpdateCurrentUserBasicInfoArgs = {
 
 export type MutationUpdateCurrentUserPhoneNumberArgs = {
   input: UpdatePhoneNumberInput;
+};
+
+
+export type MutationUpdateManyPermissionsArgs = {
+  input: Array<UpdatePermissionInput>;
+};
+
+
+export type MutationUpdateManyRolesArgs = {
+  input: Array<UpdateRoleInput>;
+};
+
+
+export type MutationUpdateManyUsersArgs = {
+  input: Array<UpdateUserInput>;
 };
 
 
@@ -571,9 +755,33 @@ export type SmsotpLoginInput = {
   phoneNumber: Scalars['PhoneNumber']['input'];
 };
 
+export type SendEmailLoginOtpInput = {
+  email: Scalars['EmailAddress']['input'];
+};
+
+export type SendPasswordResetEmailInput = {
+  email: Scalars['EmailAddress']['input'];
+};
+
+export type SendPhoneNumberVerificationSmsInput = {
+  phoneNumber: Scalars['PhoneNumber']['input'];
+};
+
+export type SendSmsLoginOtpInput = {
+  phoneNumber: Scalars['PhoneNumber']['input'];
+};
+
+export type SendVerificationEmailInput = {
+  email: Scalars['EmailAddress']['input'];
+};
+
 export type SessionsList = {
   __typename?: 'SessionsList';
   items: Array<Maybe<UserSession>>;
+};
+
+export type UnblockUserIpInput = {
+  ip: Scalars['IP']['input'];
 };
 
 export type UpdateBasicInfoInput = {
@@ -583,8 +791,31 @@ export type UpdateBasicInfoInput = {
   surname?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
+export type UpdatePermissionInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  id: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
 export type UpdatePhoneNumberInput = {
   phoneNumber: Scalars['PhoneNumber']['input'];
+};
+
+export type UpdateRoleInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  id: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type UpdateUserInput = {
+  email?: InputMaybe<Scalars['EmailAddress']['input']>;
+  firstName?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  id: Scalars['ID']['input'];
+  language?: InputMaybe<Scalars['Locale']['input']>;
+  lastName?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  password?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  phoneNumber?: InputMaybe<Scalars['PhoneNumber']['input']>;
+  surname?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
 export type User = {
@@ -793,6 +1024,12 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Byte: ResolverTypeWrapper<Scalars['Byte']['output']>;
   CountryCode: ResolverTypeWrapper<Scalars['CountryCode']['output']>;
+  CreatePermissionInput: CreatePermissionInput;
+  CreateRoleInput: CreateRoleInput;
+  CreateRolePermissionInput: CreateRolePermissionInput;
+  CreateUserInput: CreateUserInput;
+  CreateUserPermissionInput: CreateUserPermissionInput;
+  CreateUserRoleInput: CreateUserRoleInput;
   Cuid: ResolverTypeWrapper<Scalars['Cuid']['output']>;
   Currency: ResolverTypeWrapper<Scalars['Currency']['output']>;
   DID: ResolverTypeWrapper<Scalars['DID']['output']>;
@@ -800,6 +1037,15 @@ export type ResolversTypes = ResolversObject<{
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   DateTimeISO: ResolverTypeWrapper<Scalars['DateTimeISO']['output']>;
   DeleteAccountInput: DeleteAccountInput;
+  DeleteFileInput: DeleteFileInput;
+  DeletePermissionInput: DeletePermissionInput;
+  DeleteRoleInput: DeleteRoleInput;
+  DeleteRolePermissionInput: DeleteRolePermissionInput;
+  DeleteUserInput: DeleteUserInput;
+  DeleteUserPermissionInput: DeleteUserPermissionInput;
+  DeleteUserPictureInput: DeleteUserPictureInput;
+  DeleteUserRoleInput: DeleteUserRoleInput;
+  DeleteUserSessionInput: DeleteUserSessionInput;
   DeweyDecimal: ResolverTypeWrapper<Scalars['DeweyDecimal']['output']>;
   Duration: ResolverTypeWrapper<Scalars['Duration']['output']>;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
@@ -872,6 +1118,11 @@ export type ResolversTypes = ResolversObject<{
   SMSOTPLoginInput: SmsotpLoginInput;
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']['output']>;
   SemVer: ResolverTypeWrapper<Scalars['SemVer']['output']>;
+  SendEmailLoginOTPInput: SendEmailLoginOtpInput;
+  SendPasswordResetEmailInput: SendPasswordResetEmailInput;
+  SendPhoneNumberVerificationSMSInput: SendPhoneNumberVerificationSmsInput;
+  SendSMSLoginOTPInput: SendSmsLoginOtpInput;
+  SendVerificationEmailInput: SendVerificationEmailInput;
   SessionsList: ResolverTypeWrapper<SessionsList>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Time: ResolverTypeWrapper<Scalars['Time']['output']>;
@@ -880,10 +1131,14 @@ export type ResolversTypes = ResolversObject<{
   URL: ResolverTypeWrapper<Scalars['URL']['output']>;
   USCurrency: ResolverTypeWrapper<Scalars['USCurrency']['output']>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
+  UnblockUserIPInput: UnblockUserIpInput;
   UnsignedFloat: ResolverTypeWrapper<Scalars['UnsignedFloat']['output']>;
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']['output']>;
   UpdateBasicInfoInput: UpdateBasicInfoInput;
+  UpdatePermissionInput: UpdatePermissionInput;
   UpdatePhoneNumberInput: UpdatePhoneNumberInput;
+  UpdateRoleInput: UpdateRoleInput;
+  UpdateUserInput: UpdateUserInput;
   User: ResolverTypeWrapper<User>;
   UserAvatar: ResolverTypeWrapper<UserAvatar>;
   UserAvatarsList: ResolverTypeWrapper<UserAvatarsList>;
@@ -910,6 +1165,12 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
   Byte: Scalars['Byte']['output'];
   CountryCode: Scalars['CountryCode']['output'];
+  CreatePermissionInput: CreatePermissionInput;
+  CreateRoleInput: CreateRoleInput;
+  CreateRolePermissionInput: CreateRolePermissionInput;
+  CreateUserInput: CreateUserInput;
+  CreateUserPermissionInput: CreateUserPermissionInput;
+  CreateUserRoleInput: CreateUserRoleInput;
   Cuid: Scalars['Cuid']['output'];
   Currency: Scalars['Currency']['output'];
   DID: Scalars['DID']['output'];
@@ -917,6 +1178,15 @@ export type ResolversParentTypes = ResolversObject<{
   DateTime: Scalars['DateTime']['output'];
   DateTimeISO: Scalars['DateTimeISO']['output'];
   DeleteAccountInput: DeleteAccountInput;
+  DeleteFileInput: DeleteFileInput;
+  DeletePermissionInput: DeletePermissionInput;
+  DeleteRoleInput: DeleteRoleInput;
+  DeleteRolePermissionInput: DeleteRolePermissionInput;
+  DeleteUserInput: DeleteUserInput;
+  DeleteUserPermissionInput: DeleteUserPermissionInput;
+  DeleteUserPictureInput: DeleteUserPictureInput;
+  DeleteUserRoleInput: DeleteUserRoleInput;
+  DeleteUserSessionInput: DeleteUserSessionInput;
   DeweyDecimal: Scalars['DeweyDecimal']['output'];
   Duration: Scalars['Duration']['output'];
   EmailAddress: Scalars['EmailAddress']['output'];
@@ -987,6 +1257,11 @@ export type ResolversParentTypes = ResolversObject<{
   SMSOTPLoginInput: SmsotpLoginInput;
   SafeInt: Scalars['SafeInt']['output'];
   SemVer: Scalars['SemVer']['output'];
+  SendEmailLoginOTPInput: SendEmailLoginOtpInput;
+  SendPasswordResetEmailInput: SendPasswordResetEmailInput;
+  SendPhoneNumberVerificationSMSInput: SendPhoneNumberVerificationSmsInput;
+  SendSMSLoginOTPInput: SendSmsLoginOtpInput;
+  SendVerificationEmailInput: SendVerificationEmailInput;
   SessionsList: SessionsList;
   String: Scalars['String']['output'];
   Time: Scalars['Time']['output'];
@@ -995,10 +1270,14 @@ export type ResolversParentTypes = ResolversObject<{
   URL: Scalars['URL']['output'];
   USCurrency: Scalars['USCurrency']['output'];
   UUID: Scalars['UUID']['output'];
+  UnblockUserIPInput: UnblockUserIpInput;
   UnsignedFloat: Scalars['UnsignedFloat']['output'];
   UnsignedInt: Scalars['UnsignedInt']['output'];
   UpdateBasicInfoInput: UpdateBasicInfoInput;
+  UpdatePermissionInput: UpdatePermissionInput;
   UpdatePhoneNumberInput: UpdatePhoneNumberInput;
+  UpdateRoleInput: UpdateRoleInput;
+  UpdateUserInput: UpdateUserInput;
   User: User;
   UserAvatar: UserAvatar;
   UserAvatarsList: UserAvatarsList;
@@ -1200,29 +1479,22 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  attachManyPermissionsToRole?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
-  attachManyPermissionsToUser?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
-  attachManyRolesToUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
-  attachPermissionToManyRoles?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
-  attachPermissionToManyUsers?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
-  attachRoleToManyUsers?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
-  createManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
-  createManyRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
-  createManyUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
-  deleteManyFiles?: Resolver<Array<Maybe<ResolversTypes['File']>>, ParentType, ContextType>;
-  deleteManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
-  deleteManyRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
-  deleteManySessions?: Resolver<Array<Maybe<ResolversTypes['UserSession']>>, ParentType, ContextType>;
-  deleteManyUserPictures?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  deleteManyUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
+  createManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationCreateManyPermissionsArgs, 'input'>>;
+  createManyRolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType, RequireFields<MutationCreateManyRolePermissionsArgs, 'input'>>;
+  createManyRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType, RequireFields<MutationCreateManyRolesArgs, 'input'>>;
+  createManyUserPermissions?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType, RequireFields<MutationCreateManyUserPermissionsArgs, 'input'>>;
+  createManyUserRoles?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType, RequireFields<MutationCreateManyUserRolesArgs, 'input'>>;
+  createManyUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationCreateManyUsersArgs, 'input'>>;
+  deleteManyFiles?: Resolver<Array<Maybe<ResolversTypes['File']>>, ParentType, ContextType, RequireFields<MutationDeleteManyFilesArgs, 'input'>>;
+  deleteManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationDeleteManyPermissionsArgs, 'input'>>;
+  deleteManyRolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType, RequireFields<MutationDeleteManyRolePermissionsArgs, 'input'>>;
+  deleteManyRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType, RequireFields<MutationDeleteManyRolesArgs, 'input'>>;
+  deleteManyUserPermissions?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType, RequireFields<MutationDeleteManyUserPermissionsArgs, 'input'>>;
+  deleteManyUserPictures?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationDeleteManyUserPicturesArgs, 'input'>>;
+  deleteManyUserRoles?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType, RequireFields<MutationDeleteManyUserRolesArgs, 'input'>>;
+  deleteManyUserSessions?: Resolver<Array<Maybe<ResolversTypes['UserSession']>>, ParentType, ContextType, RequireFields<MutationDeleteManyUserSessionsArgs, 'input'>>;
+  deleteManyUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationDeleteManyUsersArgs, 'input'>>;
   deleteUserAccount?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserAccountArgs, 'input'>>;
-  deleteUserSessions?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  detachManyPermissionsFromRole?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
-  detachManyPermissionsFromUser?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
-  detachManyRolesFromUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
-  detachPermissionFromManyRoles?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
-  detachPermissionFromManyUsers?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
-  detachRoleFromManyUsers?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;
   joinWaitlist?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationJoinWaitlistArgs, 'email'>>;
   leaveWaitlist?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationLeaveWaitlistArgs, 'token'>>;
   loginWithEmail?: Resolver<ResolversTypes['AuthResponse'], ParentType, ContextType, RequireFields<MutationLoginWithEmailArgs, 'input'>>;
@@ -1239,17 +1511,17 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   requestUserEmailVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserEmailVerificationArgs, 'email'>>;
   requestUserPhoneNumberVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserPhoneNumberVerificationArgs, 'phoneNumber'>>;
   resetUserPassword?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationResetUserPasswordArgs, 'input'>>;
-  sendEmailLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
-  sendPasswordResetEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
-  sendPhoneNumberVerificationSMSToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
-  sendSMSLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
-  sendVerificationEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
-  unblockUserIP?: Resolver<Array<Maybe<ResolversTypes['File']>>, ParentType, ContextType>;
+  sendEmailLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendEmailLoginOtpToManyUsersArgs, 'input'>>;
+  sendPasswordResetEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendPasswordResetEmailToManyUsersArgs, 'input'>>;
+  sendPhoneNumberVerificationSMSToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendPhoneNumberVerificationSmsToManyUsersArgs, 'input'>>;
+  sendSMSLoginOTPToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendSmsLoginOtpToManyUsersArgs, 'input'>>;
+  sendVerificationEmailToManyUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendVerificationEmailToManyUsersArgs, 'input'>>;
+  unblockUserIPs?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUnblockUserIPsArgs, 'input'>>;
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;
-  updateManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
-  updateManyRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType>;
-  updateManyUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
+  updateManyPermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationUpdateManyPermissionsArgs, 'input'>>;
+  updateManyRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType, RequireFields<MutationUpdateManyRolesArgs, 'input'>>;
+  updateManyUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationUpdateManyUsersArgs, 'input'>>;
   verifyUserEmail?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserEmailArgs, 'input'>>;
   verifyUserPhoneNumber?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationVerifyUserPhoneNumberArgs, 'input'>>;
 }>;
