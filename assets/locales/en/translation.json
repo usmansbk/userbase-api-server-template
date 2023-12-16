@@ -1,4 +1,21 @@
 {
+  "query": {
+    "user": {
+      "errors": {
+        "notFound": "User does not exist."
+      }
+    },
+    "role": {
+      "errors": {
+        "notFound": "Role does not exist."
+      }
+    },
+    "permissions": {
+      "errors": {
+        "notFound": "Permission does not exist."
+      }
+    }
+  },
   "mutation": {
     "joinWaitlist": {
       "message": "Thank you for joining the waitlist."
