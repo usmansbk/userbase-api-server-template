@@ -383,5 +383,5 @@ input SendSMSLoginOTPInput {
 
 input UnblockUserIPsInput {
   id: ID!
-  ip: [IP!]!
+  ips: [IP!]!
 }

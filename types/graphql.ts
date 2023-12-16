@@ -827,7 +827,7 @@ export type SessionsList = {
 
 export type UnblockUserIPsInput = {
   id: Scalars['ID']['input'];
-  ip: Array<Scalars['IP']['input']>;
+  ips: Array<Scalars['IP']['input']>;
 };
 
 export type UpdateApplicationInput = {
