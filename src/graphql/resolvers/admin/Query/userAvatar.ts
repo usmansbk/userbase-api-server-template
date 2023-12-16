@@ -5,7 +5,7 @@ import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Query: {
-    async user(
+    async userAvatar(
       _parent: unknown,
       { id }: QueryUserAvatarArgs,
       context: AppContext,

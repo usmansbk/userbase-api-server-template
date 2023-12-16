@@ -24,6 +24,16 @@
       "errors": {
         "notFound": "Avatar not found."
       }
+    },
+    "userRole": {
+      "errors": {
+        "notFound": "User role not found."
+      }
+    },
+    "userPermission": {
+      "errors": {
+        "notFound": "User permission not found."
+      }
     }
   },
   "mutation": {
