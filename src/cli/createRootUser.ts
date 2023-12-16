@@ -35,13 +35,13 @@ export default async function createRootUser() {
 
     if (!adminRole) {
       console.log("Creating admin role");
-      superUserRole = await prismaClient.role.create({
+      await prismaClient.role.create({
         data: {
           name: "Admin",
           description: "For administrative purposes",
         },
       });
-      console.log("Role created");
+      console.log("Admin Role created");
     }
 
     const rootUser = await prismaClient.user.findFirst({

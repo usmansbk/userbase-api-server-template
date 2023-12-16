@@ -84,25 +84,25 @@ type User {
       ]
     )
 
-  rolesCreatedByUser: [Role]! @auth(rules: [{ allow: roles, roles: ["admin"] }])
+  rolesCreatedByUser: [Role]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   permissionsCreatedByUser: [Permission]!
-    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   rolesAssignedToUser: [UserRole]!
-    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   rolesAssignedByUser: [UserRole]!
-    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   permissionsAssignedToUser: [UserPermission]!
-    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   permissionsAssignedByUser: [UserPermission]!
-    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 
   rolePermissionsAssignedByUser: [RolePermission]!
-    @auth(rules: [{ allow: roles, roles: ["admin"] }])
+    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
 }
 
 type UserAvatar implements Picture {
@@ -139,7 +139,7 @@ type Role
   @auth(
     rules: [
       { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ViewRole"] }
+      { allow: permissions, permissions: ["ReadRole"] }
     ]
   ) {
   id: ID!
@@ -156,7 +156,7 @@ type Permission
   @auth(
     rules: [
       { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ViewPermission"] }
+      { allow: permissions, permissions: ["ReadPermission"] }
     ]
   ) {
   id: ID!
@@ -173,7 +173,7 @@ type UserRole
   @auth(
     rules: [
       { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ViewUserRole"] }
+      { allow: permissions, permissions: ["ReadRole"] }
     ]
   ) {
   id: ID!
@@ -188,7 +188,7 @@ type UserPermission
   @auth(
     rules: [
       { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ViewUserPermission"] }
+      { allow: permissions, permissions: ["ReadPermission"] }
     ]
   ) {
   id: ID!
@@ -203,7 +203,7 @@ type RolePermission
   @auth(
     rules: [
       { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ViewRolePermission"] }
+      { allow: permissions, permissions: ["ReadPermission"] }
     ]
   ) {
   id: ID!

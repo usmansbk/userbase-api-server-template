@@ -15,7 +15,7 @@ export const S3_URL_EXPIRES_IN: DurationType = [7, "days"];
 
 // Auth
 export const BRUTE_FORCE_THRESHOLD = 10;
-export const ACCESS_TOKEN_EXPIRES_IN: DurationType = [15, "minutes"];
+export const ACCESS_TOKEN_EXPIRES_IN: DurationType = [15, "days"];
 export const REFRESH_TOKEN_EXPIRES_IN: DurationType = [7, "days"];
 export const ID_TOKEN_EXPIRES_IN: DurationType = [7, "days"];
 export const RESET_LOGIN_ATTEMPTS_IN: DurationType = [15, "minutes"];
