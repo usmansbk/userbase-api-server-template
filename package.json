@@ -68,7 +68,8 @@
     "sh": "docker exec -it api sh",
     "codegen": "graphql-codegen",
     "keys:generate": "babel-node build/cli/generateKeyPairs",
-    "create:root": "babel-node build/cli/createRootUser"
+    "create:root": "babel-node build/cli/createRootUser",
+    "create:permissions": "babel-node build/cli/createPermissions"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

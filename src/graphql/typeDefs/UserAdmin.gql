@@ -3,7 +3,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewUser"] }
+        { allow: permissions, permissions: ["ReadUser"] }
       ]
     )
 
@@ -11,7 +11,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewRole"] }
+        { allow: permissions, permissions: ["ReadRole"] }
       ]
     )
 
@@ -19,7 +19,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewPermission"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
       ]
     )
 
@@ -27,7 +27,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewUserSession"] }
+        { allow: permissions, permissions: ["ReadSession"] }
       ]
     )
 
@@ -35,7 +35,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewUserAvatar"] }
+        { allow: permissions, permissions: ["ReadUserAvatar"] }
       ]
     )
 
@@ -43,7 +43,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewUserRole"] }
+        { allow: permissions, permissions: ["ReadRole"] }
       ]
     )
 
@@ -51,7 +51,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewUserPermission"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
       ]
     )
 
@@ -59,7 +59,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewRolePermission"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
       ]
     )
 
@@ -67,7 +67,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewFile"] }
+        { allow: permissions, permissions: ["ReadFile"] }
       ]
     )
 
@@ -75,7 +75,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewUser"] }
+        { allow: permissions, permissions: ["ReadUser"] }
       ]
     )
 
@@ -83,7 +83,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewRole"] }
+        { allow: permissions, permissions: ["ReadRole"] }
       ]
     )
 
@@ -91,7 +91,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewPermission"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
       ]
     )
 
@@ -99,7 +99,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewUserSession"] }
+        { allow: permissions, permissions: ["ReadSession"] }
       ]
     )
 
@@ -107,7 +107,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ViewFile"] }
+        { allow: permissions, permissions: ["ReadFile"] }
       ]
     )
 }
@@ -117,7 +117,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["CreateManyUsers"] }
+        { allow: permissions, permissions: ["CreateUser"] }
       ]
     )
 
@@ -125,7 +125,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["UpdateManyUsers"] }
+        { allow: permissions, permissions: ["UpdateUser"] }
       ]
     )
 
@@ -133,7 +133,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteManyUsers"] }
+        { allow: permissions, permissions: ["DeleteUser"] }
       ]
     )
 
@@ -141,7 +141,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteManyUserPictures"] }
+        { allow: permissions, permissions: ["DeleteUserAvatar"] }
       ]
     )
 
@@ -189,7 +189,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["CreateManyRoles"] }
+        { allow: permissions, permissions: ["CreateRole"] }
       ]
     )
 
@@ -197,7 +197,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["UpdateManyRoles"] }
+        { allow: permissions, permissions: ["UpdateRole"] }
       ]
     )
 
@@ -205,7 +205,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteManyRoles"] }
+        { allow: permissions, permissions: ["DeleteRole"] }
       ]
     )
 
@@ -213,7 +213,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["AssignUserRole"] }
+        { allow: permissions, permissions: ["AssignRole"] }
       ]
     )
 
@@ -221,7 +221,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["AssignUserRole"] }
+        { allow: permissions, permissions: ["AssignRole"] }
       ]
     )
 
@@ -229,7 +229,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["AssignUserRole"] }
+        { allow: permissions, permissions: ["AssignRole"] }
       ]
     )
 
@@ -237,7 +237,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["AssignUserRole"] }
+        { allow: permissions, permissions: ["AssignRole"] }
       ]
     )
 
@@ -245,7 +245,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["CreateManyPermissions"] }
+        { allow: permissions, permissions: ["CreatePermission"] }
       ]
     )
 
@@ -253,7 +253,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["UpdateManyPermissions"] }
+        { allow: permissions, permissions: ["UpdatePermission"] }
       ]
     )
 
@@ -261,7 +261,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteManyPermissions"] }
+        { allow: permissions, permissions: ["DeletePermission"] }
       ]
     )
 
@@ -269,7 +269,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantRolePermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -277,7 +277,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantRolePermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -285,7 +285,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantRolePermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -293,7 +293,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantRolePermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -301,7 +301,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantUserPermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -309,7 +309,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantUserPermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -317,7 +317,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantUserPermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -325,7 +325,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["GrantUserPermission"] }
+        { allow: permissions, permissions: ["GrantPermission"] }
       ]
     )
 
@@ -333,7 +333,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteManySessions"] }
+        { allow: permissions, permissions: ["DeleteSession"] }
       ]
     )
 
@@ -341,7 +341,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteUserSessions"] }
+        { allow: permissions, permissions: ["DeleteSession"] }
       ]
     )
 
@@ -349,7 +349,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteManyFiles"] }
+        { allow: permissions, permissions: ["DeleteFile"] }
       ]
     )
 

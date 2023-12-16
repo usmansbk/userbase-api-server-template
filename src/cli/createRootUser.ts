@@ -121,7 +121,9 @@ export default async function createRootUser() {
     if (e instanceof ZodError) {
       console.log(e.formErrors.formErrors);
     } else {
-      logger.error(e);
+      logger.error({
+        error: e,
+      });
     }
   }
 }
