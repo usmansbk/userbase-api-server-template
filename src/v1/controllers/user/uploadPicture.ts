@@ -64,7 +64,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
               id: currentUser!.id,
             },
           })
-          .picture();
+          .avatar();
 
         if (oldPicture) {
           await prismaClient.file.delete({
@@ -80,7 +80,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
             id: currentUser!.id,
           },
           data: {
-            picture: {
+            avatar: {
               create: {
                 file: {
                   create: {
@@ -97,7 +97,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
           },
           select: {
             id: true,
-            picture: {
+            avatar: {
               include: {
                 file: {
                   select: {
@@ -116,7 +116,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
             user: {
               id: user.id,
               pictureUrl: getImageUrl({
-                ...user.picture!.file,
+                ...user.avatar!.file,
                 edits: {
                   resize: {
                     width: DEFAULT_USER_PICTURE_SIZE,
@@ -125,7 +125,7 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
                 },
               }),
               thumbnailUrl: getImageUrl({
-                ...user.picture!.file,
+                ...user.avatar!.file,
                 edits: {
                   resize: {
                     width: DEFAULT_USER_THUMBNAIL_SIZE,

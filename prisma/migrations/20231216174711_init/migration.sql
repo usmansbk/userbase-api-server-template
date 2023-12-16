@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('Staged', 'Provisioned', 'Active', 'Recovery', 'PasswordExpired', 'LockedOut', 'Suspended', 'Deprovisioned');
 
+-- CreateEnum
+CREATE TYPE "ApplicationType" AS ENUM ('SPA', 'Machine', 'Native', 'RegularWebApplication');
+
 -- CreateTable
 CREATE TABLE "File" (
     "key" TEXT NOT NULL,
@@ -125,6 +128,16 @@ CREATE TABLE "RolePermission" (
     CONSTRAINT "RolePermission_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Application" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "type" "ApplicationType",
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3)
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "File_key_key" ON "File"("key");
 
@@ -154,6 +167,9 @@ CREATE UNIQUE INDEX "UserPermission_permissionId_assigneeId_key" ON "UserPermiss
 
 -- CreateIndex
 CREATE UNIQUE INDEX "RolePermission_roleId_permissionId_key" ON "RolePermission"("roleId", "permissionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Application_name_key" ON "Application"("name");
 
 -- AddForeignKey
 ALTER TABLE "Role" ADD CONSTRAINT "Role_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

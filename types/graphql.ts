@@ -822,6 +822,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
+  avatar?: Maybe<UserAvatar>;
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['EmailAddress']['output'];
   firstName: Scalars['String']['output'];
@@ -836,7 +837,6 @@ export type User = {
   permissionsAssignedToUser: Array<Maybe<UserPermission>>;
   permissionsCreatedByUser: Array<Maybe<Permission>>;
   phoneNumber?: Maybe<Scalars['PhoneNumber']['output']>;
-  picture?: Maybe<UserAvatar>;
   rolePermissionsAssignedByUser: Array<Maybe<RolePermission>>;
   roles: Array<Maybe<Scalars['String']['output']>>;
   rolesAssignedByUser: Array<Maybe<UserRole>>;
@@ -1716,6 +1716,7 @@ export interface UnsignedIntScalarConfig extends GraphQLScalarTypeConfig<Resolve
 }
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+  avatar?: Resolver<Maybe<ResolversTypes['UserAvatar']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['EmailAddress'], ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -1730,7 +1731,6 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   permissionsAssignedToUser?: Resolver<Array<Maybe<ResolversTypes['UserPermission']>>, ParentType, ContextType>;
   permissionsCreatedByUser?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
   phoneNumber?: Resolver<Maybe<ResolversTypes['PhoneNumber']>, ParentType, ContextType>;
-  picture?: Resolver<Maybe<ResolversTypes['UserAvatar']>, ParentType, ContextType>;
   rolePermissionsAssignedByUser?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType>;
   roles?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   rolesAssignedByUser?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType>;

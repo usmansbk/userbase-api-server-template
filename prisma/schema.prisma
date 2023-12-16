@@ -93,7 +93,7 @@ model User {
   passwordUpdatedAt             DateTime?
   blockedIps                    Json             @default("{}")
   status                        UserStatus       @default(Staged)
-  picture                       UserAvatar?
+  avatar                        UserAvatar?
   rolesCreatedByUser            Role[]           @relation("CreatedRole")
   permissionsCreatedByUser      Permission[]     @relation("CreatedPermission")
   rolesAssignedToUser           UserRole[]       @relation("RoleAssignee")
@@ -156,4 +156,20 @@ model RolePermission {
   assignorId   String?
 
   @@unique([roleId, permissionId])
+}
+
+enum ApplicationType {
+  SPA
+  Machine
+  Native
+  RegularWebApplication
+}
+
+model Application {
+  id          String           @default(cuid())
+  name        String           @unique
+  description String
+  type        ApplicationType?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime?        @updatedAt
 }

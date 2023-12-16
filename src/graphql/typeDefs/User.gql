@@ -69,7 +69,7 @@ type User {
   isPhoneNumberVerified: Boolean!
   isMe: Boolean!
   socialPictureUrl: URL
-  picture: UserAvatar
+  avatar: UserAvatar
   createdAt: DateTime!
   updatedAt: DateTime
   passwordUpdatedAt: DateTime

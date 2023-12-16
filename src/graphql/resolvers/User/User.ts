@@ -17,7 +17,7 @@ export default {
         })
         .sessions();
     },
-    async picture(user: User, _args: never, context: AppContext) {
+    async avatar(user: User, _args: never, context: AppContext) {
       const { prismaClient } = context;
 
       return await prismaClient.user
@@ -26,7 +26,7 @@ export default {
             id: user.id,
           },
         })
-        .picture();
+        .avatar();
     },
     async roles(user: User, _args: never, context: AppContext) {
       const { prismaClient } = context;
