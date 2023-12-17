@@ -270,7 +270,13 @@
     "deleteRolePermissions": {
       "errors": {
         "message": "Failed to delete role permissions.",
-        "message_P2025": "Role permission does exists."
+        "message_P2025": "Role permission does not exists."
+      }
+    },
+    "deleteUserAvatars": {
+      "errors": {
+        "message": "Failed to delete user avatars.",
+        "message_P2025": "User avatar does not exists."
       }
     }
   }
