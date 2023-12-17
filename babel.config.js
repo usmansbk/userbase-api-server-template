@@ -12,6 +12,7 @@ module.exports = {
           "^@/(.+)": "./src/\\1",
           "^test/(.+)": "./test/\\1",
           "^assets/(.+)": "./assets/\\1",
+          "^types/(.+)": "./types/\\1",
         },
       },
     ],

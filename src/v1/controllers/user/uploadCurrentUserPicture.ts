@@ -11,7 +11,11 @@ import {
 import getImageUrl from "@/utils/getImageUrl";
 import QueryError from "@/utils/errors/QueryError";
 
-const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
+const uploadCurrentUserPicture = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const upload = uploader({
     supportedMimeTypes: SUPPORTED_IMAGE_TYPES,
     folder: "avatars",
@@ -147,4 +151,4 @@ const uploadPicture = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-export default uploadPicture;
+export default uploadCurrentUserPicture;

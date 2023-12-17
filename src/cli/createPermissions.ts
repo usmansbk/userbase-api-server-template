@@ -6,7 +6,9 @@ const permissions: string[] = [
   "ReadUser",
   "UpdateUser",
   "DeleteUser",
+  "CreateUserAvatar",
   "ReadUserAvatar",
+  "UpdateUserAvatar",
   "DeleteUserAvatar",
   "SendVerificationEmail",
   "SendPhoneNumberVerificationSMS",
@@ -33,6 +35,7 @@ const permissions: string[] = [
   "ReadApplication",
   "UpdateApplication",
   "DeleteApplication",
+  "RotateSecurityKeys",
 ];
 
 export default async function createPermissions() {
