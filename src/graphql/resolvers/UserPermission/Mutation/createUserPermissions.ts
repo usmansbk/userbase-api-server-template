@@ -1,28 +1,28 @@
-import type { MutationCreateRolePermissionsArgs } from "types/graphql";
+import type { MutationCreateUserPermissionsArgs } from "types/graphql";
 import type { AppContext } from "types";
-import type { RolePermission } from "@prisma/client";
+import type { UserPermission } from "@prisma/client";
 
 export default {
   Mutation: {
-    async createRolePermissions(
+    async createUserPermissions(
       _parent: unknown,
-      { inputs }: MutationCreateRolePermissionsArgs,
+      { inputs }: MutationCreateUserPermissionsArgs,
       context: AppContext,
-    ): Promise<RolePermission[]> {
+    ): Promise<UserPermission[]> {
       const { prismaClient, currentUser } = context;
 
       return await prismaClient.$transaction(
-        inputs.map(({ roleId, permissionId }) =>
-          prismaClient.rolePermission.create({
+        inputs.map(({ userId, permissionId }) =>
+          prismaClient.userPermission.create({
             data: {
-              role: {
-                connect: {
-                  id: roleId,
-                },
-              },
               permission: {
                 connect: {
                   id: permissionId,
+                },
+              },
+              assignee: {
+                connect: {
+                  id: userId,
                 },
               },
               assignor: {

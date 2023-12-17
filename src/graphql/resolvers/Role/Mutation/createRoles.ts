@@ -9,7 +9,7 @@ export default {
       { inputs }: MutationCreateRolesArgs,
       context: AppContext,
     ): Promise<Role[]> {
-      const { prismaClient } = context;
+      const { prismaClient, currentUser } = context;
 
       return await prismaClient.$transaction(
         inputs.map(({ name, description }) =>
@@ -17,6 +17,11 @@ export default {
             data: {
               name,
               description,
+              creator: {
+                connect: {
+                  id: currentUser!.id,
+                },
+              },
             },
           }),
         ),
