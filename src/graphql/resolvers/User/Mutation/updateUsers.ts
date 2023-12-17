@@ -85,7 +85,9 @@ export default {
                 }),
               ),
             password: z
-              .string()
+              .string(
+                t("mutation.registerWithEmail.errors.fields.password.required"),
+              )
               .trim()
               .min(
                 PASSWORD_MIN_LENGTH,
