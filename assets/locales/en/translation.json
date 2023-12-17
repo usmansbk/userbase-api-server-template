@@ -49,9 +49,6 @@
       "errors": {
         "notFound": "Application not found."
       }
-    },
-    "sendVerificationEmailToUsers": {
-      "message": "Verification emails sent."
     }
   },
   "mutation": {
@@ -167,6 +164,36 @@
     },
     "requestSMSLoginOTP": {
       "message": "We've sent an OTP to {{phoneNumber}}."
+    },
+    "sendVerificationEmailToUsers": {
+      "message": "Verification email sent.",
+      "errors": {
+        "message": "Failed to send verification email."
+      }
+    },
+    "sendPhoneNumberVerificationSMSToUsers": {
+      "message": "Verification code sent.",
+      "errors": {
+        "message": "Failed to send verification SMS."
+      }
+    },
+    "sendPasswordResetEmailsToUsers": {
+      "message": "Password reset email sent.",
+      "errors": {
+        "message": "Failed to send password reset email."
+      }
+    },
+    "sendEmailLoginOTPToUsers": {
+      "message": "Email login OTP sent.",
+      "errors": {
+        "message": "Failed to send email OTP."
+      }
+    },
+    "sendSMSLoginOTPToUsers": {
+      "message": "SMS login OTP sent.",
+      "errors": {
+        "message": "Failed to send SMS OTP."
+      }
     }
   }
 }

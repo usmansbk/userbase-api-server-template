@@ -59,7 +59,7 @@ export default {
 
       return {
         success: true,
-        message: t("query.sendVerificationEmailToUsers.message"),
+        message: t("mutation.sendVerificationEmailToUsers.message"),
       };
     },
   },
