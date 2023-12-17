@@ -30,6 +30,7 @@ export default {
               context: e.code as unknown,
               count: inputs.length,
             }),
+            { originalError: e },
           );
         }
         throw e;

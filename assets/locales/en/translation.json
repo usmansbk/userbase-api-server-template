@@ -278,6 +278,18 @@
         "message": "Failed to delete user avatars.",
         "message_P2025": "User avatar does not exists."
       }
+    },
+    "createUserPermissions": {
+      "errors": {
+        "message": "Failed to create user permissions.",
+        "message_P2002": "User permission already exists."
+      }
+    },
+    "deleteUserPermissions": {
+      "errors": {
+        "message": "Failed to delete user permissions.",
+        "message_P2025": "User permission does not exists."
+      }
     }
   }
 }
