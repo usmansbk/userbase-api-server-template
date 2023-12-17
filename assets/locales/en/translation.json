@@ -236,6 +236,12 @@
         "message": "Failed to delete permissions.",
         "message_P2025": "Permission does not exists."
       }
+    },
+    "deleteFiles": {
+      "errors": {
+        "message": "Failed to delete files.",
+        "message_P2025": "File does not exists."
+      }
     }
   }
 }
