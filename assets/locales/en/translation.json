@@ -49,6 +49,9 @@
       "errors": {
         "notFound": "Application not found."
       }
+    },
+    "sendVerificationEmailToUsers": {
+      "message": "Verification emails sent."
     }
   },
   "mutation": {
