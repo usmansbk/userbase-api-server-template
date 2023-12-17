@@ -165,6 +165,24 @@
     "requestSMSLoginOTP": {
       "message": "We've sent an OTP to {{phoneNumber}}."
     },
+    "createUsers": {
+      "errors": {
+        "message": "Failed to create users.",
+        "message_P2002": "User already exists."
+      }
+    },
+    "updateUsers": {
+      "errors": {
+        "message": "Failed to update users.",
+        "message_P2002": "User already exists."
+      }
+    },
+    "deleteUsers": {
+      "errors": {
+        "message": "Failed to delete users.",
+        "message_P2025": "User does not exists."
+      }
+    },
     "sendVerificationEmailToUsers": {
       "message": "Verification email sent.",
       "errors": {

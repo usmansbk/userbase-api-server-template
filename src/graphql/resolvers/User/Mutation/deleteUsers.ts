@@ -1,6 +1,8 @@
 import type { User } from "@prisma/client";
 import type { MutationDeleteUsersArgs } from "types/graphql";
 import type { AppContext } from "types";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Mutation: {
@@ -9,17 +11,30 @@ export default {
       { inputs }: MutationDeleteUsersArgs,
       context: AppContext,
     ): Promise<User[]> {
-      const { prismaClient } = context;
+      const { prismaClient, t } = context;
 
-      return await prismaClient.$transaction(
-        inputs.map(({ id }) =>
-          prismaClient.user.delete({
-            where: {
-              id,
-            },
-          }),
-        ),
-      );
+      try {
+        return await prismaClient.$transaction(
+          inputs.map(({ id }) =>
+            prismaClient.user.delete({
+              where: {
+                id,
+              },
+            }),
+          ),
+        );
+      } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError) {
+          throw new QueryError(
+            t("mutation.deleteUsers.errors.message", {
+              context: e.code as unknown,
+              count: inputs.length,
+            }),
+            { originalError: e },
+          );
+        }
+        throw e;
+      }
     },
   },
 };

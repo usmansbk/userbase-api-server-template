@@ -2,6 +2,8 @@ import { nanoid } from "nanoid";
 import { UserStatus, type User } from "@prisma/client";
 import type { MutationCreateUsersArgs } from "types/graphql";
 import type { AppContext } from "types";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Mutation: {
@@ -10,19 +12,32 @@ export default {
       { inputs }: MutationCreateUsersArgs,
       context: AppContext,
     ): Promise<User[]> {
-      const { prismaClient } = context;
+      const { prismaClient, t } = context;
 
-      return await prismaClient.$transaction(
-        inputs.map(({ password, status, ...data }) =>
-          prismaClient.user.create({
-            data: {
-              ...data,
-              password: password ?? nanoid(),
-              status: status ?? UserStatus.Provisioned,
-            },
-          }),
-        ),
-      );
+      try {
+        return await prismaClient.$transaction(
+          inputs.map(({ password, status, ...data }) =>
+            prismaClient.user.create({
+              data: {
+                ...data,
+                password: password ?? nanoid(),
+                status: status ?? UserStatus.Provisioned,
+              },
+            }),
+          ),
+        );
+      } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError) {
+          throw new QueryError(
+            t("mutation.createUsers.errors.message", {
+              context: e.code as unknown,
+              count: inputs.length,
+            }),
+            { originalError: e },
+          );
+        }
+        throw e;
+      }
     },
   },
 };
