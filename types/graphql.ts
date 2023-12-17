@@ -535,7 +535,7 @@ export type MutationSendVerificationEmailToUsersArgs = {
 
 
 export type MutationUnblockUserIPsArgs = {
-  input?: InputMaybe<UnblockUserIPsInput>;
+  input: UnblockUserIPsInput;
 };
 
 
@@ -1578,7 +1578,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendPhoneNumberVerificationSMSToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendPhoneNumberVerificationSmsToUsersArgs, 'inputs'>>;
   sendSMSLoginOTPToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendSmsLoginOtpToUsersArgs, 'inputs'>>;
   sendVerificationEmailToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendVerificationEmailToUsersArgs, 'inputs'>>;
-  unblockUserIPs?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, Partial<MutationUnblockUserIPsArgs>>;
+  unblockUserIPs?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUnblockUserIPsArgs, 'input'>>;
   updateApplication?: Resolver<ResolversTypes['Application'], ParentType, ContextType, RequireFields<MutationUpdateApplicationArgs, 'input'>>;
   updateCurrentUserBasicInfo?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserBasicInfoArgs, 'input'>>;
   updateCurrentUserPhoneNumber?: Resolver<ResolversTypes['UserResponse'], ParentType, ContextType, RequireFields<MutationUpdateCurrentUserPhoneNumberArgs, 'input'>>;

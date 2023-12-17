@@ -194,6 +194,12 @@
       "errors": {
         "message": "Failed to send SMS OTP."
       }
+    },
+    "unblockUserIPs": {
+      "message": "You've unblocked ips.",
+      "errors": {
+        "message": "Failed to unblock ips."
+      }
     }
   }
 }

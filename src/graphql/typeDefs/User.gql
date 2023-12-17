@@ -235,7 +235,7 @@ type Mutation {
       ]
     )
 
-  unblockUserIPs(input: UnblockUserIPsInput): UserResponse!
+  unblockUserIPs(input: UnblockUserIPsInput!): UserResponse!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
