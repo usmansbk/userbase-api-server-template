@@ -6,7 +6,7 @@ import type {
   User,
   UserResponse,
 } from "types/graphql";
-import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from "@/constants/limits";
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/constants/limits";
 
 export default {
   Mutation: {
@@ -27,44 +27,44 @@ export default {
                 ),
               })
               .min(
-                MIN_NAME_LENGTH,
+                NAME_MIN_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.min", {
-                  count: MIN_NAME_LENGTH,
+                  count: NAME_MIN_LENGTH,
                 }),
               )
               .max(
-                MAX_NAME_LENGTH,
+                NAME_MAX_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.max", {
-                  count: MAX_NAME_LENGTH,
+                  count: NAME_MAX_LENGTH,
                 }),
               ),
             lastName: z
               .string()
               .min(
-                MIN_NAME_LENGTH,
+                NAME_MIN_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.min", {
-                  count: MIN_NAME_LENGTH,
+                  count: NAME_MIN_LENGTH,
                 }),
               )
               .max(
-                MAX_NAME_LENGTH,
+                NAME_MAX_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.max", {
-                  count: MAX_NAME_LENGTH,
+                  count: NAME_MAX_LENGTH,
                 }),
               )
               .optional(),
             surname: z
               .string()
               .min(
-                MIN_NAME_LENGTH,
+                NAME_MIN_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.min", {
-                  count: MIN_NAME_LENGTH,
+                  count: NAME_MIN_LENGTH,
                 }),
               )
               .max(
-                MAX_NAME_LENGTH,
+                NAME_MAX_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.max", {
-                  count: MAX_NAME_LENGTH,
+                  count: NAME_MAX_LENGTH,
                 }),
               )
               .optional(),

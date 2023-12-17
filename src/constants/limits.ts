@@ -30,12 +30,25 @@ export const PASSWORD_RESET_TOKEN_EXPIRES_IN: DurationType = [5, "minutes"];
 export const DELETE_ACCOUNT_TOKEN_EXPIRES_IN: DurationType = [5, "minutes"];
 export const PHONE_NUMBER_OTP_EXPIRES_IN: DurationType = [8, "minutes"];
 
-export const MIN_PASSWORD_LENGTH = 10;
-export const MAX_PASSWORD_LENGTH = 32;
-export const MIN_NAME_LENGTH = 2;
-export const MAX_NAME_LENGTH = 30;
-
 export const OTP_LENGTH = 6;
 
 // List
 export const DEFAULT_LIST_SIZE = 25;
+
+// Application
+export const APPLICATION_NAME_MAX_LENGTH = 50;
+export const APPLICATION_DESCRIPTION_MAX_LENGTH = 200;
+
+// User
+export const PASSWORD_MIN_LENGTH = 10;
+export const PASSWORD_MAX_LENGTH = 32;
+export const NAME_MIN_LENGTH = 2;
+export const NAME_MAX_LENGTH = 30;
+
+// Role
+export const ROLE_NAME_MAX_LENGTH = 50;
+export const ROLE_DESCRIPTION_MAX_LENGTH = 200;
+
+// Permission
+export const PERMISSION_NAME_MAX_LENGTH = 50;
+export const PERMISSION_DESCRIPTION_MAX_LENGTH = 200;

@@ -9,7 +9,7 @@ import {
   WELCOME_TEMPLATE,
 } from "@/constants/templates";
 import { PASSWORD_RESET_PREFIX } from "@/constants/cachePrefixes";
-import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from "@/constants/limits";
+import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "@/constants/limits";
 import type {
   MutationResetUserPasswordArgs,
   MutationResponse,
@@ -30,15 +30,15 @@ export default {
           .string()
           .trim()
           .min(
-            MIN_PASSWORD_LENGTH,
+            PASSWORD_MIN_LENGTH,
             t("mutation.registerWithEmail.errors.fields.password.min", {
-              count: MIN_PASSWORD_LENGTH,
+              count: PASSWORD_MIN_LENGTH,
             }),
           )
           .max(
-            MAX_PASSWORD_LENGTH,
+            PASSWORD_MAX_LENGTH,
             t("mutation.registerWithEmail.errors.fields.password.max", {
-              count: MAX_PASSWORD_LENGTH,
+              count: PASSWORD_MAX_LENGTH,
             }),
           )
           .parse(input.password);
