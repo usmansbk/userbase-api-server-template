@@ -260,6 +260,18 @@
         "message": "Failed to delete roles.",
         "message_P2025": "Role does not exists."
       }
+    },
+    "createRolePermissions": {
+      "errors": {
+        "message": "Failed to create role permissions.",
+        "message_P2025": "Role permission already exists."
+      }
+    },
+    "deleteRolePermissions": {
+      "errors": {
+        "message": "Failed to delete role permissions.",
+        "message_P2025": "Role permission does exists."
+      }
     }
   }
 }

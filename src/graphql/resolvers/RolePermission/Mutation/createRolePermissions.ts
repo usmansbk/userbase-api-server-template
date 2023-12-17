@@ -1,6 +1,8 @@
 import type { MutationCreateRolePermissionsArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { RolePermission } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Mutation: {
@@ -9,31 +11,43 @@ export default {
       { inputs }: MutationCreateRolePermissionsArgs,
       context: AppContext,
     ): Promise<RolePermission[]> {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
-      return await prismaClient.$transaction(
-        inputs.map(({ roleId, permissionId }) =>
-          prismaClient.rolePermission.create({
-            data: {
-              role: {
-                connect: {
-                  id: roleId,
+      try {
+        return await prismaClient.$transaction(
+          inputs.map(({ roleId, permissionId }) =>
+            prismaClient.rolePermission.create({
+              data: {
+                role: {
+                  connect: {
+                    id: roleId,
+                  },
+                },
+                permission: {
+                  connect: {
+                    id: permissionId,
+                  },
+                },
+                assignor: {
+                  connect: {
+                    id: currentUser!.id,
+                  },
                 },
               },
-              permission: {
-                connect: {
-                  id: permissionId,
-                },
-              },
-              assignor: {
-                connect: {
-                  id: currentUser!.id,
-                },
-              },
-            },
-          }),
-        ),
-      );
+            }),
+          ),
+        );
+      } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError) {
+          throw new QueryError(
+            t("mutation.createRolePermissions.errors.message", {
+              context: e.code as unknown,
+            }),
+            { originalError: e },
+          );
+        }
+        throw e;
+      }
     },
   },
 };
