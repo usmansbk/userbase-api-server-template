@@ -200,6 +200,12 @@
       "errors": {
         "message": "Failed to unblock ips."
       }
+    },
+    "createPermissions": {
+      "errors": {
+        "message": "Failed to create permissions.",
+        "message_P2002": "Permission already exists."
+      }
     }
   }
 }

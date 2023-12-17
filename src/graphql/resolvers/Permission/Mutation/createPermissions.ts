@@ -1,6 +1,8 @@
 import type { MutationCreatePermissionsArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { Permission } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Mutation: {
@@ -9,23 +11,37 @@ export default {
       { inputs }: MutationCreatePermissionsArgs,
       context: AppContext,
     ): Promise<Permission[]> {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
-      return await prismaClient.$transaction(
-        inputs.map(({ name, description }) =>
-          prismaClient.permission.create({
-            data: {
-              name,
-              description,
-              creator: {
-                connect: {
-                  id: currentUser!.id,
+      try {
+        return await prismaClient.$transaction(
+          inputs.map(({ name, description }) =>
+            prismaClient.permission.create({
+              data: {
+                name,
+                description,
+                creator: {
+                  connect: {
+                    id: currentUser!.id,
+                  },
                 },
               },
+            }),
+          ),
+        );
+      } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError) {
+          throw new QueryError(
+            t("mutation.createPermissions.errors.message", {
+              context: e.code as unknown,
+            }),
+            {
+              originalError: e,
             },
-          }),
-        ),
-      );
+          );
+        }
+        throw e;
+      }
     },
   },
 };
