@@ -24,7 +24,7 @@ export default {
         context;
 
       try {
-        const { email, language, phoneNumber } = input;
+        const { email } = input;
 
         const form = z.object({
           email: z
@@ -102,9 +102,18 @@ export default {
                 count: PASSWORD_MAX_LENGTH,
               }),
             ),
+          phoneNumber: z.string().optional(),
+          language: z.string().optional(),
         });
 
-        const { password, firstName, lastName, surname } = form.parse(input);
+        const {
+          password,
+          firstName,
+          lastName,
+          surname,
+          phoneNumber,
+          language,
+        } = form.parse(input);
 
         let user = await prismaClient.user.findFirst({
           where: {
