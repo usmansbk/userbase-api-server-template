@@ -1,6 +1,8 @@
 import type { MutationUpdateApplicationArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { Application } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Mutation: {
@@ -9,15 +11,28 @@ export default {
       { input }: MutationUpdateApplicationArgs,
       context: AppContext,
     ): Promise<Application> {
-      const { prismaClient } = context;
+      const { prismaClient, t } = context;
       const { id, ...data } = input;
 
-      return await prismaClient.application.update({
-        where: {
-          id,
-        },
-        data,
-      });
+      try {
+        return await prismaClient.application.update({
+          where: {
+            id,
+          },
+          data,
+        });
+      } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError) {
+          throw new QueryError(
+            t("mutation.updateApplication.errors.message", {
+              context: e.code as unknown,
+            }),
+            { originalError: e },
+          );
+        }
+
+        throw e;
+      }
     },
   },
 };

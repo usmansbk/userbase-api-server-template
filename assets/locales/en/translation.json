@@ -201,9 +201,27 @@
         "message": "Failed to unblock ips."
       }
     },
+    "createApplication": {
+      "errors": {
+        "message": "Failed to create application.",
+        "message_P2002": "Application already exists."
+      }
+    },
+    "updateApplication": {
+      "errors": {
+        "message": "Failed to update application.",
+        "message_P2002": "Application already exists."
+      }
+    },
     "createPermissions": {
       "errors": {
         "message": "Failed to create permissions.",
+        "message_P2002": "Permission already exists."
+      }
+    },
+    "updatePermissions": {
+      "errors": {
+        "message": "Failed to update permissions.",
         "message_P2002": "Permission already exists."
       }
     }
