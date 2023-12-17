@@ -34,6 +34,7 @@ export default {
           throw new QueryError(
             t("mutation.createRoles.errors.message", {
               context: e.code as unknown,
+              count: inputs.length,
             }),
             { originalError: e },
           );

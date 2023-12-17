@@ -27,6 +27,7 @@ export default {
           throw new QueryError(
             t("mutation.deletePermissions.errors.message", {
               context: e.code as unknown,
+              count: inputs.length,
             }),
             { originalError: e },
           );

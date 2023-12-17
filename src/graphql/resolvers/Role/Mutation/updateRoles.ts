@@ -32,6 +32,7 @@ export default {
           throw new QueryError(
             t("mutation.updateRoles.errors.message", {
               context: e.code as unknown,
+              count: inputs.length,
             }),
             { originalError: e },
           );
