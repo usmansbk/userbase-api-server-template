@@ -3,11 +3,12 @@ import type { AppContext } from "types";
 import type { Application } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import QueryError from "@/utils/errors/QueryError";
-import { z } from "zod";
+import { ZodError, z } from "zod";
 import {
   APPLICATION_DESCRIPTION_MAX_LENGTH,
   APPLICATION_NAME_MAX_LENGTH,
 } from "@/constants/limits";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {
@@ -21,10 +22,20 @@ export default {
       try {
         const data = z
           .object({
-            name: z.string().max(APPLICATION_NAME_MAX_LENGTH),
+            name: z.string().max(
+              APPLICATION_NAME_MAX_LENGTH,
+              t("mutation.createApplication.errors.fields.name.max", {
+                count: APPLICATION_NAME_MAX_LENGTH,
+              }),
+            ),
             description: z
               .string()
-              .max(APPLICATION_DESCRIPTION_MAX_LENGTH)
+              .max(
+                APPLICATION_DESCRIPTION_MAX_LENGTH,
+                t("mutation.createApplication.errors.fields.description.max", {
+                  count: APPLICATION_DESCRIPTION_MAX_LENGTH,
+                }),
+              )
               .optional(),
           })
           .parse(input);
@@ -40,6 +51,23 @@ export default {
               meta: e.meta,
             }),
             { originalError: e },
+          );
+        }
+
+        if (e instanceof ZodError) {
+          const fieldErrors = Object.entries(e.formErrors.fieldErrors).map(
+            ([name, messages]) => ({
+              name,
+              messages,
+            }),
+          );
+
+          throw new ValidationError(
+            t("mutation.createApplication.errors.message"),
+            {
+              originalError: e,
+              fieldErrors,
+            },
           );
         }
         throw e;

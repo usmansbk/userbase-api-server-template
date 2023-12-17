@@ -222,7 +222,15 @@
     "createApplication": {
       "errors": {
         "message": "Failed to create application.",
-        "message_P2002": "Application already exists."
+        "message_P2002": "Application already exists.",
+        "fields": {
+          "name": {
+            "max": "Name must not be longer than {{count}} characters."
+          },
+          "description": {
+            "max": "Description must not be longer than {{count}} characters."
+          }
+        }
       }
     },
     "updateApplication": {
