@@ -2,10 +2,10 @@ import { ZodError, z } from "zod";
 import { UserStatus } from "@prisma/client";
 import ValidationError from "@/utils/errors/ValidationError";
 import {
-  NAME_MAX_LENGTH,
-  PASSWORD_MAX_LENGTH,
-  NAME_MIN_LENGTH,
-  PASSWORD_MIN_LENGTH,
+  USER_NAME_MAX_LENGTH,
+  USER_PASSWORD_MAX_LENGTH,
+  USER_NAME_MIN_LENGTH,
+  USER_PASSWORD_MIN_LENGTH,
 } from "@/constants/limits";
 import type { AppContext } from "types";
 import type {
@@ -44,30 +44,30 @@ export default {
             .string()
             .trim()
             .min(
-              NAME_MIN_LENGTH,
+              USER_NAME_MIN_LENGTH,
               t("mutation.registerWithEmail.errors.fields.name.min", {
-                count: NAME_MIN_LENGTH,
+                count: USER_NAME_MIN_LENGTH,
               }),
             )
             .max(
-              NAME_MAX_LENGTH,
+              USER_NAME_MAX_LENGTH,
               t("mutation.registerWithEmail.errors.fields.name.max", {
-                count: NAME_MAX_LENGTH,
+                count: USER_NAME_MAX_LENGTH,
               }),
             ),
           lastName: z
             .string()
             .trim()
             .min(
-              NAME_MIN_LENGTH,
+              USER_NAME_MIN_LENGTH,
               t("mutation.registerWithEmail.errors.fields.name.min", {
-                count: NAME_MIN_LENGTH,
+                count: USER_NAME_MIN_LENGTH,
               }),
             )
             .max(
-              NAME_MAX_LENGTH,
+              USER_NAME_MAX_LENGTH,
               t("mutation.registerWithEmail.errors.fields.name.max", {
-                count: NAME_MAX_LENGTH,
+                count: USER_NAME_MAX_LENGTH,
               }),
             )
             .optional(),
@@ -75,15 +75,15 @@ export default {
             .string()
             .trim()
             .min(
-              NAME_MIN_LENGTH,
+              USER_NAME_MIN_LENGTH,
               t("mutation.registerWithEmail.errors.fields.name.min", {
-                count: NAME_MIN_LENGTH,
+                count: USER_NAME_MIN_LENGTH,
               }),
             )
             .max(
-              NAME_MAX_LENGTH,
+              USER_NAME_MAX_LENGTH,
               t("mutation.registerWithEmail.errors.fields.name.max", {
-                count: NAME_MAX_LENGTH,
+                count: USER_NAME_MAX_LENGTH,
               }),
             )
             .optional(),
@@ -93,15 +93,15 @@ export default {
             )
             .trim()
             .min(
-              PASSWORD_MIN_LENGTH,
+              USER_PASSWORD_MIN_LENGTH,
               t("mutation.registerWithEmail.errors.fields.password.min", {
-                count: PASSWORD_MIN_LENGTH,
+                count: USER_PASSWORD_MIN_LENGTH,
               }),
             )
             .max(
-              PASSWORD_MAX_LENGTH,
+              USER_PASSWORD_MAX_LENGTH,
               t("mutation.registerWithEmail.errors.fields.password.max", {
-                count: PASSWORD_MAX_LENGTH,
+                count: USER_PASSWORD_MAX_LENGTH,
               }),
             ),
           phoneNumber: z.string().optional(),

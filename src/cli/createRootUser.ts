@@ -5,7 +5,10 @@ import "@/config/env";
 import prismaClient from "@/config/database";
 import logger from "@/utils/logger";
 import { UserStatus } from "@prisma/client";
-import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from "@/constants/limits";
+import {
+  USER_PASSWORD_MAX_LENGTH,
+  USER_PASSWORD_MIN_LENGTH,
+} from "@/constants/limits";
 
 export default async function createRootUser() {
   try {
@@ -87,7 +90,7 @@ export default async function createRootUser() {
         .parse(emailInput);
 
       const newPasswordInput = await password({
-        message: `Password (${PASSWORD_MIN_LENGTH} - ${PASSWORD_MAX_LENGTH} characters long):`,
+        message: `Password (${USER_PASSWORD_MIN_LENGTH} - ${USER_PASSWORD_MAX_LENGTH} characters long):`,
       });
 
       const newPassword = z
@@ -96,12 +99,12 @@ export default async function createRootUser() {
         })
         .trim()
         .min(
-          PASSWORD_MIN_LENGTH,
-          `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+          USER_PASSWORD_MIN_LENGTH,
+          `Password must be at least ${USER_PASSWORD_MIN_LENGTH} characters`,
         )
         .max(
-          PASSWORD_MAX_LENGTH,
-          `Password must not be longer than ${PASSWORD_MAX_LENGTH} characters`,
+          USER_PASSWORD_MAX_LENGTH,
+          `Password must not be longer than ${USER_PASSWORD_MAX_LENGTH} characters`,
         )
         .parse(newPasswordInput);
 

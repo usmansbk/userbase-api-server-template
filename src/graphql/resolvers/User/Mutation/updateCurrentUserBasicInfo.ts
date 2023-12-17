@@ -6,7 +6,7 @@ import type {
   User,
   UserResponse,
 } from "types/graphql";
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/constants/limits";
+import { USER_NAME_MAX_LENGTH, USER_NAME_MIN_LENGTH } from "@/constants/limits";
 
 export default {
   Mutation: {
@@ -27,44 +27,44 @@ export default {
                 ),
               })
               .min(
-                NAME_MIN_LENGTH,
+                USER_NAME_MIN_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.min", {
-                  count: NAME_MIN_LENGTH,
+                  count: USER_NAME_MIN_LENGTH,
                 }),
               )
               .max(
-                NAME_MAX_LENGTH,
+                USER_NAME_MAX_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.max", {
-                  count: NAME_MAX_LENGTH,
+                  count: USER_NAME_MAX_LENGTH,
                 }),
               ),
             lastName: z
               .string()
               .min(
-                NAME_MIN_LENGTH,
+                USER_NAME_MIN_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.min", {
-                  count: NAME_MIN_LENGTH,
+                  count: USER_NAME_MIN_LENGTH,
                 }),
               )
               .max(
-                NAME_MAX_LENGTH,
+                USER_NAME_MAX_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.max", {
-                  count: NAME_MAX_LENGTH,
+                  count: USER_NAME_MAX_LENGTH,
                 }),
               )
               .optional(),
             surname: z
               .string()
               .min(
-                NAME_MIN_LENGTH,
+                USER_NAME_MIN_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.min", {
-                  count: NAME_MIN_LENGTH,
+                  count: USER_NAME_MIN_LENGTH,
                 }),
               )
               .max(
-                NAME_MAX_LENGTH,
+                USER_NAME_MAX_LENGTH,
                 t("mutation.registerWithEmail.errors.fields.name.max", {
-                  count: NAME_MAX_LENGTH,
+                  count: USER_NAME_MAX_LENGTH,
                 }),
               )
               .optional(),

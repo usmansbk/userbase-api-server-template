@@ -40,10 +40,10 @@ export const APPLICATION_NAME_MAX_LENGTH = 50;
 export const APPLICATION_DESCRIPTION_MAX_LENGTH = 200;
 
 // User
-export const PASSWORD_MIN_LENGTH = 10;
-export const PASSWORD_MAX_LENGTH = 32;
-export const NAME_MIN_LENGTH = 2;
-export const NAME_MAX_LENGTH = 30;
+export const USER_PASSWORD_MIN_LENGTH = 10;
+export const USER_PASSWORD_MAX_LENGTH = 32;
+export const USER_NAME_MIN_LENGTH = 2;
+export const USER_NAME_MAX_LENGTH = 30;
 
 // Role
 export const ROLE_NAME_MAX_LENGTH = 50;
