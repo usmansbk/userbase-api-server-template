@@ -1,18 +1,18 @@
 import type {
-  MutationSendPhoneNumberVerificationSmsToUsersArgs,
+  MutationSendSmsLoginOtpToUsersArgs,
   MutationResponse,
 } from "types/graphql";
 import type { AppContext } from "types";
 import getOTP from "@/utils/getOTP";
-import { VERIFY_PHONE_NUMBER_PREFIX } from "@/constants/cachePrefixes";
-import { PHONE_NUMBER_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import { PHONE_NUMBER_LOGIN_OTP_PREFIX } from "@/constants/cachePrefixes";
+import { PHONE_NUMBER_OTP_EXPIRES_IN } from "@/constants/limits";
 import dayjs from "@/utils/dayjs";
 
 export default {
   Mutation: {
-    async sendPhoneNumberVerificationSMSToUsers(
+    async sendSMSLoginOTPToUsers(
       _parent: unknown,
-      { inputs }: MutationSendPhoneNumberVerificationSmsToUsersArgs,
+      { inputs }: MutationSendSmsLoginOtpToUsersArgs,
       context: AppContext,
     ): Promise<MutationResponse> {
       const { prismaClient, smsClient, redisClient, t } = context;
@@ -22,36 +22,31 @@ export default {
           phoneNumber: {
             in: inputs.map((input) => input.phoneNumber),
           },
-          isPhoneNumberVerified: {
-            not: true,
-          },
         },
       });
 
       users.forEach((user) => {
         (async () => {
           const phoneNumber = user.phoneNumber!;
-          const token = getOTP();
-          const cacheKey = `${VERIFY_PHONE_NUMBER_PREFIX}:${phoneNumber}`;
+          const otp = getOTP();
 
+          const cacheKey = `${PHONE_NUMBER_LOGIN_OTP_PREFIX}:${phoneNumber}`;
           await redisClient.setex(
             cacheKey,
-            dayjs
-              .duration(...PHONE_NUMBER_VERIFICATION_TOKEN_EXPIRES_IN)
-              .asSeconds(),
-            token,
+            dayjs.duration(...PHONE_NUMBER_OTP_EXPIRES_IN).asSeconds(),
+            otp,
           );
 
           smsClient.sendMessage({
             phoneNumber,
-            text: token,
+            text: otp,
           });
         })();
       });
 
       return {
         success: true,
-        message: t("mutation.sendPhoneNumberVerificationSMSToUsers.message"),
+        message: t("mutation.sendEmailLoginOTPToUsers.message"),
       };
     },
   },

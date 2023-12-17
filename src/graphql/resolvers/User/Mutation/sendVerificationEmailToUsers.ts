@@ -23,6 +23,9 @@ export default {
           email: {
             in: inputs.map((input) => input.email),
           },
+          isEmailVerified: {
+            not: true,
+          },
         },
       });
 
