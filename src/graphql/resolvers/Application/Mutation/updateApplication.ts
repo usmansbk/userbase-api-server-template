@@ -3,8 +3,12 @@ import type { AppContext } from "types";
 import type { Application } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import QueryError from "@/utils/errors/QueryError";
-import { ZodError } from "zod";
+import { ZodError, z } from "zod";
 import ValidationError from "@/utils/errors/ValidationError";
+import {
+  APPLICATION_DESCRIPTION_MAX_LENGTH,
+  APPLICATION_NAME_MAX_LENGTH,
+} from "@/constants/limits";
 
 export default {
   Mutation: {
@@ -14,9 +18,32 @@ export default {
       context: AppContext,
     ): Promise<Application> {
       const { prismaClient, t } = context;
-      const { id, ...data } = input;
+      const { id } = input;
 
       try {
+        const data = z
+          .object({
+            name: z
+              .string()
+              .max(
+                APPLICATION_NAME_MAX_LENGTH,
+                t("mutation.createApplication.errors.fields.name.max", {
+                  count: APPLICATION_NAME_MAX_LENGTH,
+                }),
+              )
+              .optional(),
+            description: z
+              .string()
+              .max(
+                APPLICATION_DESCRIPTION_MAX_LENGTH,
+                t("mutation.createApplication.errors.fields.description.max", {
+                  count: APPLICATION_DESCRIPTION_MAX_LENGTH,
+                }),
+              )
+              .optional(),
+          })
+          .parse(input);
+
         return await prismaClient.application.update({
           where: {
             id,
