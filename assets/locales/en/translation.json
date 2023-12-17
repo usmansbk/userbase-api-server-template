@@ -240,13 +240,13 @@
     "createPermissions": {
       "errors": {
         "message": "Failed to create permissions.",
-        "message_P2002": "Permission already exists."
+        "message_P2002": "Permission with {{meta.target}} already exists."
       }
     },
     "updatePermissions": {
       "errors": {
         "message": "Failed to update permissions.",
-        "message_P2002": "Permission already exists."
+        "message_P2002": "Permission with {{meta.target}} already exists."
       }
     },
     "deletePermissions": {
