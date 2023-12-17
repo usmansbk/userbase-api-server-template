@@ -302,6 +302,11 @@
         "message": "Failed to remove user roles.",
         "message_P2002": "User role does not exists."
       }
+    },
+    "deleteUserSessions": {
+      "errors": {
+        "message": "Failed to delete user sessions."
+      }
     }
   }
 }
