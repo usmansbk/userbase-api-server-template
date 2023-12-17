@@ -264,7 +264,7 @@
     "createRolePermissions": {
       "errors": {
         "message": "Failed to add role permissions.",
-        "message_P2025": "Role permission already added."
+        "message_P2002": "Role permission already added."
       }
     },
     "deleteRolePermissions": {
@@ -300,12 +300,13 @@
     "deleteUserRoles": {
       "errors": {
         "message": "Failed to remove user roles.",
-        "message_P2002": "User role does not exists."
+        "message_P2025": "User role does not exists."
       }
     },
     "deleteUserSessions": {
       "errors": {
-        "message": "Failed to delete user sessions."
+        "message": "Failed to delete user sessions.",
+        "message_P2025": "User session does not exists."
       }
     }
   }
