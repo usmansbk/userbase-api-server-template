@@ -33,6 +33,7 @@ export default {
             t("mutation.updateUsers.errors.message", {
               context: e.code as unknown,
               count: inputs.length,
+              meta: e.meta,
             }),
           );
         }

@@ -32,6 +32,7 @@ export default {
             t("mutation.deleteFiles.errors.message", {
               context: e.code as unknown,
               count: inputs.length,
+              meta: e.meta,
             }),
             { originalError: e },
           );

@@ -33,6 +33,7 @@ export default {
             t("mutation.updateRoles.errors.message", {
               context: e.code as unknown,
               count: inputs.length,
+              meta: e.meta,
             }),
             { originalError: e },
           );

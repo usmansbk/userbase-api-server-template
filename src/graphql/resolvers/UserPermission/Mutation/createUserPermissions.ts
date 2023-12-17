@@ -43,6 +43,7 @@ export default {
             t("mutation.createUserPermissions.errors.message", {
               context: e.code as unknown,
               count: inputs.length,
+              meta: e.meta,
             }),
             { originalError: e },
           );

@@ -28,6 +28,7 @@ export default {
             t("mutation.deletePermissions.errors.message", {
               context: e.code as unknown,
               count: inputs.length,
+              meta: e.meta,
             }),
             { originalError: e },
           );

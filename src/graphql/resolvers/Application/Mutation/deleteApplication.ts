@@ -25,6 +25,7 @@ export default {
           throw new QueryError(
             t("mutation.deleteApplication.errors.message", {
               context: e.code as unknown,
+              meta: e.meta,
             }),
             { originalError: e },
           );
