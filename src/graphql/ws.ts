@@ -43,9 +43,10 @@ export default function useWebSocketServer(
 
           jwtClient.setAudience(clientId);
 
-          const authorization = ctx.connectionParams?.authorization as
+          const authorization = ctx.connectionParams?.Authorization as
             | string
             | undefined;
+
           if (!(authorization && authorization.startsWith("Bearer"))) {
             return false;
           }
@@ -62,7 +63,7 @@ export default function useWebSocketServer(
           let currentUser: CurrentUser | undefined | null;
           const { t } = i18next;
 
-          const authorization = ctx.connectionParams?.authorization as
+          const authorization = ctx.connectionParams?.Authorization as
             | string
             | undefined;
 

@@ -244,6 +244,11 @@ type Mutation {
     )
 }
 
+type Subscription {
+  userBasicInfoUpdated(id: ID!): User
+  ping: String
+}
+
 type UsersList {
   items: [User]!
 }

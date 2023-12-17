@@ -1,0 +1,1 @@
+export const USER_UPDATED_TOPIC = "USER_UPDATED";

@@ -7,6 +7,7 @@ import type {
   UserResponse,
 } from "types/graphql";
 import { USER_NAME_MAX_LENGTH, USER_NAME_MIN_LENGTH } from "@/constants/limits";
+import { USER_UPDATED_TOPIC } from "@/constants/subscriptions";
 
 export default {
   Mutation: {
@@ -15,7 +16,7 @@ export default {
       { input }: MutationUpdateCurrentUserBasicInfoArgs,
       context: AppContext,
     ): Promise<UserResponse> {
-      const { prismaClient, currentUser, t } = context;
+      const { prismaClient, currentUser, t, pubsub } = context;
 
       try {
         const { firstName, lastName, surname } = z
@@ -82,6 +83,8 @@ export default {
             language: input.language,
           },
         });
+
+        pubsub.publish(USER_UPDATED_TOPIC, user);
 
         return {
           success: true,

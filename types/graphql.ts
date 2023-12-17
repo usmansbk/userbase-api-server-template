@@ -827,6 +827,17 @@ export type SessionsList = {
   items: Array<Maybe<UserSession>>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  ping?: Maybe<Scalars['String']['output']>;
+  userBasicInfoUpdated?: Maybe<User>;
+};
+
+
+export type SubscriptionUserBasicInfoUpdatedArgs = {
+  id: Scalars['ID']['input'];
+};
+
 export type UnblockUserIPsInput = {
   id: Scalars['ID']['input'];
   ips: Array<Scalars['IP']['input']>;
@@ -1171,6 +1182,7 @@ export type ResolversTypes = ResolversObject<{
   SendVerificationEmailInput: SendVerificationEmailInput;
   SessionsList: ResolverTypeWrapper<SessionsList>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Subscription: ResolverTypeWrapper<{}>;
   Time: ResolverTypeWrapper<Scalars['Time']['output']>;
   TimeZone: ResolverTypeWrapper<Scalars['TimeZone']['output']>;
   Timestamp: ResolverTypeWrapper<Scalars['Timestamp']['output']>;
@@ -1314,6 +1326,7 @@ export type ResolversParentTypes = ResolversObject<{
   SendVerificationEmailInput: SendVerificationEmailInput;
   SessionsList: SessionsList;
   String: Scalars['String']['output'];
+  Subscription: {};
   Time: Scalars['Time']['output'];
   TimeZone: Scalars['TimeZone']['output'];
   Timestamp: Scalars['Timestamp']['output'];
@@ -1760,6 +1773,11 @@ export type SessionsListResolvers<ContextType = any, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
+  ping?: SubscriptionResolver<Maybe<ResolversTypes['String']>, "ping", ParentType, ContextType>;
+  userBasicInfoUpdated?: SubscriptionResolver<Maybe<ResolversTypes['User']>, "userBasicInfoUpdated", ParentType, ContextType, RequireFields<SubscriptionUserBasicInfoUpdatedArgs, 'id'>>;
+}>;
+
 export interface TimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Time'], any> {
   name: 'Time';
 }
@@ -1968,6 +1986,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   SafeInt?: GraphQLScalarType;
   SemVer?: GraphQLScalarType;
   SessionsList?: SessionsListResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   Time?: GraphQLScalarType;
   TimeZone?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
