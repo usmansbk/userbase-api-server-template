@@ -38,6 +38,11 @@ export default {
         (payload: User, variables: SubscriptionUserBasicInfoUpdatedArgs) =>
           payload.id === variables.id,
       ),
+      /**
+       * By default subscription resolver expects payload to be in the
+       * shape of { userBasicInfoUpdated: User }. So override it because
+       * we always make our payloads the mutated objects.
+       */
       resolve: (payload: User) => payload,
     },
   },
