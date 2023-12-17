@@ -14,5 +14,6 @@
   "FILE_SIZE_EXCEEDED": "File exceed {{size}}.",
   "FILE_LIMIT_EXCEEDED": "Can only upload {{count}} file",
   "FILE_LIMIT_EXCEEDED_other": "Can only upload {{count}} files",
-  "UNSUPPORTED_FILE_TYPE": "Unsupported file type."
+  "UNSUPPORTED_FILE_TYPE": "Unsupported file type.",
+  "AUTH_STRATEGY_NOT_IMPLEMENTED": "Auth strategy not implemented."
 }

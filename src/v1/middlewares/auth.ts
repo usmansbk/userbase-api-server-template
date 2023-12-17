@@ -1,7 +1,8 @@
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
+import QueryError from "@/utils/errors/QueryError";
 import type { NextFunction, Request, Response } from "express";
-import type { AuthRule } from "types/graphql";
+import { AuthStrategy, type AuthRule } from "types/graphql";
 
 const authMiddleware =
   (rules?: AuthRule[]) => (req: Request, res: Response, next: NextFunction) => {
@@ -20,16 +21,23 @@ const authMiddleware =
     } else if (!currentUser.roles.includes("Root") && rules) {
       const checks = rules.map(({ allow, roles, permissions, status }) => {
         switch (allow) {
-          case "roles": {
+          case AuthStrategy.Roles: {
             return roles?.some((role) => currentUser.roles.includes(role!));
           }
-          case "permissions": {
+          case AuthStrategy.Permissions: {
             return permissions?.some((permission) =>
               currentUser.permissions.includes(permission!),
             );
           }
-          case "status": {
+          case AuthStrategy.Status: {
             return status?.includes(currentUser.status);
+          }
+          case AuthStrategy.Owner: {
+            throw new QueryError(
+              t("AUTH_STRATEGY_NOT_IMPLEMENTED", {
+                ns: "error",
+              }),
+            );
           }
           default: {
             return false;
