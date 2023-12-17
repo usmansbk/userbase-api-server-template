@@ -3,6 +3,8 @@ import type { MutationUpdateUsersArgs } from "types/graphql";
 import type { AppContext } from "types";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import QueryError from "@/utils/errors/QueryError";
+import { ZodError } from "zod";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {
@@ -36,6 +38,20 @@ export default {
               meta: e.meta,
             }),
           );
+        }
+
+        if (e instanceof ZodError) {
+          const fieldErrors = Object.entries(e.formErrors.fieldErrors).map(
+            ([name, messages]) => ({
+              name,
+              messages,
+            }),
+          );
+
+          throw new ValidationError(t("mutation.updateUsers.errors.message"), {
+            originalError: e,
+            fieldErrors,
+          });
         }
         throw e;
       }

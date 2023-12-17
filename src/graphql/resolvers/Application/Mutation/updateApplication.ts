@@ -3,6 +3,8 @@ import type { AppContext } from "types";
 import type { Application } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import QueryError from "@/utils/errors/QueryError";
+import { ZodError } from "zod";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {
@@ -29,6 +31,23 @@ export default {
               meta: e.meta,
             }),
             { originalError: e },
+          );
+        }
+
+        if (e instanceof ZodError) {
+          const fieldErrors = Object.entries(e.formErrors.fieldErrors).map(
+            ([name, messages]) => ({
+              name,
+              messages,
+            }),
+          );
+
+          throw new ValidationError(
+            t("mutation.updateApplication.errors.message"),
+            {
+              originalError: e,
+              fieldErrors,
+            },
           );
         }
 
