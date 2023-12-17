@@ -213,6 +213,12 @@
         "message_P2002": "Application already exists."
       }
     },
+    "deleteApplication": {
+      "errors": {
+        "message": "Failed to delete application.",
+        "message_P2025": "Application does not exists."
+      }
+    },
     "createPermissions": {
       "errors": {
         "message": "Failed to create permissions.",
@@ -223,6 +229,12 @@
       "errors": {
         "message": "Failed to update permissions.",
         "message_P2002": "Permission already exists."
+      }
+    },
+    "deletePermissions": {
+      "errors": {
+        "message": "Failed to delete permissions.",
+        "message_P2025": "Permission does not exists."
       }
     }
   }

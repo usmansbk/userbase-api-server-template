@@ -10,7 +10,7 @@ export default {
       { inputs }: MutationDeletePermissionsArgs,
       context: AppContext,
     ): Promise<Permission[]> {
-      const { prismaClient } = context;
+      const { prismaClient, t } = context;
 
       try {
         return await prismaClient.$transaction(
@@ -24,7 +24,12 @@ export default {
         );
       } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
-          throw new QueryError(e.message);
+          throw new QueryError(
+            t("mutation.deletePermissions.errors.message", {
+              context: e.code as unknown,
+            }),
+            { originalError: e },
+          );
         }
         throw e;
       }
