@@ -33,7 +33,6 @@ export default {
         );
       } catch (e) {
         if (e instanceof PrismaClientKnownRequestError) {
-          console.log(e.meta);
           throw new QueryError(
             t("mutation.createPermissions.errors.message", {
               context: e.code as unknown,
