@@ -173,6 +173,7 @@ export type CreateUserInput = {
   lastName?: InputMaybe<Scalars['NonEmptyString']['input']>;
   password?: InputMaybe<Scalars['NonEmptyString']['input']>;
   phoneNumber?: InputMaybe<Scalars['PhoneNumber']['input']>;
+  status?: InputMaybe<AccountStatus>;
   surname?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
@@ -868,6 +869,7 @@ export type UpdateUserInput = {
   lastName?: InputMaybe<Scalars['NonEmptyString']['input']>;
   password?: InputMaybe<Scalars['NonEmptyString']['input']>;
   phoneNumber?: InputMaybe<Scalars['PhoneNumber']['input']>;
+  status?: InputMaybe<AccountStatus>;
   surname?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
