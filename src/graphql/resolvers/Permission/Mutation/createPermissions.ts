@@ -3,8 +3,12 @@ import type { AppContext } from "types";
 import type { Permission } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import QueryError from "@/utils/errors/QueryError";
-import { ZodError } from "zod";
+import { ZodError, z } from "zod";
 import ValidationError from "@/utils/errors/ValidationError";
+import {
+  PERMISSION_DESCRIPTION_MAX_LENGTH,
+  PERMISSION_NAME_MAX_LENGTH,
+} from "@/constants/limits";
 
 export default {
   Mutation: {
@@ -16,8 +20,28 @@ export default {
       const { prismaClient, currentUser, t } = context;
 
       try {
+        const inputSchema = z.object({
+          name: z.string().max(
+            PERMISSION_NAME_MAX_LENGTH,
+            t("mutation.createPermissions.errors.fields.name.max", {
+              count: PERMISSION_NAME_MAX_LENGTH,
+            }),
+          ),
+          description: z
+            .string()
+            .max(
+              PERMISSION_NAME_MAX_LENGTH,
+              t("mutation.createPermissions.errors.fields.description.max", {
+                count: PERMISSION_DESCRIPTION_MAX_LENGTH,
+              }),
+            )
+            .optional(),
+        });
+
+        const data = z.array(inputSchema).parse(inputs);
+
         return await prismaClient.$transaction(
-          inputs.map(({ name, description }) =>
+          data.map(({ name, description }) =>
             prismaClient.permission.create({
               data: {
                 name,

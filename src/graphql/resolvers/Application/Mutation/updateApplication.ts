@@ -23,25 +23,20 @@ export default {
       try {
         const data = z
           .object({
-            name: z
-              .string()
-              .max(
-                APPLICATION_NAME_MAX_LENGTH,
-                t("mutation.createApplication.errors.fields.name.max", {
-                  count: APPLICATION_NAME_MAX_LENGTH,
-                }),
-              )
-              .optional(),
-            description: z
-              .string()
-              .max(
-                APPLICATION_DESCRIPTION_MAX_LENGTH,
-                t("mutation.createApplication.errors.fields.description.max", {
-                  count: APPLICATION_DESCRIPTION_MAX_LENGTH,
-                }),
-              )
-              .optional(),
+            name: z.string().max(
+              APPLICATION_NAME_MAX_LENGTH,
+              t("mutation.createApplication.errors.fields.name.max", {
+                count: APPLICATION_NAME_MAX_LENGTH,
+              }),
+            ),
+            description: z.string().max(
+              APPLICATION_DESCRIPTION_MAX_LENGTH,
+              t("mutation.createApplication.errors.fields.description.max", {
+                count: APPLICATION_DESCRIPTION_MAX_LENGTH,
+              }),
+            ),
           })
+          .partial()
           .parse(input);
 
         return await prismaClient.application.update({

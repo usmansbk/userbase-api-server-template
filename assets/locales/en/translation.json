@@ -248,7 +248,15 @@
     "createPermissions": {
       "errors": {
         "message": "Failed to create permissions.",
-        "message_P2002": "Permission with {{meta.target}} already exists."
+        "message_P2002": "Permission with {{meta.target}} already exists.",
+        "fields": {
+          "name": {
+            "max": "Name must not be longer than {{count}} characters."
+          },
+          "description": {
+            "max": "Description must not be longer than {{count}} characters."
+          }
+        }
       }
     },
     "updatePermissions": {
@@ -272,7 +280,15 @@
     "createRoles": {
       "errors": {
         "message": "Failed to create roles.",
-        "message_P2002": "Role already exists."
+        "message_P2002": "Role already exists.",
+        "fields": {
+          "name": {
+            "max": "Name must not be longer than {{count}} characters."
+          },
+          "description": {
+            "max": "Description must not be longer than {{count}} characters."
+          }
+        }
       }
     },
     "updateRoles": {
