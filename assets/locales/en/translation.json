@@ -177,7 +177,7 @@
         "message": "Failed to send verification SMS."
       }
     },
-    "sendPasswordResetEmailsToUsers": {
+    "sendPasswordResetEmailToUsers": {
       "message": "Password reset email sent.",
       "errors": {
         "message": "Failed to send password reset email."
