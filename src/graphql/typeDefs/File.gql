@@ -28,7 +28,7 @@ type Query {
 }
 
 type Mutation {
-  deleteFiles(inputs: [DeleteFileInput!]!): [File]!
+  deleteFiles(inputs: [DeleteFileInput!]!): File!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
@@ -42,5 +42,6 @@ type FilesList {
 }
 
 input DeleteFileInput {
-  id: ID!
+  key: ID!
+  bucket: ID!
 }

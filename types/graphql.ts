@@ -196,7 +196,8 @@ export type DeleteApplicationInput = {
 };
 
 export type DeleteFileInput = {
-  id: Scalars['ID']['input'];
+  bucket: Scalars['ID']['input'];
+  key: Scalars['ID']['input'];
 };
 
 export type DeletePermissionInput = {
@@ -309,7 +310,7 @@ export type Mutation = {
   createUserRoles: Array<Maybe<UserRole>>;
   createUsers: Array<Maybe<User>>;
   deleteApplication: Application;
-  deleteFiles: Array<Maybe<File>>;
+  deleteFiles: File;
   deletePermissions: Array<Maybe<Permission>>;
   deleteRolePermissions: Array<Maybe<RolePermission>>;
   deleteRoles: Array<Maybe<Role>>;
@@ -1544,7 +1545,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createUserRoles?: Resolver<Array<Maybe<ResolversTypes['UserRole']>>, ParentType, ContextType, RequireFields<MutationCreateUserRolesArgs, 'inputs'>>;
   createUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'inputs'>>;
   deleteApplication?: Resolver<ResolversTypes['Application'], ParentType, ContextType, RequireFields<MutationDeleteApplicationArgs, 'input'>>;
-  deleteFiles?: Resolver<Array<Maybe<ResolversTypes['File']>>, ParentType, ContextType, RequireFields<MutationDeleteFilesArgs, 'inputs'>>;
+  deleteFiles?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationDeleteFilesArgs, 'inputs'>>;
   deletePermissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType, RequireFields<MutationDeletePermissionsArgs, 'inputs'>>;
   deleteRolePermissions?: Resolver<Array<Maybe<ResolversTypes['RolePermission']>>, ParentType, ContextType, RequireFields<MutationDeleteRolePermissionsArgs, 'inputs'>>;
   deleteRoles?: Resolver<Array<Maybe<ResolversTypes['Role']>>, ParentType, ContextType, RequireFields<MutationDeleteRolesArgs, 'inputs'>>;
