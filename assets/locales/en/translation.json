@@ -263,13 +263,13 @@
     },
     "createRolePermissions": {
       "errors": {
-        "message": "Failed to create role permissions.",
-        "message_P2025": "Role permission already exists."
+        "message": "Failed to add role permissions.",
+        "message_P2025": "Role permission already added."
       }
     },
     "deleteRolePermissions": {
       "errors": {
-        "message": "Failed to delete role permissions.",
+        "message": "Failed to remove role permissions.",
         "message_P2025": "Role permission does not exists."
       }
     },
@@ -281,14 +281,26 @@
     },
     "createUserPermissions": {
       "errors": {
-        "message": "Failed to create user permissions.",
-        "message_P2002": "User permission already exists."
+        "message": "Failed to add user permissions.",
+        "message_P2002": "User permission already added."
       }
     },
     "deleteUserPermissions": {
       "errors": {
-        "message": "Failed to delete user permissions.",
+        "message": "Failed to remove user permissions.",
         "message_P2025": "User permission does not exists."
+      }
+    },
+    "createUserRoles": {
+      "errors": {
+        "message": "Failed to add user roles.",
+        "message_P2002": "User role already added."
+      }
+    },
+    "deleteUserRoles": {
+      "errors": {
+        "message": "Failed to remove user roles.",
+        "message_P2002": "User role does not exists."
       }
     }
   }
