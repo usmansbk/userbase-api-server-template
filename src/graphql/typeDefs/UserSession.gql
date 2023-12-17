@@ -12,6 +12,7 @@ type UserSession
   clientIp: IP!
   createdAt: DateTime!
   userAgent: String
+  user: User!
 }
 
 type Query {

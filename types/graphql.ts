@@ -959,6 +959,7 @@ export type UserSession = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   jti: Scalars['ID']['output'];
+  user: User;
   userAgent?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1876,6 +1877,7 @@ export type UserSessionResolvers<ContextType = any, ParentType extends Resolvers
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   jti?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   userAgent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
