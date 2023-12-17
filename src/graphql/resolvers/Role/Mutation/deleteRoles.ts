@@ -1,6 +1,8 @@
 import type { MutationDeleteRolesArgs } from "types/graphql";
 import type { AppContext } from "types";
 import type { Role } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Mutation: {
@@ -9,17 +11,29 @@ export default {
       { inputs }: MutationDeleteRolesArgs,
       context: AppContext,
     ): Promise<Role[]> {
-      const { prismaClient } = context;
+      const { prismaClient, t } = context;
 
-      return await prismaClient.$transaction(
-        inputs.map(({ id }) =>
-          prismaClient.role.delete({
-            where: {
-              id,
-            },
-          }),
-        ),
-      );
+      try {
+        return await prismaClient.$transaction(
+          inputs.map(({ id }) =>
+            prismaClient.role.delete({
+              where: {
+                id,
+              },
+            }),
+          ),
+        );
+      } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError) {
+          throw new QueryError(
+            t("mutation.deleteRoles.errors.message", {
+              context: e.code as unknown,
+            }),
+            { originalError: e },
+          );
+        }
+        throw e;
+      }
     },
   },
 };

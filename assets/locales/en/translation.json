@@ -242,6 +242,24 @@
         "message": "Failed to delete files.",
         "message_P2025": "File does not exists."
       }
+    },
+    "createRoles": {
+      "errors": {
+        "message": "Failed to create roles.",
+        "message_P2002": "Role already exists."
+      }
+    },
+    "updateRoles": {
+      "errors": {
+        "message": "Failed to update roles.",
+        "message_P2002": "Role already exists."
+      }
+    },
+    "deleteRoles": {
+      "errors": {
+        "message": "Failed to delete roles.",
+        "message_P2025": "Role does not exists."
+      }
     }
   }
 }
