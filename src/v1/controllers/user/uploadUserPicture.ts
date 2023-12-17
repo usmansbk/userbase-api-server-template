@@ -20,10 +20,14 @@ const uploadUserPicture = (req: Request, res: Response, next: NextFunction) => {
 
   upload(req, res, (err) => {
     const {
-      context: { t, prismaClient, currentUser },
+      context: { t, prismaClient },
       file,
       files,
+      params,
     } = req;
+
+    const { id } = params as { id: string };
+
     (async () => {
       if (err instanceof MulterError) {
         let errorMessage: string | undefined = err.message;
@@ -61,7 +65,7 @@ const uploadUserPicture = (req: Request, res: Response, next: NextFunction) => {
         const oldPicture = await prismaClient.user
           .findUnique({
             where: {
-              id: currentUser!.id,
+              id,
             },
           })
           .avatar();
@@ -77,7 +81,7 @@ const uploadUserPicture = (req: Request, res: Response, next: NextFunction) => {
 
         const user = await prismaClient.user.update({
           where: {
-            id: currentUser!.id,
+            id,
           },
           data: {
             avatar: {
