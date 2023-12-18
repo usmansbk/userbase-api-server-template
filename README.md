@@ -22,7 +22,7 @@ User management system api server base template
 - [x] Update user profile
 - [x] User profile picture
 - [x] Brute-Force login protection
-- [ ] User Management
+- [x] User Management
 
 ## Prerequisites
 
@@ -97,6 +97,21 @@ yarn test
 ```sh
 yarn sh
 yarn db:migrate
+```
+
+## Create Default Application, Owner, Admin Role, & Rquired Permissions
+
+In development
+
+```sh
+yarn sh
+yarn init:dev
+```
+
+In production
+
+```sh
+yarn init:app
 ```
 
 ## Development
