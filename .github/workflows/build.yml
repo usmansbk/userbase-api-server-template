@@ -20,9 +20,6 @@ jobs:
         run: yarn
       - name: Run tests
         run: yarn test
-        env:
-          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -32,6 +29,9 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build and push
         uses: docker/build-push-action@v3
+        env:
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
           context: .
           file: ./Dockerfile
