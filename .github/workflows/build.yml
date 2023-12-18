@@ -8,11 +8,6 @@ on:
 
 jobs:
   test_and_build:
-    env:
-      DOTENV_ME: ${{ secrets.DOTENV_ME }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
-      TEST: "HELLO"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,3 +34,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository }}:${{ github.ref_name }}
+          secrets: |
+            "DOTENV_ME=${{ secrets.DOTENV_ME }}"
+            "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+            "DOTENV_KEY=${{ secrets.DOTENV_KEY }}"
+            TEST=HELLO
