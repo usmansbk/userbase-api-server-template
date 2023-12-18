@@ -21,6 +21,7 @@ User management system api server base template
 - [x] Delete user account
 - [x] Update user profile
 - [x] User profile picture
+- [x] WebSocket via GraphQL Subscriptions
 - [x] Brute-Force login protection
 - [x] User Management
 
