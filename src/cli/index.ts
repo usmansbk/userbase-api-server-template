@@ -6,20 +6,25 @@ import createOwner from "./createOwner";
 import generateSecurityKeys from "./generateSecurityKeys";
 
 async function init() {
-  consola.info("Initializing project");
+  try {
+    consola.info("Initializing project");
 
-  await createOwner();
+    await createOwner();
 
-  await createApplication();
+    const app = await createApplication();
 
-  await createAdmin();
+    await createAdmin();
 
-  await createPermissions();
+    await createPermissions();
 
-  await generateSecurityKeys();
+    await generateSecurityKeys();
 
-  consola.box("Project is ready!");
-  consola.success("Done!");
+    consola.box(`Client ID: ${app.clientId}`);
+
+    consola.success("Done!");
+  } catch (e) {
+    consola.error(e);
+  }
 }
 
 init();

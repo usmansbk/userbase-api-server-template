@@ -6,24 +6,22 @@ const defaultApplication = {
 };
 
 export default async function createApplication() {
-  try {
-    consola.start("Creating default application...");
+  consola.start("Creating default application...");
 
-    let defaultApp = await prismaClient.application.findFirst({
-      where: {
+  let defaultApp = await prismaClient.application.findFirst({
+    where: {
+      name: defaultApplication.name,
+    },
+  });
+
+  if (!defaultApp) {
+    defaultApp = await prismaClient.application.create({
+      data: {
         name: defaultApplication.name,
       },
     });
-
-    if (!defaultApp) {
-      defaultApp = await prismaClient.application.create({
-        data: {
-          name: defaultApplication.name,
-        },
-      });
-    }
-    consola.success(`${defaultApp.name} created!`);
-  } catch (error) {
-    consola.error(error);
   }
+  consola.success(`${defaultApp.name} created!`);
+
+  return defaultApp;
 }

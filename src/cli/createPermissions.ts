@@ -168,32 +168,27 @@ const permissions: Array<{ name: string; description: string }> = [
 ];
 
 export default async function createPermissions() {
-  try {
-    consola.start(`Creating (${permissions.length}) permissions...`);
+  consola.start(`Creating (${permissions.length}) permissions...`);
 
-    await Promise.all(
-      permissions.map(async ({ name, description }) => {
-        let permission = await prismaClient.permission.findFirst({
-          where: {
+  await Promise.all(
+    permissions.map(async ({ name, description }) => {
+      let permission = await prismaClient.permission.findFirst({
+        where: {
+          name,
+        },
+      });
+
+      if (!permission) {
+        permission = await prismaClient.permission.create({
+          data: {
             name,
+            description,
           },
         });
-
-        if (!permission) {
-          permission = await prismaClient.permission.create({
-            data: {
-              name,
-              description,
-            },
-          });
-        }
-
         consola.success(name);
-      }),
-    );
+      }
+    }),
+  );
 
-    consola.success("Permissions created!");
-  } catch (error) {
-    consola.error(error);
-  }
+  consola.success("Permissions created!");
 }

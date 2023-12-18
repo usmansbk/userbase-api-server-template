@@ -1,6 +1,6 @@
 import consola from "consola";
 import prismaClient from "@/config/database";
-import { input, password } from "@inquirer/prompts";
+import { input, password, confirm } from "@inquirer/prompts";
 import { z } from "zod";
 import {
   USER_NAME_MAX_LENGTH,
@@ -8,6 +8,7 @@ import {
   USER_PASSWORD_MAX_LENGTH,
   USER_PASSWORD_MIN_LENGTH,
 } from "@/constants/limits";
+import { UserStatus } from "@prisma/client";
 
 const rootRole = {
   name: "Root",
@@ -38,111 +39,115 @@ const passwordSchema = z
   );
 
 export default async function createOwner() {
-  try {
-    consola.start("Creating project owner...");
+  consola.start("Creating project owner...");
 
-    let owner = await prismaClient.user.findFirst({
-      where: {
-        rolesAssignedToUser: {
-          some: {
-            role: {
-              name: rootRole.name,
-            },
+  let owner = await prismaClient.user.findFirst({
+    where: {
+      rolesAssignedToUser: {
+        some: {
+          role: {
+            name: rootRole.name,
           },
         },
       },
+    },
+  });
+
+  if (!owner) {
+    const user = {
+      firstName: await input({
+        message: `What's your first name?`,
+        transformer(value) {
+          return value.trim();
+        },
+        validate(value: string) {
+          const result = nameSchema.safeParse(value);
+          if (!result.success) {
+            return result.error.formErrors.formErrors.join(",");
+          }
+
+          return result.success;
+        },
+      }),
+      lastName: await input({
+        message: "What's your last name (optional)?",
+        transformer(value) {
+          return value.trim();
+        },
+        validate(value: string) {
+          if (!value.length) {
+            return true;
+          }
+
+          const result = nameSchema.nullable().safeParse(value);
+          if (!result.success) {
+            return result.error.formErrors.formErrors.join(",");
+          }
+
+          return result.success;
+        },
+      }),
+      surname: await input({
+        message: "What's your surname (optional)?",
+        transformer(value) {
+          return value.trim();
+        },
+        validate(value: string) {
+          if (!value.length) {
+            return true;
+          }
+
+          const result = nameSchema.nullable().safeParse(value);
+          if (!result.success) {
+            return result.error.formErrors.formErrors.join(",");
+          }
+
+          return result.success;
+        },
+      }),
+      email: await input({
+        message: "What's your email address?",
+        transformer(value) {
+          return value.trim();
+        },
+        validate(value) {
+          const result = z.string().email().safeParse(value);
+          if (!result.success) {
+            return result.error.formErrors.formErrors.join(",");
+          }
+
+          return result.success;
+        },
+      }),
+      password: await password({
+        message: "Enter your password:",
+        validate(value) {
+          const result = passwordSchema.safeParse(value);
+
+          if (!result.success) {
+            return result.error.formErrors.formErrors.join(",");
+          }
+
+          return result.success;
+        },
+      }),
+    };
+
+    await password({
+      message: "Retype password:",
+      validate(value) {
+        if (value !== user.password) {
+          return "Password does not match!";
+        }
+        return true;
+      },
     });
 
-    if (!owner) {
-      const user = {
-        firstName: await input({
-          message: `What's your first name?`,
-          transformer(value) {
-            return value.trim();
-          },
-          validate(value: string) {
-            const result = nameSchema.safeParse(value);
-            if (!result.success) {
-              return result.error.formErrors.formErrors.join(",");
-            }
+    const confirmed = await confirm({
+      message: "Is user info correct?",
+    });
 
-            return result.success;
-          },
-        }),
-        lastName: await input({
-          message: "What's your last name (optional)?",
-          transformer(value) {
-            return value.trim();
-          },
-          validate(value: string) {
-            if (!value.length) {
-              return true;
-            }
-
-            const result = nameSchema.nullable().safeParse(value);
-            if (!result.success) {
-              return result.error.formErrors.formErrors.join(",");
-            }
-
-            return result.success;
-          },
-        }),
-        surname: await input({
-          message: "What's your surname (optional)?",
-          transformer(value) {
-            return value.trim();
-          },
-          validate(value: string) {
-            if (!value.length) {
-              return true;
-            }
-
-            const result = nameSchema.nullable().safeParse(value);
-            if (!result.success) {
-              return result.error.formErrors.formErrors.join(",");
-            }
-
-            return result.success;
-          },
-        }),
-        email: await input({
-          message: "What's your email address?",
-          transformer(value) {
-            return value.trim();
-          },
-          validate(value) {
-            const result = z.string().email().safeParse(value);
-            if (!result.success) {
-              return result.error.formErrors.formErrors.join(",");
-            }
-
-            return result.success;
-          },
-        }),
-        password: await password({
-          message: "Enter your password:",
-          validate(value) {
-            const result = passwordSchema.safeParse(value);
-
-            if (!result.success) {
-              return result.error.formErrors.formErrors.join(",");
-            }
-
-            return result.success;
-          },
-        }),
-      };
-
-      await password({
-        message: "Retype password:",
-        validate(value) {
-          if (value !== user.password) {
-            return "Password does not match!";
-          }
-          return true;
-        },
-      });
-
+    if (confirmed) {
       owner = await prismaClient.user.create({
         data: {
           firstName: user.firstName,
@@ -150,6 +155,7 @@ export default async function createOwner() {
           surname: user.surname,
           email: user.email,
           password: user.password,
+          status: UserStatus.Active,
           rolesAssignedToUser: {
             create: {
               role: {
@@ -159,10 +165,12 @@ export default async function createOwner() {
           },
         },
       });
+    } else {
+      throw new Error("Cancelled");
     }
-
-    consola.success(`Project owner is ${owner.firstName} (${owner.email})`);
-  } catch (error) {
-    consola.error(error);
   }
+
+  consola.success(`Project owner is ${owner.firstName} (${owner.email})`);
+
+  return owner;
 }

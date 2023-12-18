@@ -9,20 +9,17 @@ const data = {
 
 export default async function createAdminRole() {
   consola.start(`Creating admin role...`);
-  try {
-    let role = await prismaClient.role.findFirst({
-      where: {
-        name: data.name,
-      },
-    });
+  let role = await prismaClient.role.findFirst({
+    where: {
+      name: data.name,
+    },
+  });
 
-    if (!role) {
-      role = await prismaClient.role.create({
-        data,
-      });
-    }
-    consola.success("Admin role created!");
-  } catch (error) {
-    consola.error(error);
+  if (!role) {
+    role = await prismaClient.role.create({
+      data,
+    });
   }
+
+  consola.success("Admin role created!");
 }
