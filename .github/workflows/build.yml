@@ -37,4 +37,4 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository }}:${{ github.ref_name }}
         env:
-          DOTENV_KEY: ${{ secrets.DOTENV_ME }}
+          DOTENV_ME: ${{ secrets.DOTENV_ME }}
