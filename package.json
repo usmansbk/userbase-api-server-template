@@ -67,9 +67,8 @@
     "docker:stop": "yarn docker:down && yarn docker:clean",
     "sh": "docker exec -it api sh",
     "codegen": "graphql-codegen",
-    "keys:generate": "babel-node build/cli/generateKeyPairs",
-    "create:root": "babel-node build/cli/createRootUser",
-    "create:permissions": "babel-node build/cli/createPermissions"
+    "app:init:dev": "babel-node src/cli --extensions .ts",
+    "app:init": "babel-node build/cli"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -96,6 +95,7 @@
     "awesome-phonenumber": "^6.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
+    "consola": "^3.2.3",
     "cors": "^2.8.5",
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
