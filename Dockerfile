@@ -23,6 +23,5 @@ COPY --from=builder /app/build ./build
 COPY ./prisma ./prisma
 COPY ./assets ./assets
 COPY .env.vault ./
-RUN yarn db:deploy
 EXPOSE 4000
 CMD yarn start
