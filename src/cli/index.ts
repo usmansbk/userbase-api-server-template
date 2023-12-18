@@ -1,22 +1,22 @@
 import consola from "consola";
-import createPermissions from "./createPermissions";
-import createRoles from "./createRoles";
-import createOwner from "./createOwner";
 import createApplication from "./createApplication";
+import createAdmin from "./createAdminRole";
+import createPermissions from "./createPermissions";
+import createOwner from "./createOwner";
 import generateSecurityKeys from "./generateSecurityKeys";
 
 async function init() {
   consola.info("Initializing project");
 
-  await generateSecurityKeys();
+  await createOwner();
 
   await createApplication();
 
-  await createRoles();
+  await createAdmin();
 
   await createPermissions();
 
-  await createOwner();
+  await generateSecurityKeys();
 
   consola.box("Project is ready!");
   consola.success("Done!");

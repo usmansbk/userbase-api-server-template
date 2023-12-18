@@ -169,7 +169,7 @@ const permissions: Array<{ name: string; description: string }> = [
 
 export default async function createPermissions() {
   try {
-    consola.start(`Creating ${permissions.length} permissions...`);
+    consola.start(`Creating (${permissions.length}) permissions...`);
 
     await Promise.all(
       permissions.map(async ({ name, description }) => {
