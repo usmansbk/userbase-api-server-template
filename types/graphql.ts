@@ -337,6 +337,7 @@ export type Mutation = {
   requestUserEmailVerification: MutationResponse;
   requestUserPhoneNumberVerification: MutationResponse;
   resetUserPassword: MutationResponse;
+  rotateKeys: MutationResponse;
   sendEmailLoginOTPToUsers: MutationResponse;
   sendPasswordResetEmailToUsers: MutationResponse;
   sendPhoneNumberVerificationSMSToUsers: MutationResponse;
@@ -1587,6 +1588,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   requestUserEmailVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserEmailVerificationArgs, 'email'>>;
   requestUserPhoneNumberVerification?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationRequestUserPhoneNumberVerificationArgs, 'phoneNumber'>>;
   resetUserPassword?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationResetUserPasswordArgs, 'input'>>;
+  rotateKeys?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType>;
   sendEmailLoginOTPToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendEmailLoginOtpToUsersArgs, 'inputs'>>;
   sendPasswordResetEmailToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendPasswordResetEmailToUsersArgs, 'inputs'>>;
   sendPhoneNumberVerificationSMSToUsers?: Resolver<ResolversTypes['MutationResponse'], ParentType, ContextType, RequireFields<MutationSendPhoneNumberVerificationSmsToUsersArgs, 'inputs'>>;

@@ -350,6 +350,9 @@
         "message": "Failed to delete user sessions.",
         "message_P2025": "User session does not exists."
       }
+    },
+    "rotateKeys": {
+      "message": "You've rotated security keys."
     }
   }
 }

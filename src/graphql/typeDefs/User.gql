@@ -163,6 +163,9 @@ type Mutation {
     @auth(rules: [{ allow: status, status: [Provisioned, Active] }])
   deleteUserAccount(input: DeleteAccountInput!): MutationResponse!
 
+  rotateKeys: MutationResponse!
+    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+
   createUsers(inputs: [CreateUserInput!]!): [User]!
     @auth(
       rules: [

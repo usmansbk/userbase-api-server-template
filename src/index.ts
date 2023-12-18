@@ -13,12 +13,9 @@ import rateLimiter from "./v1/middlewares/rateLimiter";
 import v1Router from "./v1/routes";
 import errorHandler from "./v1/middlewares/errorHandler";
 import appContext from "./v1/middlewares/appContext";
-import { generateKeys } from "./utils/generateKeys";
 import { initializeSentry } from "./config/sentry";
 
 async function main() {
-  generateKeys();
-
   const app = express();
 
   await initializeI18n(app);
