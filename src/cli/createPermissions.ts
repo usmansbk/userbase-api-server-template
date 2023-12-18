@@ -4,155 +4,166 @@ import prismaClient from "@/config/database";
 const permissions: Array<{ name: string; description: string }> = [
   {
     name: "CreateApplication",
-    description: "",
+    description: "Grants permission to create a new application",
   },
   {
     name: "ReadApplication",
-    description: "",
+    description:
+      "Allows access to view details and information about existing applications.",
   },
   {
     name: "UpdateApplication",
-    description: "",
+    description: "Permits modification of application details and settings.",
   },
   {
     name: "DeleteApplication",
-    description: "",
+    description: "Enables the deletion of an existing application.",
   },
   {
     name: "CreateUser",
-    description: "",
+    description: "Authorizes the creation of a new user account.",
   },
   {
     name: "ReadUser",
-    description: "",
+    description:
+      "Provides access to view details and information about existing user accounts.",
   },
   {
     name: "UpdateUser",
-    description: "",
+    description: "Allows modification of user account details and settings.",
   },
   {
     name: "DeleteUser",
-    description: "",
+    description: "Grants permission to delete an existing user account.",
   },
   {
     name: "SendVerificationEmail",
-    description: "",
+    description: "Enables the sending of verification emails to users.",
   },
   {
     name: "SendPhoneNumberVerificationSMS",
-    description: "",
+    description: "Allows sending SMS messages for phone number verification.",
   },
   {
     name: "SendPasswordResetEmail",
-    description: "",
+    description: "Permits the sending of emails for password reset requests.",
   },
   {
     name: "SendEmailLoginOTP",
-    description: "",
+    description:
+      "Enables the sending of One-Time Passwords (OTPs) via email for login.",
   },
   {
     name: "SendSMSLoginOTP",
-    description: "",
+    description: "Allows sending One-Time Passwords (OTPs) via SMS for login.",
   },
   {
     name: "UnblockUserLoginIP",
-    description: "",
+    description: "Grants permission to unblock or whitelist a user's login IP.",
   },
   {
     name: "CreateRole",
-    description: "",
+    description: "Authorizes the creation of a new role.",
   },
   {
     name: "ReadRole",
-    description: "",
+    description:
+      "Allows access to view details and information about existing roles.",
   },
   {
     name: "UpdateRole",
-    description: "",
+    description: "Permits modification of role details and settings.",
   },
   {
     name: "DeleteRole",
-    description: "",
+    description: "Enables the deletion of an existing role.",
   },
   {
     name: "CreatePermission",
-    description: "",
+    description: "Authorizes the creation of a new permission.",
   },
   {
     name: "ReadPermission",
-    description: "",
+    description:
+      "Allows access to view details and information about existing permissions.",
   },
   {
     name: "UpdatePermission",
-    description: "",
+    description: "Permits modification of permission details and settings.",
   },
   {
     name: "DeletePermission",
-    description: "",
+    description: "Enables the deletion of an existing permission.",
   },
   {
     name: "CreateUserAvatar",
-    description: "",
+    description: "Authorizes the creation or upload of a new user avatar.",
   },
   {
     name: "ReadUserAvatar",
-    description: "",
+    description:
+      "Allows access to view details and information about user avatars.",
   },
   {
     name: "UpdateUserAvatar",
-    description: "",
+    description: "Permits modification or replacement of user avatars.",
   },
   {
     name: "DeleteUserAvatar",
-    description: "",
+    description: "Enables the deletion of an existing user avatar.",
   },
   {
     name: "ReadUserSession",
-    description: "",
+    description:
+      "Allows access to view details and information about user sessions.",
   },
   {
     name: "DeleteUserSession",
-    description: "",
+    description: "Enables the termination or deletion of user sessions.",
   },
   {
     name: "CreateFile",
-    description: "",
+    description: "Authorizes the creation or upload of new files.",
   },
   {
     name: "ReadFile",
-    description: "",
+    description:
+      "Allows access to view details and information about existing files.",
   },
   {
     name: "UpdateFile",
-    description: "",
+    description: "Permits modification or update of file details and contents.",
   },
   {
     name: "DeleteFile",
-    description: "",
+    description: "Enables the deletion of existing files.",
   },
   {
     name: "ReadRolePermission",
-    description: "",
+    description:
+      "Allows access to view details and information about role permissions.",
   },
   {
     name: "GrantRolePermission",
-    description: "",
+    description: "Permits the assignment or granting of permissions to roles.",
   },
   {
     name: "ReadUserPermission",
-    description: "",
+    description:
+      "Allows access to view details and information about user permissions.",
   },
   {
     name: "GrantUserPermission",
-    description: "",
+    description: "Permits the assignment or granting of permissions to users.",
   },
   {
     name: "ReadUserRole",
-    description: "",
+    description:
+      "Allows access to view details and information about user roles.",
   },
   {
     name: "AssignUserRole",
-    description: "",
+    description: "Permits the assignment or modification of roles for users.",
   },
 ];
 
@@ -177,7 +188,7 @@ export default async function createPermissions() {
           });
         }
 
-        consola.info(name);
+        consola.success(name);
       }),
     );
 

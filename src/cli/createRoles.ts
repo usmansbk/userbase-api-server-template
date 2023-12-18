@@ -33,7 +33,7 @@ export default async function createRoles() {
             },
           });
         }
-        consola.info(name);
+        consola.success(name);
       }),
     );
     consola.success("Roles created!");
