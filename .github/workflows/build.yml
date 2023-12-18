@@ -25,6 +25,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Load environment variables
+        run: npx dotenv-vault pull production .env --dotenvMe=${{ secrets.DOTENV_ME }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build and push
@@ -34,6 +36,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository }}:${{ github.ref_name }}
-          secrets: |
-            "DONTENV_ME=${{ secrets.DOTENV_ME }}"
-            "DATABASE_URL=${{ secrets.DATABASE_URL }}"
