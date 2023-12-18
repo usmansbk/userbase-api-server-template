@@ -99,7 +99,7 @@ yarn sh
 yarn db:migrate
 ```
 
-## Create Default Application, Owner, Admin Role, & Required Permissions
+## Create Default Application, Owner, Admin Role, & Permissions
 
 In development
 
