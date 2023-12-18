@@ -25,6 +25,16 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Pull dotenv-vault
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx dotenv-vault pull production --dotenvMe=${{ secrets.DOTENV_ME }}
+      - name: "Copy env file"
+        run: mv .env.production .env
+      - name: "Print dotenv key"
+        run: echo ${{ secrets.DOTENV_KEY }}
+      - name: "Print database url"
+        run: echo ${{ secrets.DATABASE_URL }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Build and push
@@ -34,8 +44,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.repository }}:${{ github.ref_name }}
-          secrets: |
-            "DOTENV_ME=${{ secrets.DOTENV_ME }}"
-            "DATABASE_URL=${{ secrets.DATABASE_URL }}"
-            "DOTENV_KEY=${{ secrets.DOTENV_KEY }}"
-            TEST=HELLO

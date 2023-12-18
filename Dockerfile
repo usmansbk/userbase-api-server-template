@@ -23,11 +23,6 @@ COPY --from=builder /app/build ./build
 COPY ./prisma ./prisma
 COPY ./assets ./assets
 COPY .env.vault ./
-RUN echo 'dontenvMe'
-RUN echo $DOTENV_ME
-RUN echo $TEST
-# RUN npx dotenv-vault pull production --dotenvMe=$DOTENV_ME
-# RUN mv .env.production .env
 RUN yarn db:deploy
 EXPOSE 4000
 CMD yarn start
