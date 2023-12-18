@@ -15,29 +15,28 @@ const roles = [
 ];
 
 export default async function createRoles() {
+  consola.start(`Creating ${roles.length} roles...`);
   try {
     await Promise.all(
       roles.map(async ({ name, description }) => {
-        consola.start(`Creating ${name} role...`);
-        const existingRole = await prismaClient.role.findFirst({
+        let role = await prismaClient.role.findFirst({
           where: {
             name,
           },
         });
 
-        if (existingRole) {
-          consola.success(`${name} role already exists.`);
-        } else {
-          await prismaClient.role.create({
+        if (!role) {
+          role = await prismaClient.role.create({
             data: {
               name,
               description,
             },
           });
-          consola.success(`${name} role created!`);
         }
+        consola.info(name);
       }),
     );
+    consola.success("Roles created!");
   } catch (error) {
     consola.error(error);
   }

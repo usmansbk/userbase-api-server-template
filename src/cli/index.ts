@@ -6,7 +6,7 @@ import createApplication from "./createApplication";
 import generateSecurityKeys from "./generateSecurityKeys";
 
 async function init() {
-  consola.info("Initializing API Server");
+  consola.info("Initializing project");
 
   await generateSecurityKeys();
 
@@ -18,7 +18,7 @@ async function init() {
 
   await createOwner();
 
-  consola.box("Your project is ready!");
+  consola.box("Project is ready!");
   consola.success("Done!");
 }
 

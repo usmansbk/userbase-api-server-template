@@ -1,4 +1,10 @@
-type File {
+type File
+  @auth(
+    rules: [
+      { allow: roles, roles: ["Admin"] }
+      { allow: permissions, permissions: ["ReadFile"] }
+    ]
+  ) {
   id: ID!
   name: String
   mimetype: String!

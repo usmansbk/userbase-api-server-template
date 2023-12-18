@@ -18,7 +18,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadRole"] }
+        { allow: permissions, permissions: ["ReadUserRole"] }
       ]
     )
 
@@ -26,7 +26,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadRole"] }
+        { allow: permissions, permissions: ["ReadUserRole"] }
       ]
     )
 }
@@ -36,7 +36,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["AssignRole"] }
+        { allow: permissions, permissions: ["AssignUserRole"] }
       ]
     )
 
@@ -44,7 +44,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["AssignRole"] }
+        { allow: permissions, permissions: ["AssignUserRole"] }
       ]
     )
 }

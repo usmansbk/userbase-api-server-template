@@ -80,7 +80,7 @@ type User {
       rules: [
         { allow: owner, ownerField: "id" }
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadSession"] }
+        { allow: permissions, permissions: ["ReadUserSession"] }
       ]
     )
 
@@ -242,7 +242,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["UnblockUserIP"] }
+        { allow: permissions, permissions: ["UnblockUserLoginIP"] }
       ]
     )
 }

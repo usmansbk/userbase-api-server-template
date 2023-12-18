@@ -3,7 +3,7 @@ type UserSession
     rules: [
       { allow: owner }
       { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadSession"] }
+      { allow: permissions, permissions: ["ReadUserSession"] }
     ]
   ) {
   id: ID!
@@ -20,7 +20,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadSession"] }
+        { allow: permissions, permissions: ["ReadUserSession"] }
       ]
     )
 
@@ -28,7 +28,7 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadSession"] }
+        { allow: permissions, permissions: ["ReadUserSession"] }
       ]
     )
 }
@@ -38,7 +38,7 @@ type Mutation {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteSession"] }
+        { allow: permissions, permissions: ["DeleteUserSession"] }
       ]
     )
 }
