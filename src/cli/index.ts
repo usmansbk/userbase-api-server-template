@@ -3,12 +3,12 @@ import createPermissions from "./createPermissions";
 import createRoles from "./createRoles";
 import createOwner from "./createOwner";
 import createApplication from "./createApplication";
-import createSecurityKeys from "./createSecurityKeys";
+import generateSecurityKeys from "./generateSecurityKeys";
 
 async function init() {
   consola.info("Initializing API Server");
 
-  await createSecurityKeys();
+  await generateSecurityKeys();
 
   await createApplication();
 

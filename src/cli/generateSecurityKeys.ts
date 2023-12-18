@@ -1,7 +1,7 @@
 import consola from "consola";
 import { generateKeys, isKeysExists } from "@/utils/generateKeys";
 
-export default async function createSecurityKeys() {
+export default async function generateSecurityKeys() {
   consola.start("Generating security keys...");
   const hasKeys = isKeysExists();
 
