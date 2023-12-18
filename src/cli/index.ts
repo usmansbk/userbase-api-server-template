@@ -2,10 +2,12 @@ import consola from "consola";
 import createPermissions from "./createPermissions";
 import createRoles from "./createRoles";
 import createOwner from "./createOwner";
+import createApplication from "./createApplication";
 
 async function init() {
-  consola.info("API Server");
-  consola.start("Initializing project...");
+  consola.info("Initializing API Server");
+
+  await createApplication();
 
   await createRoles();
 

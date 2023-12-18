@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import type { CurrentUser } from "types";
 import type { AccountStatus } from "types/graphql";
 
-const prismaClient = new PrismaClient();
+const client = new PrismaClient();
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -89,7 +89,7 @@ const currentUserExtension = Prisma.defineExtension({
   model: {
     user: {
       async currentUser(id: string): Promise<CurrentUser | null> {
-        const user = await prismaClient.user.findUnique({
+        const user = await client.user.findUnique({
           where: {
             id,
           },
@@ -141,12 +141,12 @@ const currentUserExtension = Prisma.defineExtension({
   },
 });
 
-const client = prismaClient
+const prismaClient = client
   .$extends(currentUserExtension)
   .$extends(comparePasswordExtension)
   .$extends(hashPasswordExtension)
   .$extends(deleteS3ObjectExtension);
 
-export type ExtendedPrismaClient = typeof client;
+export type ExtendedPrismaClient = typeof prismaClient;
 
-export default client;
+export default prismaClient;

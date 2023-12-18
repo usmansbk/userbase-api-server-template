@@ -1,9 +1,43 @@
 import consola from "consola";
+import prismaClient from "@/config/database";
+
+const roles = [
+  {
+    name: "Root",
+    description:
+      "This role has unrestricted access to the server's resources, allowing them to configure and manage the API server and perform critical administrative tasks. It's essential to exercise caution when using the root user account to prevent unintended consequences and potential security risks.",
+  },
+  {
+    name: "Admin",
+    description:
+      "Admins have access to advanced features, configuration settings, and management capabilities, allowing them to oversee and control various aspects of the API server. This role is crucial for system administration, ensuring the proper functioning, security, and maintenance of the API infrastructure.",
+  },
+];
 
 export default async function createRoles() {
   try {
-    consola.start("Creating required roles...");
-    consola.success("Roles created!");
+    await Promise.all(
+      roles.map(async ({ name, description }) => {
+        consola.start(`Creating ${name} role...`);
+        const existingRole = await prismaClient.role.findFirst({
+          where: {
+            name,
+          },
+        });
+
+        if (existingRole) {
+          consola.warn(`${name} role already exists. Skipping...`);
+        } else {
+          await prismaClient.role.create({
+            data: {
+              name,
+              description,
+            },
+          });
+          consola.success(`${name} role created!`);
+        }
+      }),
+    );
   } catch (error) {
     consola.error(error);
   }
