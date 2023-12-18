@@ -13,7 +13,7 @@ async function init() {
 
   await createOwner();
 
-  consola.box("Your app is ready!");
+  consola.box("Your project is ready!");
   consola.success("Done!");
 }
 
