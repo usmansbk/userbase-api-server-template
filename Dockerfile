@@ -25,6 +25,7 @@ COPY ./assets ./assets
 COPY .env.vault ./
 RUN echo 'dontenvMe'
 RUN echo $DOTENV_ME
+RUN echo $TEST
 # RUN npx dotenv-vault pull production --dotenvMe=$DOTENV_ME
 # RUN mv .env.production .env
 RUN yarn db:deploy

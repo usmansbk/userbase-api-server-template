@@ -33,6 +33,7 @@ jobs:
         env:
           DOTENV_ME: ${{ secrets.DOTENV_ME }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          TEST: "HELLO"
         uses: docker/build-push-action@v3
         with:
           context: .
