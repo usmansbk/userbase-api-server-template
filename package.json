@@ -67,8 +67,8 @@
     "docker:stop": "yarn docker:down && yarn docker:clean",
     "sh": "docker exec -it api sh",
     "codegen": "graphql-codegen",
-    "app:init:dev": "babel-node src/cli --extensions .ts",
-    "app:init": "babel-node build/cli"
+    "init:dev": "babel-node src/cli --extensions .ts",
+    "init:app": "babel-node build/cli"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
