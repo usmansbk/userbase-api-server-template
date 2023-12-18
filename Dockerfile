@@ -12,7 +12,7 @@ CMD yarn dev
 FROM base as builder
 RUN yarn build
 
-FROM node:16 as prod
+FROM node:18 as prod
 ENV NODE_ENV=production
 WORKDIR /app
 RUN mkdir /app/certs
