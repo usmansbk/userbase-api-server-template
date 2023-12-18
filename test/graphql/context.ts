@@ -1,20 +1,13 @@
-import { mockDeep, type DeepMockProxy } from "jest-mock-extended";
 import redisClient, { pubsub } from "@/config/redis";
 import log from "@/utils/logger";
 import jwtClient from "@/utils/jwt";
-import type { ExtendedPrismaClient } from "@/config/database";
+import prismaClient from "@/config/database";
 import type { AppContext, CurrentUser } from "types";
 import type { TFunction } from "i18next";
 
-interface MockContext extends AppContext {
-  mockPrismaClient: DeepMockProxy<ExtendedPrismaClient>;
-}
-
-const prismaClient = mockDeep<ExtendedPrismaClient>();
-
 export default async function createMockContext(
   currentUser?: CurrentUser,
-): Promise<MockContext> {
+): Promise<AppContext> {
   return {
     log,
     pubsub,
@@ -25,7 +18,6 @@ export default async function createMockContext(
     clientIp: "test",
     clientId: "test",
     userAgent: "test",
-    mockPrismaClient: prismaClient,
     prismaClient,
     t: jest
       .fn()
