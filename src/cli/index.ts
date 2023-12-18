@@ -4,7 +4,7 @@ import createRoles from "./createRoles";
 import createOwner from "./createOwner";
 
 async function init() {
-  consola.info("Userbase v1.0");
+  consola.info("API Server");
   consola.start("Initializing project...");
 
   await createRoles();
