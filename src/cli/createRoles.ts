@@ -26,7 +26,7 @@ export default async function createRoles() {
         });
 
         if (existingRole) {
-          consola.warn(`${name} role already exists. Skipping...`);
+          consola.success(`${name} role already exists.`);
         } else {
           await prismaClient.role.create({
             data: {

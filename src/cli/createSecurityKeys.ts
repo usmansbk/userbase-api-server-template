@@ -1,8 +1,21 @@
 import consola from "consola";
-import { generateKeys } from "@/utils/generateKeys";
+import { generateKeys, isKeysExists } from "@/utils/generateKeys";
 
-export default function createSecurityKeys() {
+export default async function createSecurityKeys() {
   consola.start("Generating security keys...");
-  generateKeys(true);
+  const hasKeys = isKeysExists();
+
+  if (hasKeys) {
+    const confirmed = await consola.prompt("Delete existing keys?", {
+      type: "confirm",
+    });
+
+    if (!confirmed) {
+      consola.success("Using current security keys.");
+      return;
+    }
+  }
+  generateKeys();
+
   consola.success("Security keys generated!");
 }

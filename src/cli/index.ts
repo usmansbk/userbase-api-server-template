@@ -8,7 +8,7 @@ import createSecurityKeys from "./createSecurityKeys";
 async function init() {
   consola.info("Initializing API Server");
 
-  createSecurityKeys();
+  await createSecurityKeys();
 
   await createApplication();
 

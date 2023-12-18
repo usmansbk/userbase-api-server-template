@@ -16,17 +16,15 @@ export default async function createApplication() {
     });
 
     if (defaultApp) {
-      consola.warn(`${defaultApplication.name} already exists. Skipping...`);
+      consola.success(`${defaultApplication.name} already exists.`);
     } else {
       defaultApp = await prismaClient.application.create({
         data: {
           name: defaultApplication.name,
         },
       });
-      consola.info("Application created!");
+      consola.success("Application created!");
     }
-
-    consola.success(`Your client ID is ${defaultApp.clientId}`);
   } catch (error) {
     consola.error(error);
   }
