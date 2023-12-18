@@ -1,8 +1,5 @@
 {
   "name": "userbase-api-server-template",
-  "engines": {
-    "node": ">=18"
-  },
   "version": "1.0.0",
   "description": "user managemnet api server template",
   "main": "build/index.js",
