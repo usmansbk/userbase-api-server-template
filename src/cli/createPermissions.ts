@@ -113,12 +113,12 @@ const permissions: Array<{ name: string; description: string }> = [
     description: "Enables the deletion of an existing user avatar.",
   },
   {
-    name: "ReadUserSession",
+    name: "ReadSession",
     description:
       "Allows access to view details and information about user sessions.",
   },
   {
-    name: "DeleteUserSession",
+    name: "DeleteSession",
     description: "Enables the termination or deletion of user sessions.",
   },
   {

@@ -10,7 +10,7 @@ export default {
     ): Promise<MutationResponse> {
       const { prismaClient, currentUser, t } = context;
 
-      await prismaClient.userSession.deleteMany({
+      await prismaClient.session.deleteMany({
         where: {
           id: {
             in: currentUser!.sessions.map((session) => session.id),

@@ -64,7 +64,7 @@ enum UserStatus {
   Deprovisioned
 }
 
-model UserSession {
+model Session {
   id        String   @id @default(cuid())
   jti       String   @default(cuid())
   clientId  String
@@ -101,7 +101,7 @@ model User {
   permissionsAssignedToUser     UserPermission[] @relation("PermissionAssignee")
   permissionsAssignedByUser     UserPermission[] @relation("PermissionAssignor")
   rolePermissionsAssignedByUser RolePermission[] @relation("RolePermissionAssignor")
-  sessions                      UserSession[]
+  sessions                      Session[]
 }
 
 model UserAvatar {

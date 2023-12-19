@@ -75,34 +75,77 @@ type User {
   passwordUpdatedAt: DateTime
   roles: [String]!
   status: AccountStatus
-  sessions: [UserSession]!
+  sessions: [Session]!
     @auth(
       rules: [
         { allow: owner, ownerField: "id" }
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadUserSession"] }
+        { allow: permissions, permissions: ["ReadSession"] }
       ]
     )
 
-  rolesCreatedByUser: [Role]! @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+  rolesCreatedByUser: [Role]!
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadRole"] }
+      ]
+    )
 
   permissionsCreatedByUser: [Permission]!
-    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadPermission"] }
+      ]
+    )
 
   rolesAssignedToUser: [UserRole]!
-    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUserRole"] }
+      ]
+    )
 
   rolesAssignedByUser: [UserRole]!
-    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUserRole"] }
+      ]
+    )
 
   permissionsAssignedToUser: [UserPermission]!
-    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUserPermission"] }
+      ]
+    )
 
   permissionsAssignedByUser: [UserPermission]!
-    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadUserPermission"] }
+      ]
+    )
 
   rolePermissionsAssignedByUser: [RolePermission]!
-    @auth(rules: [{ allow: roles, roles: ["Admin"] }])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "id" }
+        { allow: roles, roles: ["Admin"] }
+        { allow: permissions, permissions: ["ReadRolePermission"] }
+      ]
+    )
 }
 
 type Query {

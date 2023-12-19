@@ -345,7 +345,7 @@
         "message_P2025": "User role does not exists."
       }
     },
-    "deleteUserSessions": {
+    "deleteSessions": {
       "errors": {
         "message": "Failed to delete user sessions.",
         "message_P2025": "User session does not exists."

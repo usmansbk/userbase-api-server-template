@@ -1,9 +1,9 @@
-type UserSession
+type Session
   @auth(
     rules: [
       { allow: owner }
       { allow: roles, roles: ["Admin"] }
-      { allow: permissions, permissions: ["ReadUserSession"] }
+      { allow: permissions, permissions: ["ReadSession"] }
     ]
   ) {
   id: ID!
@@ -16,11 +16,11 @@ type UserSession
 }
 
 type Query {
-  session(id: ID!): UserSession!
+  session(id: ID!): Session!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadUserSession"] }
+        { allow: permissions, permissions: ["ReadSession"] }
       ]
     )
 
@@ -28,25 +28,25 @@ type Query {
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["ReadUserSession"] }
+        { allow: permissions, permissions: ["ReadSession"] }
       ]
     )
 }
 
 type Mutation {
-  deleteUserSessions(inputs: [DeleteUserSessionInput!]!): [UserSession]!
+  deleteSessions(inputs: [DeleteSessionInput!]!): [Session]!
     @auth(
       rules: [
         { allow: roles, roles: ["Admin"] }
-        { allow: permissions, permissions: ["DeleteUserSession"] }
+        { allow: permissions, permissions: ["DeleteSession"] }
       ]
     )
 }
 
 type SessionsList {
-  items: [UserSession]!
+  items: [Session]!
 }
 
-input DeleteUserSessionInput {
+input DeleteSessionInput {
   id: ID!
 }

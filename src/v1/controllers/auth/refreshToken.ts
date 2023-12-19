@@ -52,13 +52,13 @@ export default function refreshToken(
 
       const [oldSession] = user.sessions;
 
-      await prismaClient.userSession.delete({
+      await prismaClient.session.delete({
         where: {
           id: oldSession.id,
         },
       });
 
-      const session = await prismaClient.userSession.create({
+      const session = await prismaClient.session.create({
         data: {
           clientId,
           clientIp,

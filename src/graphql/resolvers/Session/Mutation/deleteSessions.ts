@@ -1,22 +1,22 @@
-import type { MutationDeleteUserSessionsArgs } from "types/graphql";
+import type { MutationDeleteSessionsArgs } from "types/graphql";
 import type { AppContext } from "types";
-import type { UserSession } from "@prisma/client";
+import type { Session } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Mutation: {
-    async deleteUserSessions(
+    async deleteSessions(
       _parent: unknown,
-      { inputs }: MutationDeleteUserSessionsArgs,
+      { inputs }: MutationDeleteSessionsArgs,
       context: AppContext,
-    ): Promise<UserSession[]> {
+    ): Promise<Session[]> {
       const { prismaClient, t } = context;
 
       try {
         return await prismaClient.$transaction(
           inputs.map(({ id }) =>
-            prismaClient.userSession.delete({
+            prismaClient.session.delete({
               where: {
                 id,
               },
@@ -26,7 +26,7 @@ export default {
       } catch (e) {
         if (e instanceof PrismaClientKnownRequestError) {
           throw new QueryError(
-            t("mutation.deleteUserSessions.errors.message", {
+            t("mutation.deleteSessions.errors.message", {
               context: e.code as unknown,
               count: inputs.length,
               meta: e.meta,

@@ -118,7 +118,7 @@ export default {
 
       await redisClient.del(cacheKey);
 
-      const session = await prismaClient.userSession.create({
+      const session = await prismaClient.session.create({
         data: {
           clientId,
           clientIp,

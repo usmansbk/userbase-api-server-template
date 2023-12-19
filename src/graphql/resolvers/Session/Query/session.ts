@@ -1,6 +1,6 @@
 import type { QuerySessionArgs, QuerySessionsArgs } from "types/graphql";
 import type { AppContext } from "types";
-import type { UserSession } from "@prisma/client";
+import type { Session } from "@prisma/client";
 import QueryError from "@/utils/errors/QueryError";
 import { DEFAULT_LIST_SIZE } from "@/constants/limits";
 
@@ -10,10 +10,10 @@ export default {
       _parent: unknown,
       { id }: QuerySessionArgs,
       context: AppContext,
-    ): Promise<UserSession> {
+    ): Promise<Session> {
       const { prismaClient, t } = context;
 
-      const session = await prismaClient.userSession.findUnique({
+      const session = await prismaClient.session.findUnique({
         where: {
           id,
         },
@@ -32,7 +32,7 @@ export default {
     ) {
       const { prismaClient } = context;
 
-      const items = await prismaClient.userSession.findMany({
+      const items = await prismaClient.session.findMany({
         take: limit ?? DEFAULT_LIST_SIZE,
       });
 

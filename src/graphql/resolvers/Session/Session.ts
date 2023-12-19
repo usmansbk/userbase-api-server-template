@@ -1,12 +1,12 @@
-import type { UserSession } from "@prisma/client";
+import type { Session } from "@prisma/client";
 import type { AppContext } from "types";
 
 export default {
-  UserSession: {
-    async user(session: UserSession, _args: never, context: AppContext) {
+  Session: {
+    async user(session: Session, _args: never, context: AppContext) {
       const { prismaClient } = context;
 
-      return await prismaClient.userSession
+      return await prismaClient.session
         .findUnique({
           where: {
             id: session.id,
