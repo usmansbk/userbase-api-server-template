@@ -42,6 +42,6 @@ jobs:
           tags: usmansbk/userbase-api-server-template:${{ github.ref_name }}
 
       - name: Run migrations
-        run: yarn db:migrate:reset
+        run: yarn db:deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
