@@ -44,4 +44,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: usmansbk/userbase-api-server-template:${{ github.ref_name }}
+          tags: usmansbk/${{ github.repository }}:${{ github.ref_name }}
