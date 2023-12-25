@@ -1,6 +1,7 @@
-import type { MutationDeletePermissionsArgs } from "types/graphql";
-import type { AppContext } from "types";
 import { type Permission, Prisma } from "@prisma/client";
+import type { AppContext } from "types";
+import type { MutationDeletePermissionsArgs } from "types/graphql";
+
 import QueryError from "@/utils/errors/QueryError";
 
 export default {

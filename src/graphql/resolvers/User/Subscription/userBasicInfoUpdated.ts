@@ -10,11 +10,12 @@
  * payload is the payload of the event that was published.
  * variables is an object containing all arguments the client provided when initiating their subscription.
  */
+import type { User } from "@prisma/client";
 import { withFilter } from "graphql-subscriptions";
-import { USER_UPDATED_TOPIC } from "@/constants/subscriptions";
 import type { SocketContext } from "types";
 import type { SubscriptionUserBasicInfoUpdatedArgs } from "types/graphql";
-import type { User } from "@prisma/client";
+
+import { USER_UPDATED_TOPIC } from "@/constants/subscriptions";
 
 export default {
   Subscription: {

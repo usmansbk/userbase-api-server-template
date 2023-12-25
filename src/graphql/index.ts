@@ -1,8 +1,9 @@
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import http from "http";
 import type { Express } from "express";
+import http from "http";
 import type { AppContext } from "types";
+
 import schema from "./schema";
 import useWebSocketServer from "./ws";
 

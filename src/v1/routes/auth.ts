@@ -1,4 +1,5 @@
 import express from "express";
+
 import refreshToken from "../controllers/auth/refreshToken";
 
 const authRouter = express.Router();

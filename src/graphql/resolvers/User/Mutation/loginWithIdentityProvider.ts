@@ -1,14 +1,15 @@
-import { nanoid } from "nanoid";
 import { UserStatus } from "@prisma/client";
-import verifyGoogleIdToken from "@/utils/googleOauth";
+import { nanoid } from "nanoid";
+import type { AppContext } from "types";
+import type {
+  AuthResponse,
+  MutationLoginWithIdentityProviderArgs,
+} from "types/graphql";
+
+import { WELCOME_TEMPLATE } from "@/constants/templates";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
-import type {
-  MutationLoginWithIdentityProviderArgs,
-  AuthResponse,
-} from "types/graphql";
-import type { AppContext } from "types";
-import { WELCOME_TEMPLATE } from "@/constants/templates";
+import verifyGoogleIdToken from "@/utils/googleOauth";
 
 export default {
   Mutation: {

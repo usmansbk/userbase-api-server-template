@@ -1,5 +1,5 @@
-import fs from "fs";
 import { generateKeyPairSync } from "crypto";
+import fs from "fs";
 
 export function isKeysExists() {
   return (

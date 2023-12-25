@@ -1,9 +1,9 @@
-import i18next from "i18next";
-import { join, resolve } from "path";
+import type { Express } from "express";
 import { lstatSync, readdirSync } from "fs";
+import i18next from "i18next";
 import Backend from "i18next-fs-backend";
 import i18nextMiddleware from "i18next-http-middleware";
-import type { Express } from "express";
+import { join, resolve } from "path";
 
 const localesDir = resolve("assets/locales");
 
@@ -33,6 +33,6 @@ async function initializeI18n(app: Express) {
   return i18next;
 }
 
-export { initializeI18n, i18nextMiddleware };
+export { i18nextMiddleware, initializeI18n };
 
 export default i18next;

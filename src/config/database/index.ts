@@ -1,8 +1,9 @@
-import storage from "@/utils/storage";
 import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import type { CurrentUser } from "types";
 import type { AccountStatus } from "types/graphql";
+
+import storage from "@/utils/storage";
 
 const client = new PrismaClient();
 

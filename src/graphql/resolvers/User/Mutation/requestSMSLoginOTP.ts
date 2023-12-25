@@ -1,13 +1,14 @@
-import dayjs from "@/utils/dayjs";
 import { UserStatus } from "@prisma/client";
-import getOTP from "@/utils/getOTP";
-import { PHONE_NUMBER_LOGIN_OTP_PREFIX } from "@/constants/cachePrefixes";
+import type { AppContext } from "types";
 import type {
   MutationRequestSmsLoginOtpArgs,
   MutationResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
+
+import { PHONE_NUMBER_LOGIN_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { PHONE_NUMBER_OTP_EXPIRES_IN } from "@/constants/limits";
+import dayjs from "@/utils/dayjs";
+import getOTP from "@/utils/getOTP";
 
 export default {
   Mutation: {

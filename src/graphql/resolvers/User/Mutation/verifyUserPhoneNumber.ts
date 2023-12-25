@@ -1,11 +1,12 @@
-import type {
-  MutationVerifyUserPhoneNumberArgs,
-  MutationResponse,
-} from "types/graphql";
+import { UserStatus } from "@prisma/client";
 import type { AppContext } from "types";
+import type {
+  MutationResponse,
+  MutationVerifyUserPhoneNumberArgs,
+} from "types/graphql";
+
 import { VERIFY_PHONE_NUMBER_PREFIX } from "@/constants/cachePrefixes";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
-import { UserStatus } from "@prisma/client";
 
 export default {
   Mutation: {

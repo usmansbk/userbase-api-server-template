@@ -1,6 +1,7 @@
-import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
 import type { NextFunction, Request, Response } from "express";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default function refreshToken(
   req: Request,

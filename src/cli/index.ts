@@ -1,8 +1,9 @@
 import consola from "consola";
-import createApplication from "./createApplication";
+
 import createAdmin from "./createAdminRole";
-import createPermissions from "./createPermissions";
+import createApplication from "./createApplication";
 import createOwner from "./createOwner";
+import createPermissions from "./createPermissions";
 import generateSecurityKeys from "./generateSecurityKeys";
 
 async function init() {

@@ -1,13 +1,14 @@
-import { ZodError, z } from "zod";
-import ValidationError from "@/utils/errors/ValidationError";
 import type { AppContext } from "types";
 import type {
   MutationUpdateCurrentUserBasicInfoArgs,
   User,
   UserResponse,
 } from "types/graphql";
+import { z, ZodError } from "zod";
+
 import { USER_NAME_MAX_LENGTH, USER_NAME_MIN_LENGTH } from "@/constants/limits";
 import { USER_UPDATED_TOPIC } from "@/constants/subscriptions";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {

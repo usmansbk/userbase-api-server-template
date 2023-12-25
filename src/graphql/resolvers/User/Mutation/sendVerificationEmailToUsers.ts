@@ -1,13 +1,14 @@
-import type {
-  MutationSendVerificationEmailToUsersArgs,
-  MutationResponse,
-} from "types/graphql";
 import type { AppContext } from "types";
-import { VERIFY_EMAIL_TEMPLATE } from "@/constants/templates";
-import dayjs from "@/utils/dayjs";
-import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import type {
+  MutationResponse,
+  MutationSendVerificationEmailToUsersArgs,
+} from "types/graphql";
+
 import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
+import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import { VERIFY_EMAIL_TEMPLATE } from "@/constants/templates";
 import universalLinks from "@/constants/universalLinks";
+import dayjs from "@/utils/dayjs";
 
 export default {
   Mutation: {

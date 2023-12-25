@@ -1,12 +1,13 @@
+import { UserStatus } from "@prisma/client";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import type { AppContext } from "types";
 import type {
   MutationDeleteUserAccountArgs,
   MutationResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
-import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
+
 import { DELETE_USER_PREFIX } from "@/constants/cachePrefixes";
-import { UserStatus } from "@prisma/client";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default {
   Mutation: {

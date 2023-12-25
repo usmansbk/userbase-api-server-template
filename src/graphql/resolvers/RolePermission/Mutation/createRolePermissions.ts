@@ -1,7 +1,8 @@
-import type { MutationCreateRolePermissionsArgs } from "types/graphql";
-import type { AppContext } from "types";
 import type { RolePermission } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import type { AppContext } from "types";
+import type { MutationCreateRolePermissionsArgs } from "types/graphql";
+
 import QueryError from "@/utils/errors/QueryError";
 
 export default {

@@ -1,5 +1,6 @@
-import { GraphQLError } from "graphql";
 import type { ErrorRequestHandler, Request } from "express";
+import { GraphQLError } from "graphql";
+
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 

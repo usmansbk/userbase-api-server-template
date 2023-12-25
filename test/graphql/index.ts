@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
-import schema from "@/graphql/schema";
 import type { AppContext } from "types";
+
+import schema from "@/graphql/schema";
 
 export function createMockApolloServer() {
   const server = new ApolloServer<AppContext>({

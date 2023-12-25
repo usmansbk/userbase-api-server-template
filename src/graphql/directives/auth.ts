@@ -1,9 +1,10 @@
+import { getDirective, MapperKind, mapSchema } from "@graphql-tools/utils";
 import { defaultFieldResolver, type GraphQLSchema } from "graphql";
-import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
 import type { AppContext } from "types";
-import { AuthStrategy, type AuthRule } from "types/graphql";
-import ForbiddenError from "@/utils/errors/ForbiddenError";
+import { type AuthRule, AuthStrategy } from "types/graphql";
+
 import AuthenticationError from "@/utils/errors/AuthenticationError";
+import ForbiddenError from "@/utils/errors/ForbiddenError";
 
 export default function authDirectiveTransformer(
   schema: GraphQLSchema,

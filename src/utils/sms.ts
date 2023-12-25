@@ -1,6 +1,8 @@
-import sns from "@/config/aws/sns";
-import logger from "./logger";
 import { PublishCommand } from "@aws-sdk/client-sns";
+
+import sns from "@/config/aws/sns";
+
+import logger from "./logger";
 
 interface Message {
   phoneNumber: string; // E.164 Format

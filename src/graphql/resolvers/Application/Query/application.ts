@@ -1,6 +1,7 @@
-import type { QueryApplicationArgs } from "types/graphql";
-import type { AppContext } from "types";
 import type { Application } from "@prisma/client";
+import type { AppContext } from "types";
+import type { QueryApplicationArgs } from "types/graphql";
+
 import QueryError from "@/utils/errors/QueryError";
 
 export default {

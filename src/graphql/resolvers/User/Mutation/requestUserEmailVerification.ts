@@ -1,14 +1,15 @@
-import dayjs from "@/utils/dayjs";
+import { UserStatus } from "@prisma/client";
+import type { AppContext } from "types";
 import type {
   MutationRequestUserEmailVerificationArgs,
   MutationResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
-import { UserStatus } from "@prisma/client";
+
 import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { EMAIL_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { VERIFY_EMAIL_TEMPLATE } from "@/constants/templates";
 import universalLinks from "@/constants/universalLinks";
+import dayjs from "@/utils/dayjs";
 
 export default {
   Mutation: {

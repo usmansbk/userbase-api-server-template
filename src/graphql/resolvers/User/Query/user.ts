@@ -1,8 +1,9 @@
-import type { QueryUserArgs, QueryUsersArgs } from "types/graphql";
-import type { AppContext } from "types";
 import type { User } from "@prisma/client";
-import QueryError from "@/utils/errors/QueryError";
+import type { AppContext } from "types";
+import type { QueryUserArgs, QueryUsersArgs } from "types/graphql";
+
 import { DEFAULT_LIST_SIZE } from "@/constants/limits";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Query: {

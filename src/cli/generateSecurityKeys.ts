@@ -1,4 +1,5 @@
 import consola from "consola";
+
 import { generateKeys, isKeysExists } from "@/utils/generateKeys";
 
 export default async function generateSecurityKeys() {

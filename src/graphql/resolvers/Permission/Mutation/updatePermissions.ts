@@ -1,14 +1,15 @@
-import type { MutationUpdatePermissionsArgs } from "types/graphql";
-import type { AppContext } from "types";
 import type { Permission } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import QueryError from "@/utils/errors/QueryError";
-import { ZodError, z } from "zod";
-import ValidationError from "@/utils/errors/ValidationError";
+import type { AppContext } from "types";
+import type { MutationUpdatePermissionsArgs } from "types/graphql";
+import { z, ZodError } from "zod";
+
 import {
   PERMISSION_DESCRIPTION_MAX_LENGTH,
   PERMISSION_NAME_MAX_LENGTH,
 } from "@/constants/limits";
+import QueryError from "@/utils/errors/QueryError";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {

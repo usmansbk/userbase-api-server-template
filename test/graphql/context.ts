@@ -1,9 +1,10 @@
-import redisClient, { pubsub } from "@/config/redis";
-import log from "@/utils/logger";
-import jwtClient from "@/utils/jwt";
-import prismaClient from "@/config/database";
-import type { AppContext, CurrentUser } from "types";
 import type { TFunction } from "i18next";
+import type { AppContext, CurrentUser } from "types";
+
+import prismaClient from "@/config/database";
+import redisClient, { pubsub } from "@/config/redis";
+import jwtClient from "@/utils/jwt";
+import log from "@/utils/logger";
 
 export default async function createMockContext(
   currentUser?: CurrentUser,

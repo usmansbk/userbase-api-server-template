@@ -1,9 +1,9 @@
+import type { AppContext } from "types";
 import type {
   MutationUpdateCurrentUserPhoneNumberArgs,
   User,
   UserResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
 
 export default {
   Mutation: {

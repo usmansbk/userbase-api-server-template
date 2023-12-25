@@ -1,16 +1,17 @@
-import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { configureScope } from "@sentry/node";
-import redisClient, { pubsub } from "@/config/redis";
-import smsClient from "@/utils/sms";
-import jwtClient from "@/utils/jwt";
-import storage from "@/utils/storage";
+import type { NextFunction, Request, Response } from "express";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import type { CurrentUser } from "types";
+
 import prismaClient from "@/config/database";
-import emailClient from "@/utils/email";
+import redisClient, { pubsub } from "@/config/redis";
 import docClient from "@/utils/docClient";
+import emailClient from "@/utils/email";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
-import type { NextFunction, Request, Response } from "express";
-import type { CurrentUser } from "types";
+import jwtClient from "@/utils/jwt";
+import smsClient from "@/utils/sms";
+import storage from "@/utils/storage";
 
 const appContext = (req: Request, res: Response, next: NextFunction) => {
   (async () => {

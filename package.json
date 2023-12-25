@@ -68,11 +68,12 @@
     "sh": "docker exec -it api sh",
     "codegen": "graphql-codegen",
     "init:dev": "babel-node src/cli --extensions .ts",
-    "init:app": "babel-node build/cli"
+    "init:app": "babel-node build/cli",
+    "lint": "eslint --fix --ext .ts"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
-    "**/*.ts": "eslint --fix"
+    "**/*.ts": "yarn lint"
   },
   "dependencies": {
     "@apollo/server": "^4.9.5",

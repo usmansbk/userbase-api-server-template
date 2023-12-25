@@ -1,10 +1,11 @@
-import type { MutationResponse } from "types/graphql";
+import { UserStatus } from "@prisma/client";
 import type { AppContext } from "types";
-import dayjs from "@/utils/dayjs";
+import type { MutationResponse } from "types/graphql";
+
 import { DELETE_USER_PREFIX } from "@/constants/cachePrefixes";
 import { DELETE_ACCOUNT_TOKEN_EXPIRES_IN } from "@/constants/limits";
-import { UserStatus } from "@prisma/client";
 import universalLinks from "@/constants/universalLinks";
+import dayjs from "@/utils/dayjs";
 
 export default {
   Mutation: {

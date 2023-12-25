@@ -1,7 +1,8 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import typeDefs from "./typeDefs";
-import resolvers from "./resolvers";
+
 import authDirectiveTransformer from "./directives/auth";
+import resolvers from "./resolvers";
+import typeDefs from "./typeDefs";
 
 const schema = authDirectiveTransformer(
   makeExecutableSchema({

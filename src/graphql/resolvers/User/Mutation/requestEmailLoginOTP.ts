@@ -1,13 +1,14 @@
-import type {
-  MutationResponse,
-  MutationRequestEmailLoginOtpArgs,
-} from "types/graphql";
-import type { AppContext } from "types";
 import { UserStatus } from "@prisma/client";
-import dayjs from "@/utils/dayjs";
+import type { AppContext } from "types";
+import type {
+  MutationRequestEmailLoginOtpArgs,
+  MutationResponse,
+} from "types/graphql";
+
 import { EMAIL_LOGIN_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { LOGIN_OTP_EXPIRES_IN } from "@/constants/limits";
 import { EMAIL_LOGIN_OTP_TEMPLATE } from "@/constants/templates";
+import dayjs from "@/utils/dayjs";
 import getOTP from "@/utils/getOTP";
 
 export default {

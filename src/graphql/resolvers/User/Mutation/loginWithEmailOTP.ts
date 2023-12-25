@@ -1,21 +1,22 @@
-import type {
-  MutationLoginWithEmailOtpArgs,
-  AuthResponse,
-} from "types/graphql";
+import { UserStatus } from "@prisma/client";
 import type { AppContext } from "types";
+import type {
+  AuthResponse,
+  MutationLoginWithEmailOtpArgs,
+} from "types/graphql";
+
 import {
   EMAIL_LOGIN_OTP_PREFIX,
   LOGIN_ATTEMPT_PREFIX,
 } from "@/constants/cachePrefixes";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
-import { UserStatus } from "@prisma/client";
 import {
   BLOCK_IP_DURATION,
   BRUTE_FORCE_THRESHOLD,
   RESET_LOGIN_ATTEMPTS_IN,
 } from "@/constants/limits";
-import dayjs from "@/utils/dayjs";
 import { BLOCKED_IP_TEMPLATE } from "@/constants/templates";
+import dayjs from "@/utils/dayjs";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default {
   Mutation: {

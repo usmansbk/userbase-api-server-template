@@ -1,18 +1,19 @@
-import { useServer } from "graphql-ws/lib/use/ws";
-import { CloseCode } from "graphql-ws";
-import { WebSocketServer } from "ws";
 import { configureScope } from "@sentry/node";
+import type { GraphQLSchema } from "graphql";
+import { CloseCode } from "graphql-ws";
+import { useServer } from "graphql-ws/lib/use/ws";
+import type { IncomingMessage, Server, ServerResponse } from "http";
+import type { CurrentUser, SocketContext } from "types";
+import { WebSocketServer } from "ws";
+
+import prismaClient from "@/config/database";
 import i18next from "@/config/i18n";
 import { pubsub } from "@/config/redis";
-import storage from "@/utils/storage";
-import prismaClient from "@/config/database";
-import log from "@/utils/logger";
-import jwtClient from "@/utils/jwt";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
 import Sentry from "@/config/sentry";
-import type { IncomingMessage, ServerResponse, Server } from "http";
-import type { GraphQLSchema } from "graphql";
-import type { CurrentUser, SocketContext } from "types";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
+import jwtClient from "@/utils/jwt";
+import log from "@/utils/logger";
+import storage from "@/utils/storage";
 
 export default function useWebSocketServer(
   schema: GraphQLSchema,

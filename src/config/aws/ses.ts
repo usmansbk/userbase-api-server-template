@@ -1,4 +1,4 @@
-import { SES, SendRawEmailCommand } from "@aws-sdk/client-ses";
+import { SendRawEmailCommand, SES } from "@aws-sdk/client-ses";
 import { defaultProvider } from "@aws-sdk/credential-provider-node";
 
 const ses = new SES({

@@ -1,13 +1,14 @@
-import type {
-  MutationVerifyUserEmailArgs,
-  MutationResponse,
-} from "types/graphql";
-import type { AppContext } from "types";
-import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
-import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
 import { UserStatus } from "@prisma/client";
+import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
+import type { AppContext } from "types";
+import type {
+  MutationResponse,
+  MutationVerifyUserEmailArgs,
+} from "types/graphql";
+
+import { VERIFY_EMAIL_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { WELCOME_TEMPLATE } from "@/constants/templates";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
 
 export default {
   Mutation: {

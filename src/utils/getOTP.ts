@@ -1,4 +1,5 @@
 import { customAlphabet } from "nanoid";
+
 import { OTP_LENGTH } from "@/constants/limits";
 
 interface OTPConfig {

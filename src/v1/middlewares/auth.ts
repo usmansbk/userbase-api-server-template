@@ -1,8 +1,9 @@
+import type { NextFunction, Request, Response } from "express";
+import { type AuthRule, AuthStrategy } from "types/graphql";
+
 import AuthenticationError from "@/utils/errors/AuthenticationError";
 import ForbiddenError from "@/utils/errors/ForbiddenError";
 import QueryError from "@/utils/errors/QueryError";
-import type { NextFunction, Request, Response } from "express";
-import { AuthStrategy, type AuthRule } from "types/graphql";
 
 const authMiddleware =
   (rules?: AuthRule[]) => (req: Request, res: Response, next: NextFunction) => {

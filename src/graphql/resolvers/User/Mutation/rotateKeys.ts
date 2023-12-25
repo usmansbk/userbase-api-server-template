@@ -1,5 +1,6 @@
-import type { AppContext } from "types/index";
 import type { MutationResponse } from "types/graphql";
+import type { AppContext } from "types/index";
+
 import { generateKeys } from "@/utils/generateKeys";
 
 export default {

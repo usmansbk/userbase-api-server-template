@@ -1,14 +1,15 @@
+import { UserStatus } from "@prisma/client";
+import type { AppContext } from "types";
 import type {
   MutationRequestResetUserPasswordArgs,
   MutationResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
-import dayjs from "@/utils/dayjs";
+
 import { PASSWORD_RESET_PREFIX } from "@/constants/cachePrefixes";
-import { UserStatus } from "@prisma/client";
 import { PASSWORD_RESET_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import { FORGOT_PASSWORD_TEMPLATE } from "@/constants/templates";
 import universalLinks from "@/constants/universalLinks";
+import dayjs from "@/utils/dayjs";
 
 export default {
   Mutation: {

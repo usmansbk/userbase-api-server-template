@@ -1,8 +1,10 @@
 import express from "express";
-import authMiddleware from "../middlewares/auth";
-import uploadCurrentUserPicture from "@/v1/controllers/user/uploadCurrentUserPicture";
-import uploadUserPicture from "../controllers/user/uploadUserPicture";
 import { AuthStrategy } from "types/graphql";
+
+import uploadCurrentUserPicture from "@/v1/controllers/user/uploadCurrentUserPicture";
+
+import uploadUserPicture from "../controllers/user/uploadUserPicture";
+import authMiddleware from "../middlewares/auth";
 
 const userRouter = express.Router();
 

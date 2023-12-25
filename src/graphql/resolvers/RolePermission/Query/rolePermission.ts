@@ -1,11 +1,12 @@
+import type { RolePermission } from "@prisma/client";
+import type { AppContext } from "types";
 import type {
   QueryRolePermissionArgs,
   QueryRolePermissionsArgs,
 } from "types/graphql";
-import type { AppContext } from "types";
-import type { RolePermission } from "@prisma/client";
-import QueryError from "@/utils/errors/QueryError";
+
 import { DEFAULT_LIST_SIZE } from "@/constants/limits";
+import QueryError from "@/utils/errors/QueryError";
 
 export default {
   Query: {

@@ -1,15 +1,16 @@
 import type { NextFunction, Request, Response } from "express";
 import { MulterError } from "multer";
 import numeral from "numeral";
-import uploader from "@/v1/middlewares/fileUploader";
+
 import {
   DEFAULT_USER_PICTURE_SIZE,
   DEFAULT_USER_THUMBNAIL_SIZE,
   MAX_USER_IMAGE_FILE_SIZE_IN_BYTES,
   SUPPORTED_IMAGE_TYPES,
 } from "@/constants/limits";
-import getImageUrl from "@/utils/getImageUrl";
 import QueryError from "@/utils/errors/QueryError";
+import getImageUrl from "@/utils/getImageUrl";
+import uploader from "@/v1/middlewares/fileUploader";
 
 const uploadCurrentUserPicture = (
   req: Request,

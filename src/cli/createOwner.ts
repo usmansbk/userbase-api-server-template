@@ -1,14 +1,15 @@
+import { confirm, input, password } from "@inquirer/prompts";
+import { UserStatus } from "@prisma/client";
 import consola from "consola";
-import prismaClient from "@/config/database";
-import { input, password, confirm } from "@inquirer/prompts";
 import { z } from "zod";
+
+import prismaClient from "@/config/database";
 import {
   USER_NAME_MAX_LENGTH,
   USER_NAME_MIN_LENGTH,
   USER_PASSWORD_MAX_LENGTH,
   USER_PASSWORD_MIN_LENGTH,
 } from "@/constants/limits";
-import { UserStatus } from "@prisma/client";
 
 const rootRole = {
   name: "Root",

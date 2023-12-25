@@ -1,12 +1,13 @@
-import type {
-  MutationSendPhoneNumberVerificationSmsToUsersArgs,
-  MutationResponse,
-} from "types/graphql";
 import type { AppContext } from "types";
-import getOTP from "@/utils/getOTP";
+import type {
+  MutationResponse,
+  MutationSendPhoneNumberVerificationSmsToUsersArgs,
+} from "types/graphql";
+
 import { VERIFY_PHONE_NUMBER_PREFIX } from "@/constants/cachePrefixes";
 import { PHONE_NUMBER_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
 import dayjs from "@/utils/dayjs";
+import getOTP from "@/utils/getOTP";
 
 export default {
   Mutation: {

@@ -1,4 +1,5 @@
 import consola from "consola";
+
 import prismaClient from "@/config/database";
 
 const defaultApplication = {

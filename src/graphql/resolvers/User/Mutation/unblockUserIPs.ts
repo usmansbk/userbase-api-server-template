@@ -1,9 +1,10 @@
+import type { AppContext } from "types";
 import type {
   MutationUnblockUserIPsArgs,
   User,
   UserResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
+
 import QueryError from "@/utils/errors/QueryError";
 
 export default {

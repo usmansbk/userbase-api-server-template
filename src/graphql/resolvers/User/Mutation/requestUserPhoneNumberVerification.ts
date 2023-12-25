@@ -1,12 +1,13 @@
+import { UserStatus } from "@prisma/client";
+import type { AppContext } from "types";
 import type {
   MutationRequestUserPhoneNumberVerificationArgs,
   MutationResponse,
 } from "types/graphql";
-import type { AppContext } from "types";
-import dayjs from "@/utils/dayjs";
+
 import { VERIFY_PHONE_NUMBER_PREFIX } from "@/constants/cachePrefixes";
-import { UserStatus } from "@prisma/client";
 import { PHONE_NUMBER_VERIFICATION_TOKEN_EXPIRES_IN } from "@/constants/limits";
+import dayjs from "@/utils/dayjs";
 import getOTP from "@/utils/getOTP";
 
 export default {

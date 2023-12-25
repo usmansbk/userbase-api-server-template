@@ -1,13 +1,14 @@
-import type {
-  MutationSendEmailLoginOtpToUsersArgs,
-  MutationResponse,
-} from "types/graphql";
 import type { AppContext } from "types";
-import getOTP from "@/utils/getOTP";
+import type {
+  MutationResponse,
+  MutationSendEmailLoginOtpToUsersArgs,
+} from "types/graphql";
+
 import { EMAIL_LOGIN_OTP_PREFIX } from "@/constants/cachePrefixes";
 import { LOGIN_OTP_EXPIRES_IN } from "@/constants/limits";
-import dayjs from "@/utils/dayjs";
 import { EMAIL_LOGIN_OTP_TEMPLATE } from "@/constants/templates";
+import dayjs from "@/utils/dayjs";
+import getOTP from "@/utils/getOTP";
 
 export default {
   Mutation: {

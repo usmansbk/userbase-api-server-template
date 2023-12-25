@@ -1,15 +1,16 @@
 import fs from "fs";
-import { nanoid } from "nanoid";
 import jwt, {
-  type SignOptions,
   type JwtPayload,
+  type SignOptions,
   type VerifyOptions,
 } from "jsonwebtoken";
-import dayjs from "@/utils/dayjs";
+import { nanoid } from "nanoid";
+
 import {
   ACCESS_TOKEN_EXPIRES_IN,
   REFRESH_TOKEN_EXPIRES_IN,
 } from "@/constants/limits";
+import dayjs from "@/utils/dayjs";
 
 const testSecret = "secret";
 let audience: string;

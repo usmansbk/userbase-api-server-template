@@ -1,7 +1,8 @@
 import type { User } from "@prisma/client";
-import type { MutationDeleteUsersArgs } from "types/graphql";
-import type { AppContext } from "types";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import type { AppContext } from "types";
+import type { MutationDeleteUsersArgs } from "types/graphql";
+
 import QueryError from "@/utils/errors/QueryError";
 
 export default {

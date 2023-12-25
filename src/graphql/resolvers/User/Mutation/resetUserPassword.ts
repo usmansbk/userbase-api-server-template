@@ -1,23 +1,24 @@
-import { ZodError, z } from "zod";
 import { UserStatus } from "@prisma/client";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
-import AuthenticationError from "@/utils/errors/AuthenticationError";
-import ValidationError from "@/utils/errors/ValidationError";
-import dayjs from "@/utils/dayjs";
-import {
-  PASSWORD_CHANGED_TEMPLATE,
-  WELCOME_TEMPLATE,
-} from "@/constants/templates";
+import type { AppContext } from "types";
+import type {
+  MutationResetUserPasswordArgs,
+  MutationResponse,
+} from "types/graphql";
+import { z, ZodError } from "zod";
+
 import { PASSWORD_RESET_PREFIX } from "@/constants/cachePrefixes";
 import {
   USER_PASSWORD_MAX_LENGTH,
   USER_PASSWORD_MIN_LENGTH,
 } from "@/constants/limits";
-import type {
-  MutationResetUserPasswordArgs,
-  MutationResponse,
-} from "types/graphql";
-import type { AppContext } from "types";
+import {
+  PASSWORD_CHANGED_TEMPLATE,
+  WELCOME_TEMPLATE,
+} from "@/constants/templates";
+import dayjs from "@/utils/dayjs";
+import AuthenticationError from "@/utils/errors/AuthenticationError";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {

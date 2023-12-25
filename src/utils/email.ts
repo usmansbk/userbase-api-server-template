@@ -1,8 +1,10 @@
 import Email, { type EmailOptions } from "email-templates";
 import nodemailer from "nodemailer";
 import path from "path";
+
 import ses, { aws } from "@/config/aws/ses";
 import Sentry from "@/config/sentry";
+
 import logger from "./logger";
 
 const transporter = nodemailer.createTransport({

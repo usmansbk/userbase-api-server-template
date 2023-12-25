@@ -1,17 +1,18 @@
-import { ZodError, z } from "zod";
 import { UserStatus } from "@prisma/client";
-import ValidationError from "@/utils/errors/ValidationError";
-import {
-  USER_NAME_MAX_LENGTH,
-  USER_PASSWORD_MAX_LENGTH,
-  USER_NAME_MIN_LENGTH,
-  USER_PASSWORD_MIN_LENGTH,
-} from "@/constants/limits";
 import type { AppContext } from "types";
 import type {
-  MutationRegisterWithEmailArgs,
   AuthResponse,
+  MutationRegisterWithEmailArgs,
 } from "types/graphql";
+import { z, ZodError } from "zod";
+
+import {
+  USER_NAME_MAX_LENGTH,
+  USER_NAME_MIN_LENGTH,
+  USER_PASSWORD_MAX_LENGTH,
+  USER_PASSWORD_MIN_LENGTH,
+} from "@/constants/limits";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {

@@ -3,8 +3,10 @@ import {
   PutCommand,
   QueryCommand,
 } from "@aws-sdk/lib-dynamodb";
-import logger from "./logger";
+
 import client from "@/config/aws/dynamodb";
+
+import logger from "./logger";
 
 const TableName = process.env.AWS_DYNAMODB_TABLE;
 

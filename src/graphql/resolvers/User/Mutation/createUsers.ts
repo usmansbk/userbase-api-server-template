@@ -1,17 +1,18 @@
-import { nanoid } from "nanoid";
-import { UserStatus, type User } from "@prisma/client";
-import type { MutationCreateUsersArgs } from "types/graphql";
-import type { AppContext } from "types";
+import { type User, UserStatus } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import QueryError from "@/utils/errors/QueryError";
-import { ZodError, z } from "zod";
-import ValidationError from "@/utils/errors/ValidationError";
+import { nanoid } from "nanoid";
+import type { AppContext } from "types";
+import type { MutationCreateUsersArgs } from "types/graphql";
+import { z, ZodError } from "zod";
+
 import {
   USER_NAME_MAX_LENGTH,
   USER_NAME_MIN_LENGTH,
   USER_PASSWORD_MAX_LENGTH,
   USER_PASSWORD_MIN_LENGTH,
 } from "@/constants/limits";
+import QueryError from "@/utils/errors/QueryError";
+import ValidationError from "@/utils/errors/ValidationError";
 
 export default {
   Mutation: {
