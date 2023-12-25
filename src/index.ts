@@ -1,19 +1,21 @@
 import "@/config/env";
-import express from "express";
-import PinoHttp from "pino-http";
+
+import { expressMiddleware } from "@apollo/server/express4";
 import { json } from "body-parser";
 import cors from "cors";
+import express from "express";
 import userAgent from "express-useragent";
+import PinoHttp from "pino-http";
 import requestip from "request-ip";
-import { expressMiddleware } from "@apollo/server/express4";
+
 import { initializeI18n } from "./config/i18n";
-import logger from "./utils/logger";
+import { initializeSentry } from "./config/sentry";
 import createApolloHTTPServer from "./graphql";
+import logger from "./utils/logger";
+import appContext from "./v1/middlewares/appContext";
+import errorHandler from "./v1/middlewares/errorHandler";
 import rateLimiter from "./v1/middlewares/rateLimiter";
 import v1Router from "./v1/routes";
-import errorHandler from "./v1/middlewares/errorHandler";
-import appContext from "./v1/middlewares/appContext";
-import { initializeSentry } from "./config/sentry";
 
 async function main() {
   const app = express();
