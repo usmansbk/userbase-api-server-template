@@ -1,4 +1,3 @@
-import { configureScope } from "@sentry/node";
 import type { GraphQLSchema } from "graphql";
 import { CloseCode } from "graphql-ws";
 import { useServer } from "graphql-ws/lib/use/ws";
@@ -75,8 +74,8 @@ export default function useWebSocketServer(
               currentUser = await prismaClient.user.currentUser(payload.sub!);
 
               if (currentUser) {
-                configureScope((scope) => {
-                  scope.setUser({ id: currentUser!.id });
+                Sentry.setUser({
+                  id: currentUser.id,
                 });
                 if (currentUser?.language) {
                   await i18next.changeLanguage(currentUser.language);

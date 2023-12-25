@@ -1,10 +1,10 @@
-import { configureScope } from "@sentry/node";
 import type { NextFunction, Request, Response } from "express";
 import { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import type { CurrentUser } from "types";
 
 import prismaClient from "@/config/database";
 import redisClient, { pubsub } from "@/config/redis";
+import Sentry from "@/config/sentry";
 import docClient from "@/utils/docClient";
 import emailClient from "@/utils/email";
 import AuthenticationError from "@/utils/errors/AuthenticationError";
@@ -64,9 +64,7 @@ const appContext = (req: Request, res: Response, next: NextFunction) => {
             if (currentUser.language) {
               await i18n.changeLanguage(currentUser.language);
             }
-            configureScope((scope) => {
-              scope.setUser({ id: currentUser!.id });
-            });
+            Sentry.setUser({ id: currentUser.id });
 
             const session = currentUser.sessions.find(
               (session) => session.id === payload.azp,
